@@ -1,0 +1,1681 @@
+<title>CEA Rack Platform Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+:root{
+  --paper:#F6F7F4; --surface:#FFFFFF; --surface-2:#EDEFEA; --surface-3:#E4E8DF;
+  --ink:#151A17; --ink-2:#4A544D; --ink-3:#79857C;
+  --rule:#D7DDD3; --rule-strong:#B9C2B4;
+  --accent:#2E6B54; --accent-soft:#E1EDE6;
+  --signal:#9A5C15; --signal-soft:#F5E9D8;
+  --alert:#96382B; --alert-soft:#F6E2DE;
+  --info:#2A5674; --info-soft:#DEEAF1;
+  --shadow:0 1px 2px rgba(21,26,23,.06), 0 8px 24px -16px rgba(21,26,23,.28);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1210; --surface:#141917; --surface-2:#1A211D; --surface-3:#212926;
+    --ink:#E8EDE8; --ink-2:#A8B3AB; --ink-3:#7B867E;
+    --rule:#28302B; --rule-strong:#3A443E;
+    --accent:#69B695; --accent-soft:#15291F;
+    --signal:#D29B58; --signal-soft:#2C2114;
+    --alert:#DE8C7C; --alert-soft:#2D1A16;
+    --info:#82B4D6; --info-soft:#13242E;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1210; --surface:#141917; --surface-2:#1A211D; --surface-3:#212926;
+  --ink:#E8EDE8; --ink-2:#A8B3AB; --ink-3:#7B867E;
+  --rule:#28302B; --rule-strong:#3A443E;
+  --accent:#69B695; --accent-soft:#15291F;
+  --signal:#D29B58; --signal-soft:#2C2114;
+  --alert:#DE8C7C; --alert-soft:#2D1A16;
+  --info:#82B4D6; --info-soft:#13242E;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--serif); font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+.prose{max-width:70ch}
+h1,h2,h3,h4{font-family:var(--sans);text-wrap:balance;margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--rule-strong);background:var(--surface)}
+.mast-in{max-width:1160px;margin:0 auto;padding:38px 28px 0}
+.eyebrow{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);display:flex;gap:14px;flex-wrap:wrap;align-items:baseline
+}
+.eyebrow b{color:var(--accent);font-weight:500}
+h1{font-size:clamp(30px,4.6vw,50px);font-weight:700;letter-spacing:-.022em;line-height:1.06;margin:14px 0 10px}
+.dek{font-size:19px;color:var(--ink-2);max-width:60ch;margin:0 0 26px}
+.docblock{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  border-top:1px solid var(--rule);
+}
+.docblock div{padding:12px 16px 14px;border-right:1px solid var(--rule)}
+.docblock div:last-child{border-right:0}
+.docblock dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px}
+.docblock dd{margin:0;font-family:var(--sans);font-size:14px;font-weight:600}
+
+/* ---------- status ---------- */
+.status{background:var(--signal-soft);border-bottom:1px solid var(--rule-strong)}
+.status-in{max-width:1160px;margin:0 auto;padding:20px 28px;display:flex;gap:18px;align-items:flex-start}
+.status .bar{width:4px;align-self:stretch;background:var(--signal);border-radius:2px;flex:none}
+.status p{margin:0;font-size:15.5px;color:var(--ink)}
+.status strong{font-family:var(--sans);font-weight:700}
+
+/* ---------- sections ---------- */
+section{padding:52px 0;border-bottom:1px solid var(--rule)}
+.snum{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+h2{font-size:clamp(22px,2.7vw,30px);font-weight:700;letter-spacing:-.018em;margin-bottom:8px}
+h3{font-size:18px;font-weight:600;letter-spacing:-.01em;margin:34px 0 8px}
+h4{font-size:14.5px;font-weight:600;margin:22px 0 6px}
+.lede{font-size:17.5px;color:var(--ink-2);max-width:70ch;margin:0 0 8px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-left:1.25em}
+li{margin-bottom:6px}
+
+/* ---------- chips ---------- */
+.chip{
+  display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.06em;text-transform:uppercase;padding:2.5px 7px;border-radius:3px;
+  white-space:nowrap;font-weight:500;
+}
+.c-a{background:var(--accent-soft);color:var(--accent)}
+.c-b{background:var(--info-soft);color:var(--info)}
+.c-c{background:var(--signal-soft);color:var(--signal)}
+.c-d{background:var(--alert-soft);color:var(--alert)}
+.c-n{background:var(--surface-3);color:var(--ink-2)}
+
+/* ---------- key grid ---------- */
+.keygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:22px 0}
+.keygrid > div{background:var(--surface);padding:16px 18px}
+.keygrid h4{margin:0 0 6px;font-size:13px}
+.keygrid p{font-size:14.5px;color:var(--ink-2);margin:0}
+
+/* ---------- brief items ---------- */
+.brief{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:26px}
+.item{background:var(--surface);padding:20px 22px;display:grid;grid-template-columns:58px 1fr;gap:20px}
+.item .letter{font-family:var(--sans);font-size:26px;font-weight:700;color:var(--rule-strong);line-height:1;letter-spacing:-.02em}
+.item h3{margin:0 0 6px;font-size:16.5px}
+.item p{font-size:15px;margin:0 0 10px}
+.item p:last-child{margin-bottom:0}
+.item .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--ink-3)}
+.val{font-family:var(--mono);font-size:14px;color:var(--ink);background:var(--surface-2);padding:1px 5px;border-radius:3px}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);margin:22px 0}
+table{border-collapse:collapse;width:100%;min-width:720px;font-family:var(--sans);font-size:13.5px}
+th{
+  text-align:left;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);padding:11px 14px;border-bottom:1px solid var(--rule-strong);
+  background:var(--surface-2);position:sticky;top:0;white-space:nowrap
+}
+td{padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:500}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:12.5px;color:var(--ink)}
+td.mono{font-family:var(--mono);font-size:12.5px}
+
+/* ---------- conflicts ---------- */
+.conflict{border:1px solid var(--rule);background:var(--surface);margin:18px 0;box-shadow:var(--shadow)}
+.conflict > header{
+  padding:14px 20px;border-bottom:1px solid var(--rule);background:var(--surface-2);
+  display:flex;gap:12px;align-items:baseline;flex-wrap:wrap
+}
+.conflict .cid{font-family:var(--mono);font-size:12px;color:var(--alert);font-weight:500}
+.conflict h3{margin:0;font-size:16px;flex:1;min-width:200px}
+.conflict .body{padding:18px 20px}
+.conflict .body p{font-size:15px}
+.side{display:grid;gap:12px;margin-bottom:14px}
+@media(min-width:720px){.side{grid-template-columns:1fr 1fr}}
+.side > div{border-left:3px solid var(--rule-strong);padding:2px 0 2px 13px}
+.side .who{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:3px}
+.side .says{font-size:14.5px;color:var(--ink)}
+.res{border-top:1px solid var(--rule);padding-top:13px;margin-top:4px}
+.res .who{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:4px}
+.res p{margin:0;font-size:15px}
+
+/* ---------- questions ---------- */
+.qgroup{border:1px solid var(--rule);background:var(--surface);margin-bottom:14px}
+.qgroup > header{padding:13px 18px;display:flex;gap:12px;align-items:baseline;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.qgroup .qn{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:500;min-width:22px}
+.qgroup h3{margin:0;font-size:15px;font-weight:600;letter-spacing:.01em}
+.qgroup ol{margin:0;padding:14px 20px 16px 38px}
+.qgroup li{font-size:15px;margin-bottom:9px;color:var(--ink)}
+.qgroup li:last-child{margin-bottom:0}
+.qgroup .hint{display:block;font-size:13.5px;color:var(--ink-3);margin-top:2px}
+.blocker{background:var(--alert);color:#fff;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;padding:2px 6px;border-radius:3px;margin-left:auto;font-weight:500;align-self:center}
+
+/* ---------- calc ---------- */
+.calc{background:var(--surface-2);border-left:3px solid var(--accent);padding:16px 20px;margin:18px 0;font-family:var(--mono);font-size:13.5px;line-height:1.85}
+.calc .row{display:flex;justify-content:space-between;gap:16px;border-bottom:1px dotted var(--rule-strong);padding:1px 0}
+.calc .row:last-child{border-bottom:0;font-weight:500;color:var(--ink);margin-top:5px;padding-top:6px;border-top:1px solid var(--rule-strong)}
+.calc .row span:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc .cap{font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+
+.note{font-size:14.5px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--rule);padding:14px 18px;margin:18px 0}
+.note strong{font-family:var(--sans);color:var(--ink)}
+
+footer{padding:44px 0 64px;color:var(--ink-3);font-size:14px}
+footer p{max-width:70ch}
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="eyebrow">
+      <span>Doc <b>RACK-P0</b></span>
+      <span>Rev <b>G</b></span>
+      <span>Phase 16 — CAD built</span>
+      <span>04 Sep 2026</span>
+    </div>
+    <h1>CEA Rack Platform Brief</h1>
+    <p class="dek">Requirements extracted from Phase&nbsp;A–E, cross-checked against external sources, with every contradiction, gap and unsupported dimension logged before any geometry is drawn.</p>
+    <dl class="docblock">
+      <div><dt>Sources read</dt><dd>5 of 5 documents</dd></div>
+      <div><dt>Requirements found</dt><dd>34 documented</dd></div>
+      <div><dt>Conflicts</dt><dd>2 resolved · 7 open</dd></div>
+      <div><dt>Blocking gaps</dt><dd>6 defaulted · 3 open</dd></div>
+      <div><dt>Frame cost</dt><dd>₹8,818 → ₹5,812</dd></div>
+      <div><dt>CAD status</dt><dd>Built · 0 interference</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="status">
+  <div class="status-in">
+    <div class="bar"></div>
+    <p><strong>Rev G. Load cases computed from first principles, the white reflective enclosure modelled, and one correction issued.</strong> §14 opens with it: the tray count was never changed from 4 — the 3-tray figure in §13 was a parametric test that I reverted in the same script and then reported badly. §14 also revises the 5-tier ergonomics in your favour, explains what the X-brace is actually carrying, and covers the plastic-moulding question. Model saved as CEA_RACK_PLATFORM_RackA_v1.</p>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ============ HOW TO READ ============ -->
+<section>
+  <div class="snum">§0 · Reading key</div>
+  <h2>How every statement here is classified</h2>
+  <p class="lede prose">Nothing below is presented as fact unless a document or a cited source says it. Each item carries one classification and, where a number is involved, a confidence.</p>
+
+  <div class="keygrid">
+    <div><h4><span class="chip c-a">A · Documented</span></h4><p>Stated directly in Phase A–E. Cited to the document and section. Treated as binding unless you override it.</p></div>
+    <div><h4><span class="chip c-b">B · Recommendation</span></h4><p>My engineering judgement or an external source, where the documents are silent. Reasoned, but yours to reject.</p></div>
+    <div><h4><span class="chip c-c">C · Assumption</span></h4><p>A working value I have adopted only so analysis can proceed. Must be confirmed or replaced before it reaches CAD.</p></div>
+    <div><h4><span class="chip c-d">D · Needs approval</span></h4><p>A decision that changes the architecture. I will not choose these for you.</p></div>
+  </div>
+
+  <p class="prose"><strong>Confidence</strong> applies to numbers only: <span class="chip c-n">High</span> multiple independent sources agree · <span class="chip c-n">Med</span> single credible source, or sources disagree within a narrow band · <span class="chip c-n">Low</span> inferred, or sources disagree materially.</p>
+</section>
+
+<!-- ============ DECISION REGISTER ============ -->
+<section>
+  <div class="snum">Rev B · Decisions</div>
+  <h2>Decisions taken, Rev B</h2>
+  <p class="lede prose">Four decisions returned on 04 Sep 2026. Two close out conflicts; two are instructions to research further before deciding. Nothing here was decided on your behalf.</p>
+
+  <div class="conflict">
+    <header><span class="cid">D1</span><h3>Tier architecture — resolved</h3><span class="chip c-a">Closed</span></header>
+    <div class="body">
+      <p><strong>Your decision:</strong> the main rack is structurally 5-tier capable and configurable down to 4, with <strong>4 tiers as the recommended default</strong> and the 5th as an optional extension. Germination is a <strong>separate, more compact rack</strong> — 6 to 12 tiers, no lighting, no water, no sensors. High-volume germination is optional and <strong>must not constrain the main rack design</strong>.</p>
+      <div class="res"><span class="who">What this fixes in the model</span>
+        <p><span class="val">Number_of_Tiers</span> = 4 default, range 3–5. Uprights are cut and drilled for 5 positions in every build, so the 5th tier is a bolt-on kit rather than a different SKU — the marginal cost of a longer upright is a few hundred rupees against the cost of stocking two upright lengths. <span class="val">Rack_Height</span> is then driven by 5 × <span class="val">Shelf_Pitch</span> plus base and headroom, with the 4-tier default leaving the top bed at a working height rather than a reaching height.</p>
+        <p>The germination rack becomes <strong>Product 1.1-G</strong>: the same upright and beam sections and the same joint, with a tighter pitch, a plain drained tray shelf, no LED rail, no duct interface, and a higher stacked load case. It shares the part standardisation matrix but has its own load path, and — per your instruction — it does not get a vote on the main rack's geometry. Where the two disagree, the growing rack wins.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict">
+    <header><span class="cid">D2</span><h3>Irrigation — confirmed in principle, conditional on §9</h3><span class="chip c-c">Conditional</span></header>
+    <div class="body">
+      <p><strong>Your instruction:</strong> look into flood-and-drain properly; if it is feasible without impacting crop quality, design the irrigation to be interchangeable with other methods.</p>
+      <div class="res"><span class="who">Finding — see §8 for the evidence</span>
+        <p>It is feasible, and the quality evidence runs in its favour rather than against it. The one real risk is not crop quality but <strong>pathogen carry-over if the solution is recirculated untreated</strong>, and that risk sits in the reservoir, not in the rack. Recommendation stands: flood-and-drain as primary, drain-to-waste as the default configuration, treated recovery as an option. The interchangeable tier bay is specified in §8.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict">
+    <header><span class="cid">D3</span><h3>Frame material — deferred to the comparison in §10</h3><span class="chip c-c">Open</span></header>
+    <div class="body">
+      <p><strong>Your instruction:</strong> show the costed comparison before deciding. First pass is in §9, built on Q3-2026 Indian trade rates. It is directional, not a quotation — vendor quotes are needed before it can be relied on, and Q17 and Q20 would sharpen it considerably.</p>
+    </div>
+  </div>
+
+  <div class="conflict">
+    <header><span class="cid">D4</span><h3>Cleaning chemistry — undecided, worst-credible-case adopted</h3><span class="chip c-c">Open</span></header>
+    <div class="body">
+      <p><strong>Your answer:</strong> not decided yet. As offered, I am carrying the worst credible case as a labelled assumption: <strong>chloride-bearing sanitisers in routine use, therefore SS316 in the wet zone</strong>. §9 prices both, so the saving you would recover by ruling chlorine out is visible as a number rather than an argument. This assumption is tagged <span class="chip c-c">C · Assumption</span> and must be retired before Phase 4, not carried into CAD.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENGINEERING BRIEF A-U ============ -->
+<section>
+  <div class="snum">§1 · Engineering brief</div>
+  <h2>Items A through U</h2>
+  <p class="lede prose">What the five documents actually establish, and — more importantly — what they do not. Six of the twenty-one items are effectively silent on the rack.</p>
+
+  <div class="brief">
+
+    <div class="item"><div class="letter">A</div><div>
+      <h3>Intended crops</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-n">High</span></div>
+      <p><strong>Primary:</strong> microgreens (Phase A Zone A). <strong>Secondary in the same facility:</strong> emersed aquatic/aquascaping plant propagation (Zone B, &gt;80% RH) and saffron corms (Zone C, programmable two-phase temperature). <strong>Named future:</strong> leafy greens, herbs, medicinal plants, tissue-culture hardening — Phase A §2.3 states these are "simply a fourth or fifth zone profile added to the same control architecture."</p>
+      <p>Engineering implication: the microgreen configuration is the design case. Zone B maps cleanly onto a propagation variant of the same rack (higher RH, lower PPFD, humidity enclosure). Zone C does not — saffron corms need a substrate bed of order 150–200&nbsp;mm and an insulated sub-chamber, which is a different shelf module and probably a different product. <span class="chip c-d">Confirm scope — Q19</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">B</div><div>
+      <h3>Tray standards</h3>
+      <div class="tags"><span class="chip c-d">Not in documents</span><span class="chip c-n">Low</span></div>
+      <p><strong>No document names a tray size.</strong> Phase A and Phase C specify "NFT trays/channels"; Phase D specifies SS304 sheet 0.8–1.2&nbsp;mm for food-contact trays and injection-moulded NFT trays "per product design". The 1020 tray comes from your brief, not from Phase A–E.</p>
+      <p>External check: "1020" is a name, not a dimension. Measured outer dimensions are <span class="val">536 × 279 × 64 mm</span> (21.1 × 11.0 × 2.5 in, Bootstrap Farmer heavy-duty), inner bottom <span class="val">505 × 239 mm</span>, wall 1.8–2.0&nbsp;mm, mass 0.52&nbsp;kg. Johnny's trays are 533 × 279&nbsp;mm. Manufacturers vary by 3–10&nbsp;mm and there is no published standard.</p>
+      <p>This single dimension propagates into shelf width, beam length, LED bar length, flood depth and rack footprint. Indian-supplied 1020 trays are not guaranteed to match US ones. <span class="chip c-d">I will not assume a value — Q1</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">C</div><div>
+      <h3>Production methodology</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-d">Conflicts with your preference</span></div>
+      <p>Phase A §2.4 and Phase C Product 1.3 both specify <strong>NFT</strong> (nutrient film technique) for microgreens. You have stated a preference for <strong>flood-and-drain</strong>. Penn State Extension supports you: "sub-irrigation, such as with ebb-and-flow systems, works well for watering microgreens trays… helps keep leaves and stems dry, which is important to avoid disease."</p>
+      <p>My assessment is that the documents are wrong here and you are right — see <a href="#c2">Conflict 2</a>. NFT is engineered for a persistent root mass sitting in a channel; microgreens are a media-grown, 7–21 day, harvest-the-whole-tray crop. This is a genuine correction to Phase A/C, not a preference.</p>
+    </div></div>
+
+    <div class="item"><div class="letter">D</div><div>
+      <h3>Target yield</h3>
+      <div class="tags"><span class="chip c-d">Not in documents</span><span class="chip c-n">Low</span></div>
+      <p>No yield target appears anywhere in Phase A–E for microgreens. External reference points: 46.8&nbsp;g/tray (cilantro) to 201&nbsp;g/tray (mustard) from Penn State's 2016–17 trial data; industry sources claim 227–454&nbsp;g/tray and 30–35 crop rotations per year.</p>
+      <p>Yield does not drive rack geometry directly, but <em>trays per week</em> drives tier count, rack count, aisle width and whether a separate germination rack is economic. <span class="chip c-d">Q3, Q20</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">E</div><div>
+      <h3>Production cycle</h3>
+      <div class="tags"><span class="chip c-b">External</span><span class="chip c-n">Med</span></div>
+      <p>Documents silent. External: 7–21 days seed to harvest (Penn State), with a two-week planning cycle; radish 6–8 d, broccoli 7–10 d, pea shoots 12–15 d.</p>
+      <p>The cycle contains a <strong>blackout germination stage</strong> that none of the five documents mentions — see item L. That stage has entirely different rack requirements (no light, stacked trays, weighted) and is the strongest argument for a separate germination configuration rather than dark-cycling a lit tier.</p>
+    </div></div>
+
+    <div class="item"><div class="letter">F</div><div>
+      <h3>Lighting requirements</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-n">High</span></div>
+      <p>PPFD working band <span class="val">150–210 µmol·m⁻²·s⁻¹</span> (Phase A §1.1, restated Phase C 1.2). Below ~100 suppresses biomass and phytochemicals; above ~210 with far-red or UV-A tends to induce photoinhibition. Photoperiod 16–24&nbsp;h; continuous 24&nbsp;h raised both yield and phytochemical content in four Brassicaceae genotypes. Spectrum blue-enriched R:B, optionally +W/FR, 2–4 dimmable channels. Target diode efficacy 2.8–3.1&nbsp;µmol/J (Phase D).</p>
+      <p><strong>Close-canopy mounting is a stated design strategy</strong>, not an option (Phase A §1.5, Sheibani &amp; Mitchell 2023): reducing fixture-to-canopy distance while dimming to hold PPFD constant cuts both lighting energy and HVAC load. This makes LED height adjustability a functional requirement, not a convenience.</p>
+      <p>An industry source gives 200–300&nbsp;µmol·m⁻²·s⁻¹ — see <a href="#c4">Conflict 4</a>. Not stated anywhere: fixture length, width, mass, mounting hole pattern, or whether the driver is onboard or remote. <span class="chip c-d">Q5</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">G</div><div>
+      <h3>Temperature requirements</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-n">High</span></div>
+      <p>Zone A microgreens <span class="val">20–24 °C</span>. Zone B not specified numerically. Zone C saffron 23–30&nbsp;°C warm phase → 15–16&nbsp;°C induction. Ooty ambient 5–25&nbsp;°C; Phase A §2.1 notes the dominant HVAC problem is gentle heating and VPD management, not refrigeration.</p>
+      <p>Implication for the rack: thermal expansion over a 5–30&nbsp;°C range is negligible for a 2&nbsp;m frame in any candidate material (&lt;1&nbsp;mm) and is not a design driver. Temperature matters to the rack only through LED junction temperature and through condensation risk in the Zone B configuration.</p>
+    </div></div>
+
+    <div class="item"><div class="letter">H</div><div>
+      <h3>Humidity requirements</h3>
+      <div class="tags"><span class="chip c-a">Partial</span><span class="chip c-n">Med</span></div>
+      <p>Phase A specifies VPD-based control rather than raw RH, and gives <span class="val">&gt;80% RH</span> for Zone B aquatics with a humidity dome/misting subsystem. For Zone A microgreens it says only "moderate VPD" — <strong>no numeric RH or VPD target is given.</strong> External: germination 80–90% RH, growing 50–70%, pre-harvest 40–50%.</p>
+      <p>This matters more than it looks. A rack that must survive sustained &gt;80% RH and misting in the propagation configuration rules out powder-coated mild steel and makes finish integrity — not bulk strength — the governing corrosion question. <span class="chip c-d">Q16</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">I</div><div>
+      <h3>Airflow requirements</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-n">High</span></div>
+      <p>Canopy-level horizontal velocity <span class="val">0.2–0.5 m/s</span>, upper practical bound ~1.3&nbsp;m/s before mechanical/desiccation stress (Phase A §1.4, multiple validated CFD studies). Crucially: <strong>distributing air inlets along the full length of a growing shelf rather than from one end reduced the velocity coefficient of variation from ~33% to ~10%.</strong> A CFD-optimised multi-duct design reached 0.42&nbsp;m/s at 44% CV.</p>
+      <p>This is the most design-determining horticultural specification in the entire document set, and it invalidates the common benchmark arrangement of one clip-on or 120&nbsp;mm axial fan per shelf blowing along the shelf. The rack needs a distributed-inlet interface — a perforated duct, a plenum edge, or a linear fan array — as a first-class structural feature. Not stated: whether air is supplied centrally by room HVAC or generated per rack. <span class="chip c-d">Q6, Q13</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">J</div><div>
+      <h3>Irrigation requirements</h3>
+      <div class="tags"><span class="chip c-a">Partial</span><span class="chip c-n">Med</span></div>
+      <p>Documented: target <span class="val">pH 5.6–6.2</span> (Phase A §1.6); PLC + peristaltic proportional dosing with inline probes achieves ±3% pH/EC error and ~50% irrigation cycle-time reduction. Phase D lists Indian-sourced solenoid valves, filters, food-grade tubing, and Texmo/CRI/Kirloskar circulation pumps.</p>
+      <p>Not documented: flow rate, pressure, flood depth, flood duration, fill/drain time, valve count per rack, or whether solution is recirculated. External: bottom watering 1–3×/day for 5–15&nbsp;min; 1.9–3.8&nbsp;L per tray per crop cycle. Your brief already flags that recirculation should not be assumed desirable for microgreens — I agree, and the reason is pathogen carry-over between trays, not hydraulics. <span class="chip c-d">Q7, Q9</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">K</div><div>
+      <h3>Drainage requirements</h3>
+      <div class="tags"><span class="chip c-d">Not in documents</span><span class="chip c-n">Low</span></div>
+      <p>Effectively absent from all five documents. The only drainage-adjacent requirement is Phase A §2.6: under-tray water-leak sensors wired to an automatic solenoid shutoff. External practice: 6&nbsp;mm (¼ in) floor slope to drains.</p>
+      <p>For a flood-and-drain rack this is the largest documentation gap relative to its engineering weight. Drain rate governs the safe flood volume; a rack that floods faster than it drains is a spill waiting to happen. <span class="chip c-d">Q8</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">L</div><div>
+      <h3>Germination requirements</h3>
+      <div class="tags"><span class="chip c-d">Not in documents</span><span class="chip c-n">Low</span></div>
+      <p>Phase A discusses germination only for saffron corms (23–30&nbsp;°C). <strong>Microgreen germination is not covered at all</strong>, despite the platform being asked to support a germination configuration.</p>
+      <p>Standard practice is a 2–4 day blackout stage, often with trays stacked and weighted, at elevated temperature and RH. Structurally this is a different problem from a lit growing tier: no lighting, no per-tier airflow, much closer tier pitch, and a stacked static load rather than a single-tray-deep load. <span class="chip c-d">Q3, Q19</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">M</div><div>
+      <h3>Sensor requirements</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-n">High</span></div>
+      <p>Phase A §1.7 and §2.4: networked T/RH, CO₂, pH, EC, PAR logging to local + cloud, per-zone dashboards. Phase A §2.6 safety: water-leak sensors under fertigation lines, NDIR CO₂ alarm with interlocked ventilation, smoke detector. Phase C 1.6 defines the monitoring node as T/RH/CO₂/PAR. Phase D names Sensirion SCD41 (CO₂), SHT-series (T/RH), Atlas Scientific (pH/EC), Apogee (PAR).</p>
+      <p>The documents never allocate sensors to rack / tier / room / water-system levels. That allocation is mine to propose — §7 — and your brief is explicit that not every rack needs every sensor.</p>
+    </div></div>
+
+    <div class="item"><div class="letter">N</div><div>
+      <h3>Automation requirements</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-n">High</span></div>
+      <p>Phase A §2.5 is unambiguous: <strong>local-first, rules-plus-feedback (setpoint + PID/fuzzy per zone), with cloud logging layered on top — explicitly not an autonomous AI controller</strong>, because the data volume at this facility scale cannot support one. Modbus/RS485 is the stated comms layer (Phase D). Phase C 2.1/2.2 are the eventual controllers.</p>
+      <p>Implication: the rack is a client of an external controller, not a host for one. Whether each rack carries a small local I/O box or only passive cable routing is an architecture decision. <span class="chip c-d">Q11</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">O</div><div>
+      <h3>Electrical requirements</h3>
+      <div class="tags"><span class="chip c-a">Partial</span><span class="chip c-n">Med</span></div>
+      <p>Documented: RCD/GFCI on every wet-area circuit (Phase A §2.6); UPS for controllers and sensors, mains + generator backup for lighting and HVAC; IP65 0–10&nbsp;V or DALI dimmable drivers (MEAN WELL, Phase D); 12/24&nbsp;V SMPS; imported M12/JST IP-rated connectors.</p>
+      <p>Not documented: supply voltage and phase, per-rack connected load, isolator location, or earthing scheme. First-pass load estimate below, to be replaced once the LED bar spec is fixed.</p>
+      <div class="calc">
+        <div class="cap">Estimated rack connected load — <span class="chip c-b">Recommendation</span> <span class="chip c-n">Low</span></div>
+        <div class="row"><span>Lit area per tier (4 trays + margin)</span><span>≈ 0.69 m²</span></div>
+        <div class="row"><span>PPFD 180 µmol·m⁻²·s⁻¹ ÷ 2.8 µmol/J</span><span>≈ 44 W</span></div>
+        <div class="row"><span>+ driver &amp; optical losses (~35%)</span><span>≈ 60 W / tier</span></div>
+        <div class="row"><span>× 4 tiers</span><span>240 W</span></div>
+        <div class="row"><span>Fans, solenoid, sensor node</span><span>≈ 40 W</span></div>
+        <div class="row"><span>Estimated rack total</span><span>≈ 280 W</span></div>
+      </div>
+      <p>If that holds, a single 230&nbsp;V 16&nbsp;A RCBO circuit serves four to five racks. That is a materially simpler electrical architecture than a cannabis- or leafy-green-grade rack, and it is a direct consequence of microgreens' low PPFD band. <span class="chip c-d">Q11</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">P</div><div>
+      <h3>Cleaning / sanitation requirements</h3>
+      <div class="tags"><span class="chip c-d">Not in documents</span><span class="chip c-n">Low</span></div>
+      <p>Almost nothing. Phase A §2.2 wants "a single flat cleanable interior face" for the room envelope. Phase D says "SS304 minimum for food-contact microgreens trays/channels". Phase C says "verify food-grade finishing capability per vendor". <strong>No cleaning chemistry, concentration, frequency or method is specified anywhere.</strong></p>
+      <p>This is the single most consequential missing requirement in the whole set, because it — not strength — decides the frame material, the finish, the profile geometry and the joint design. Chlorine- and quat-based sanitisers at food-industry concentrations pit SS304 around welds and at low-drainage points; SS316's molybdenum content is what buys immunity. Equally, it is the requirement that most damages the aluminium T-slot architecture the documents have already selected. <span class="chip c-d">Q14, Q15, Q16</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">Q</div><div>
+      <h3>Expected production scale</h3>
+      <div class="tags"><span class="chip c-a">Partial</span><span class="chip c-n">Low</span></div>
+      <p>Documented only as facility geometry: the Ooty R&amp;D room is 12 × 12 × 12&nbsp;ft (≈144&nbsp;sq&nbsp;ft), of which Zone A microgreens is 30–40% — roughly <span class="val">43–58 sq ft / 4.0–5.4 m²</span> of floor. Phase E puts the rack in Year 1 as the first revenue product.</p>
+      <p>No number of racks per year, no trays per week for a target customer. Both are needed before tier count and modular breakdown can be settled. <span class="chip c-d">Q3, Q20</span></p>
+    </div></div>
+
+    <div class="item"><div class="letter">R</div><div>
+      <h3>Future product roadmap</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-n">High</span></div>
+      <p>Phase E: <strong>Product 1.1 — Modular Aluminium-Extrusion CEA Rack System is the first product to build</strong>, TRL 8–9, complexity Low, gross margin 35–45%, "Fast (vendor-ready now)", Year 1. Phase C 1.1 features: 80/20-style extrusion frame, adjustable tier height, wheeled sub-modules, integrated cable/tubing channels, powder-coated or anodised. The tunable LED bar (1.2) follows immediately.</p>
+      <p>Two implications. First, schedule pressure is real — this product funds the firmware team that makes Products 2.1/2.2 possible, which is the company's actual moat per Phase E §4.6. Second, that argues strongly against a custom extrusion die in v1 and against any engineering that lengthens the first fabrication cycle without a clear operational payoff.</p>
+    </div></div>
+
+    <div class="item"><div class="letter">S</div><div>
+      <h3>Supplier / manufacturing constraints</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-n">High</span></div>
+      <p>Coimbatore is rated "Manufacture Locally" for CNC machining, laser cutting, sheet-metal fabrication, aluminium extrusion, aluminium fabrication/die-casting, stainless-steel fabrication, PCB assembly, cable harnesses, electrical panels, powder coating and anodising (Phase C §3). Named: Cauvery Extrusions (Coimbatore), Malabar Extrusion (Kochi), Jindal Stainless, SKF India / NBC bearings, QUALICOAT-grade powder coaters, Sine Teknologies anodising.</p>
+      <p>Two hard constraints. <strong>New extrusion die: 30–60 days lead time, ~500&nbsp;kg first run</strong> (Phase D). <strong>Injection tooling cost is the main constraint at low volume</strong> — Phase C recommends 3D-printed or CNC short-run parts before committing to tooling. Phase C also flags that SS fabrication is "less specialised than pump/motor aluminium work" in Coimbatore and that food-grade finishing capability must be verified vendor by vendor.</p>
+      <p>External correction: standard 40 × 40&nbsp;mm slot-8 T-profile is a stocked commodity in India at roughly ₹495–530/m. A modular extrusion frame therefore needs <em>no</em> die at all in v1 — see <a href="#c9">Conflict 9</a>.</p>
+    </div></div>
+
+    <div class="item"><div class="letter">T</div><div>
+      <h3>Benchmark rack characteristics</h3>
+      <div class="tags"><span class="chip c-a">Documented</span><span class="chip c-b">External</span></div>
+      <p>Phase B: the Indian norm is <strong>mild-steel welded, largely non-modular</strong>; global best practice is modular aluminium-extrusion racking with tool-less reconfiguration, which Phase B calls "the easiest visible 'premium engineering' cue for customers and dealers to notice." No Indian competitor offers one at this tier.</p>
+      <p>External benchmarks span a wide range and should not be averaged:</p>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Benchmark</th><th>Tier pitch</th><th>Tiers</th><th>Trays/shelf</th><th>Footprint</th><th>Airflow</th></tr></thead>
+          <tbody>
+            <tr><td>Prosumer NSF wire rack</td><td class="num">229–254 mm</td><td class="num">6</td><td class="num">4</td><td class="num">1219 × 610 × 1829 mm</td><td>1 × 120 mm axial per shelf</td></tr>
+            <tr><td>Commercial vertical farm</td><td class="num">457–610 mm</td><td class="num">5–7</td><td class="num">18–22</td><td>Long runs, aisle ≥ 762 mm</td><td>Room HVAC</td></tr>
+            <tr><td>Phase A room constraint</td><td class="num">—</td><td class="num">2–3 stated</td><td class="num">—</td><td>Within 12 ft ceiling</td><td>Perforated duct / oscillating array</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The prosumer 229&nbsp;mm pitch and the commercial 457–610&nbsp;mm pitch are not the same design decision at different scales — the second assumes taller crops and room-level air handling. For microgreens specifically, pitch is set by LED clearance plus harvest hand access, not by crop height.</p>
+    </div></div>
+
+    <div class="item"><div class="letter">U</div><div>
+      <h3>Target cost</h3>
+      <div class="tags"><span class="chip c-d">Not in documents</span><span class="chip c-n">Low</span></div>
+      <p>No absolute cost or price appears in any of the five documents. The only commercial figure is <strong>gross margin 35–45%</strong> (Phase C 1.1, Phase E §3), positioned as coming "from design/branding premium over generic welded racks, not from proprietary technology."</p>
+      <p>Without a target ex-works cost or a target selling price, material selection cannot be closed: SS304 versus anodised aluminium versus powder-coated MS is as much a price-point decision as an engineering one. <span class="chip c-d">Q20</span></p>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- ============ REQUIREMENT REGISTER ============ -->
+<section>
+  <div class="snum">§2 · Requirement register</div>
+  <h2>Every extracted requirement, traced to source</h2>
+  <p class="lede prose">Requirements that survive to CAD. Each row is traceable to a document section; rows without a source are marked as such and are not used to dimension anything.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Requirement</th><th>Source</th><th>Value</th><th>Conf.</th><th>Engineering implication</th></tr></thead>
+      <tbody>
+        <tr><td>Canopy PPFD band</td><td class="mono">Ph A §1.1 · Ph C 1.2</td><td class="num">150–210 µmol·m⁻²·s⁻¹</td><td><span class="chip c-n">High</span></td><td>Sets LED wattage, tier pitch and thermal load. Low by CEA standards — simplifies electrical and HVAC.</td></tr>
+        <tr><td>Photoperiod</td><td class="mono">Ph A §1.1</td><td class="num">16–24 h</td><td><span class="chip c-n">High</span></td><td>24 h operation means no thermal duty-cycle relief; LED heat is continuous.</td></tr>
+        <tr><td>Close-canopy mounting</td><td class="mono">Ph A §1.5</td><td>Required strategy</td><td><span class="chip c-n">High</span></td><td>LED height must be adjustable in service, not fixed at build.</td></tr>
+        <tr><td>Canopy air velocity</td><td class="mono">Ph A §1.4</td><td class="num">0.2–0.5 m/s</td><td><span class="chip c-n">High</span></td><td>Governs fan sizing and, with the next row, the whole airflow interface.</td></tr>
+        <tr><td>Inlet distribution</td><td class="mono">Ph A §1.4</td><td>Full-length, CV 33%→10%</td><td><span class="chip c-n">High</span></td><td>Rules out single-end fans. Requires a linear plenum or duct interface per tier.</td></tr>
+        <tr><td>Zone A temperature</td><td class="mono">Ph A §2.3</td><td class="num">20–24 °C</td><td><span class="chip c-n">High</span></td><td>Thermal expansion not a driver. LED junction temp is.</td></tr>
+        <tr><td>Zone B humidity</td><td class="mono">Ph A §2.3</td><td class="num">&gt;80% RH</td><td><span class="chip c-n">High</span></td><td>Condensing service in the propagation config. Finish integrity is critical.</td></tr>
+        <tr><td>Zone A humidity</td><td class="mono">Ph A §2.3</td><td>"Moderate VPD" — no number</td><td><span class="chip c-n">Low</span></td><td>Cannot size condensation risk for the primary config. Q16.</td></tr>
+        <tr><td>CO₂ setpoint</td><td class="mono">Ph A §1.3</td><td class="num">1,000–1,500 µmol/mol</td><td><span class="chip c-n">High</span></td><td>Room-level, not rack-level. Sensor allocation only.</td></tr>
+        <tr><td>Nutrient pH</td><td class="mono">Ph A §1.6</td><td class="num">5.6–6.2</td><td><span class="chip c-n">High</span></td><td>Mildly acidic; benign to SS and to anodised Al. Not a corrosion driver on its own.</td></tr>
+        <tr><td>Dosing accuracy</td><td class="mono">Ph A §1.6</td><td class="num">±3% pH/EC</td><td><span class="chip c-n">High</span></td><td>Water-system-level, external to the rack.</td></tr>
+        <tr><td>Irrigation method</td><td class="mono">Ph A §2.4 · Ph C 1.3</td><td>NFT</td><td><span class="chip c-n">Med</span></td><td class="mono">CONFLICTS with your flood-and-drain preference. See C2.</td></tr>
+        <tr><td>Leak detection</td><td class="mono">Ph A §2.6</td><td>Under-tray, solenoid interlock</td><td><span class="chip c-n">High</span></td><td>Needs a defined sensor position and cable path at the lowest wet point.</td></tr>
+        <tr><td>Electrical protection</td><td class="mono">Ph A §2.6</td><td>RCD/GFCI all wet circuits</td><td><span class="chip c-n">High</span></td><td>Drives earthing of the frame and segregation of wet/dry routes.</td></tr>
+        <tr><td>LED driver spec</td><td class="mono">Ph D T1</td><td>0–10 V or DALI, IP65</td><td><span class="chip c-n">High</span></td><td>Dimming pair must be routed as low-voltage control, separated from mains.</td></tr>
+        <tr><td>Control comms</td><td class="mono">Ph D T3</td><td>Modbus / RS485</td><td><span class="chip c-n">High</span></td><td>Daisy-chain topology; needs a continuous cable path along the rack and inter-rack.</td></tr>
+        <tr><td>Control philosophy</td><td class="mono">Ph A §2.5</td><td>Local-first, PID/fuzzy, cloud log</td><td><span class="chip c-n">High</span></td><td>Rack is a client, not a controller host.</td></tr>
+        <tr><td>Frame architecture</td><td class="mono">Ph A T1 · Ph B T1 · Ph C 1.1</td><td>80/20 aluminium extrusion</td><td><span class="chip c-n">High</span></td><td class="mono">CONFLICTS with food-safety cleaning intent. See C1.</td></tr>
+        <tr><td>Tier adjustability</td><td class="mono">Ph C 1.1</td><td>Adjustable tier height</td><td><span class="chip c-n">High</span></td><td>Requires a continuous or fine-pitch mounting interface on the uprights.</td></tr>
+        <tr><td>Mobility</td><td class="mono">Ph A T1 · Ph C 1.1</td><td>Wheeled sub-modules</td><td><span class="chip c-n">Med</span></td><td>Casters change the tip-over and levelling analysis substantially. Q21, Q23.</td></tr>
+        <tr><td>Integrated services</td><td class="mono">Ph C 1.1</td><td>Cable + tubing channels</td><td><span class="chip c-n">High</span></td><td>Confirms services are integrated into the frame, not strapped on.</td></tr>
+        <tr><td>Finish</td><td class="mono">Ph C 1.1 · Ph C §3</td><td>Anodised or powder-coated</td><td><span class="chip c-n">Med</span></td><td>Phase C prefers anodising "where a metallic aesthetic is wanted".</td></tr>
+        <tr><td>Food-contact material</td><td class="mono">Ph D T2</td><td>SS304 sheet 0.8–1.2 mm</td><td><span class="chip c-n">High</span></td><td>Applies to trays/channels. Silent on the frame. Q15.</td></tr>
+        <tr><td>Extrusion alloy</td><td class="mono">Ph D T2</td><td>6063-T5</td><td><span class="chip c-n">High</span></td><td>Standard architectural extrusion alloy; modest strength, excellent anodising.</td></tr>
+        <tr><td>Extrusion die lead time</td><td class="mono">Ph D T2</td><td class="num">30–60 d, ~500 kg MOQ</td><td><span class="chip c-n">High</span></td><td>Avoid a custom profile in v1. See C9.</td></tr>
+        <tr><td>Fasteners</td><td class="mono">Ph D T2</td><td>M3–M8 DIN/ISO, SS or Zn</td><td><span class="chip c-n">High</span></td><td>Mature commodity — no custom fasteners anywhere in the design.</td></tr>
+        <tr><td>Injection tooling</td><td class="mono">Ph C §3</td><td>Cost-limited at low volume</td><td><span class="chip c-n">High</span></td><td>Short-run CNC/3D-print first; defer moulds to volume.</td></tr>
+        <tr><td>Local processes available</td><td class="mono">Ph C §3</td><td>CNC, laser, sheet metal, SS fab, anodise, powder coat</td><td><span class="chip c-n">High</span></td><td>Full mechanical BOM is locally makeable. No process is a blocker.</td></tr>
+        <tr><td>Room envelope</td><td class="mono">Ph A §2.2</td><td class="num">12 × 12 × 12 ft</td><td><span class="chip c-n">High</span></td><td>Sets max rack height, and door/panel opening for knock-down shipping.</td></tr>
+        <tr><td>Zone A floor share</td><td class="mono">Ph A §2.3</td><td class="num">30–40% of 144 sq ft</td><td><span class="chip c-n">High</span></td><td>≈ 4.0–5.4 m² — one or two racks plus aisle in the R&amp;D room.</td></tr>
+        <tr><td>Stated tier capacity</td><td class="mono">Ph A §2.2</td><td>"2-tier or partial 3-tier"</td><td><span class="chip c-n">Low</span></td><td class="mono">CONFLICTS with 3/4/5-tier platform goal. See C3.</td></tr>
+        <tr><td>Product sequence</td><td class="mono">Ph E §4.1</td><td>Rack = build first</td><td><span class="chip c-n">High</span></td><td>Schedule pressure; favours standard stock sections over bespoke.</td></tr>
+        <tr><td>Gross margin</td><td class="mono">Ph C 1.1 · Ph E §3</td><td class="num">35–45%</td><td><span class="chip c-n">High</span></td><td>Only commercial constraint available. No absolute cost target. Q20.</td></tr>
+        <tr><td>Competitive frame</td><td class="mono">Ph B §2 T1</td><td>vs. welded MS, non-modular</td><td><span class="chip c-n">High</span></td><td>Modularity is the differentiator being sold — it must be genuine, not cosmetic.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ EXTERNAL RESEARCH ============ -->
+<section>
+  <div class="snum">§3 · Level 2 research register</div>
+  <h2>Externally sourced values, with their provenance</h2>
+  <p class="lede prose">Used only where the documents are silent. Recorded in the format your research protocol specifies. Where sources disagree, both figures are shown and the disagreement is carried into §4.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Parameter</th><th>Value</th><th>Source</th><th>Date</th><th>Conf.</th><th>Design implication</th></tr></thead>
+      <tbody>
+        <tr><td>1020 tray outer</td><td class="num">536 × 279 × 64 mm</td><td>Bootstrap Farmer product spec</td><td class="num">2026</td><td><span class="chip c-n">Med</span></td><td>Sets tray pitch across the shelf; must be verified against the Indian tray you will actually buy.</td></tr>
+        <tr><td>1020 tray inner bottom</td><td class="num">505 × 239 mm</td><td>Bootstrap Farmer product spec</td><td class="num">2026</td><td><span class="chip c-n">Med</span></td><td>Wetted area 0.1207 m² — basis of media mass and flood volume.</td></tr>
+        <tr><td>1020 alternative outer</td><td class="num">533 × 279 mm</td><td>Johnny's Selected Seeds, via GreenUpside</td><td class="num">2026</td><td><span class="chip c-n">Med</span></td><td>3 mm spread between makers. Shelf must tolerate ±10 mm tray variation.</td></tr>
+        <tr><td>Tray wall / mass</td><td class="num">1.8–2.0 mm / 0.52 kg</td><td>Bootstrap Farmer</td><td class="num">2026</td><td><span class="chip c-n">Med</span></td><td>Tray is not structural. Support must be continuous, not point.</td></tr>
+        <tr><td>Coco peat dry bulk density</td><td class="num">0.09 g/cm³</td><td>J. Pharmacognosy &amp; Phytochemistry 8(3)</td><td class="num">2019</td><td><span class="chip c-n">Med</span></td><td>With 66.4% WHC gives ~0.75 g/cm³ saturated — the basis of the load calc below.</td></tr>
+        <tr><td>Microgreen yield/tray</td><td class="num">47–201 g</td><td>Penn State Extension</td><td class="num">2016–17 data</td><td><span class="chip c-n">Med</span></td><td>Crop mass is a minor term in shelf load; media and water dominate.</td></tr>
+        <tr><td>Crop cycle</td><td class="num">7–21 d</td><td>Penn State Extension</td><td class="num">2026</td><td><span class="chip c-n">High</span></td><td>High tray turnover → tray insertion/removal ergonomics matter more than static capacity.</td></tr>
+        <tr><td>Irrigation method</td><td>Ebb-and-flow sub-irrigation preferred</td><td>Penn State Extension</td><td class="num">2026</td><td><span class="chip c-n">High</span></td><td>Independent support for flood-and-drain over NFT. Keeps foliage dry → lower disease pressure.</td></tr>
+        <tr><td>Water per tray per cycle</td><td class="num">1.9–3.8 L</td><td>Industry (Fytech Systems)</td><td class="num">2026</td><td><span class="chip c-n">Low</span></td><td>Vendor source. Sizes the reservoir, not the rack.</td></tr>
+        <tr><td>Beam deflection limit</td><td class="num">L/180</td><td>RMI / ANSI MH16.1</td><td class="num">2020, std 2023</td><td><span class="chip c-n">High</span></td><td>Serviceability consensus, explicitly not a strength criterion. Too slack for a flooded bed — see §5.</td></tr>
+        <tr><td>SS square tube availability</td><td class="num">10–250 mm, wall 0.5–6 mm</td><td>Steel Tubes India, ASTM A554</td><td class="num">2026</td><td><span class="chip c-n">High</span></td><td>SS304/316 hollow section is a stocked commodity — no custom mill order needed.</td></tr>
+        <tr><td>Al T-slot 40×40 stock price</td><td class="num">₹495–530 / m</td><td>IndiaMART trade listings (Bengaluru, Ahmedabad)</td><td class="num">2025–26</td><td><span class="chip c-n">Low</span></td><td>Standard slot-8 profile needs no die. Directly contradicts the Phase D die-lead-time constraint. See C9.</td></tr>
+        <tr><td>Commercial tier pitch</td><td class="num">457–610 mm</td><td>Industry (Fytech Systems)</td><td class="num">2026</td><td><span class="chip c-n">Low</span></td><td>Vendor source, assumes taller crops. Not directly applicable to microgreens.</td></tr>
+        <tr><td>Prosumer tier pitch</td><td class="num">229–254 mm</td><td>On The Grow build guide</td><td class="num">2026</td><td><span class="chip c-n">Low</span></td><td>Wire-shelf hobby benchmark; 4 trays/shelf, 6 tiers, 1219 × 610 × 1829 mm.</td></tr>
+        <tr><td>Industry PPFD claim</td><td class="num">200–300 µmol·m⁻²·s⁻¹</td><td>Industry (Fytech Systems)</td><td class="num">2026</td><td><span class="chip c-n">Low</span></td><td>Disagrees with Phase A's peer-reviewed 150–210. See C4.</td></tr>
+        <tr><td>SS304 vs 316 in washdown</td><td>304 pits at welds and low-drainage points under bleach/brine/acid cleaners</td><td>Action Stainless washdown guide</td><td class="num">2026</td><td><span class="chip c-n">Med</span></td><td>Makes cleaning chemistry the deciding input for grade selection. Q14/Q16.</td></tr>
+        <tr><td>PREN (established metallurgy)</td><td class="num">304 ≈ 18–20 · 316 ≈ 24–26</td><td>PREN = %Cr + 3.3×%Mo + 16×%N</td><td class="num">—</td><td><span class="chip c-n">High</span></td><td>Quantifies the gap. 316 justified only if chloride sanitisers are in routine use.</td></tr>
+        <tr><td>Seismic zone</td><td>Zone II (Z=0.10) claimed; Zone III commonly cited for Coimbatore</td><td>IS 1893 Part 1:2016 guides</td><td class="num">2016 std</td><td><span class="chip c-n">Low</span></td><td>Sources disagree. Immaterial here — the governing lateral case for a ~215 kg rack is human impact, not ground motion. Flagged, not resolved.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong>On the seismic disagreement:</strong> one IS 1893 guide places Coimbatore and the Nilgiris in Zone II (Z = 0.10); Coimbatore is elsewhere commonly listed as Zone III because of the Palghat Gap fault system. I have not resolved this and do not need to at Phase 0 — for a rack of this mass and aspect ratio, an operator leaning on or striking a loaded top tier produces a larger lateral demand than either zone's design ground motion. It will be checked properly in Phase 17 as a tip-over case, and the wall-anchor detail will be provided regardless of zone.</div>
+</section>
+
+<!-- ============ CONTRADICTIONS ============ -->
+<section id="conflicts">
+  <div class="snum">§4 · Conflicts</div>
+  <h2>Nine contradictions requiring your decision</h2>
+  <p class="lede prose">Each conflict is stated as both sides plus my recommended resolution. I have not silently resolved any of them. C1, C2 and C3 change the architecture; the rest change details.</p>
+
+  <div class="conflict" id="c1">
+    <header><span class="cid">C1</span><h3>Frame material: the documents chose aluminium T-slot; your brief points at stainless</h3><span class="chip c-d">Architecture</span></header>
+    <div class="body">
+      <div class="side">
+        <div><span class="who">Phase A T1, Phase B T1, Phase C 1.1, Phase E</span><span class="says">"80/20-style aluminium extrusion racks, tool-less reconfiguration" — already selected as Product 1.1, TRL 8–9, complexity Low, Year 1.</span></div>
+        <div><span class="who">Your brief</span><span class="says">Lists stainless-steel fabrication and sheet-metal design as a core competency, asks Phase 4 to compare SS304 / SS316 / galvanised / powder-coated steel / aluminium, and specifies a food-production environment.</span></div>
+      </div>
+      <div class="res"><span class="who">Recommendation</span>
+        <p>Neither side has noticed the real problem: <strong>an open T-slot is a poor hygienic profile.</strong> The slots run the full length of every member, they trap growing media, seed hulls and water, they cannot be wiped clean, and they sit directly under a flooded tray bed. For a dry assembly frame that is irrelevant; for food production it is the first thing an auditor will point at. Phase B's own argument for extrusion is explicitly about visible premium cues and reconfigurability, not hygiene — and Phase D independently specifies SS304 for anything food-contact.</p>
+        <p>My recommendation is a hybrid rather than a winner: <strong>SS304 hollow-section uprights and beams carrying the wet, food-contact, cleanable zone; a bolt-on accessory rail — extrusion or slotted SS — carrying only the dry services above the canopy.</strong> That keeps the modularity Phase B is selling, keeps the wet structure wipe-clean, and keeps the aesthetic. But it is more expensive than pure extrusion, and it contradicts a product definition already committed in Phase C/E. This is genuinely yours to decide, and Q15/Q16 are the inputs I need.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict" id="c2">
+    <header><span class="cid">C2</span><h3>Irrigation: documents specify NFT, you prefer flood-and-drain</h3><span class="chip c-d">Architecture</span></header>
+    <div class="body">
+      <div class="side">
+        <div><span class="who">Phase A §2.4, Phase C Product 1.3</span><span class="says">"NFT trays (microgreens)"; an entire product — the NFT Microgreens Tray &amp; Channel System — is built on it.</span></div>
+        <div><span class="who">You + Penn State Extension</span><span class="says">Flood-and-drain. "Sub-irrigation, such as with ebb-and-flow systems, works well for watering microgreens trays… helps keep leaves and stems dry, which is important to avoid disease."</span></div>
+      </div>
+      <div class="res"><span class="who">Recommendation — I side with you against the documents</span>
+        <p>NFT circulates a thin film of solution past a persistent root mass held in a channel. It suits lettuce and leafy greens on 4–6 week cycles. Microgreens are sown densely into a media tray, never develop a channel-compatible root structure, and are cut whole at 7–21 days. Phase C's own text concedes the NFT product "exists mainly to complete the catalogue and support the rack system, not as a standalone differentiator" and calls the segment "crowded" at 25–35% margin — the weakest product in the portfolio.</p>
+        <p>Flood-and-drain is the right primary method, <strong>and it should drain to waste or to a treated recovery loop, not recirculate directly.</strong> Your brief already warns against assuming recirculation; the reason is specific — in a dense microgreen canopy on a short cycle, recirculated solution is an efficient way to move <em>Pythium</em> and enteric contamination from one tray to every tray, and there is no long crop cycle over which to amortise UV or filtration hardware.</p>
+        <p>The modular answer to your question about accommodating more methods: make the <strong>tier a defined bay with a standard interface</strong> — flat, level, drained, with a supply port and a drain port at fixed positions. A flood table drops into that bay. So does a plain drain-to-waste tray shelf, a capillary matting shelf, a deep substrate bed for saffron corms, or an NFT channel set if a customer wants one. The rack should not know which method it is running.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict" id="c3">
+    <header><span class="cid">C3</span><h3>Tier count: Phase A says 2–3 tiers, the platform brief asks for 3, 4 and 5</h3><span class="chip c-a">Closed · Rev B</span></header>
+    <div class="body">
+      <div class="side">
+        <div><span class="who">Phase A §2.2</span><span class="says">The 12 ft ceiling gives "sufficient height for a 2-tier or partial 3-tier rack system with service clearance."</span></div>
+        <div><span class="who">Your brief · external benchmarks</span><span class="says">3-, 4- and 5-tier configurations from one structural system. Prosumer benchmark achieves 6 tiers in 1829 mm; commercial systems run 5–7.</span></div>
+      </div>
+      <div class="res"><span class="who">Recommendation — Phase A's constraint is misattributed</span>
+        <p>A 12 ft (3658 mm) ceiling is not what limits this rack. A 6-tier wire rack fits inside 1829 mm. <strong>The real constraint is operator reach, and Phase A never states it.</strong> A tray of wet media that must be lifted out, carried and cut is comfortably handled up to roughly 1400–1500 mm; above that the operator is lifting a 5 kg tray of standing water at or above shoulder height, over their own head, in a wet-floor room. That is where 4 tiers ends and 5 tiers begins needing a step platform.</p>
+        <p>So the honest framing is: <strong>4 tiers is the ergonomic ceiling for a hand-harvested microgreen rack; 5 tiers is viable only if the top tier is accepted as a step-stool tier or the rack is used for a lighter crop.</strong> That is a decision about labour, not about structure. The structural system will support 3, 4 and 5 either way — but I will not present 5 as free.</p>
+        <p><strong>Closed at Rev B — see D1.</strong> 5-tier capable structure, 4 tiers as the recommended default, 5th tier as a bolt-on extension. Germination moves to a separate compact rack at 6–12 tiers and does not constrain this geometry.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict" id="c4">
+    <header><span class="cid">C4</span><h3>PPFD: 150–210 (peer-reviewed) vs 200–300 (industry)</h3><span class="chip c-b">Detail</span></header>
+    <div class="body">
+      <div class="side">
+        <div><span class="who">Phase A §1.1</span><span class="says">150–210 µmol·m⁻²·s⁻¹. Above ~210, especially with far-red or UV-A, tends to induce photoinhibition and reduce yield.</span></div>
+        <div><span class="who">Industry vendor guide</span><span class="says">200–300 µmol·m⁻²·s⁻¹ for growth phase; 50–100 for germination.</span></div>
+      </div>
+      <div class="res"><span class="who">Recommendation — design to Phase A, provision for the industry figure</span>
+        <p>Phase A's band comes from replicated dose-response studies and is the stronger evidence; the vendor figure is a marketing-adjacent guide with no cited trial. Design the electrical and thermal case to 150–210. But because the platform is meant to grow into leafy greens and herbs — which genuinely need 250–400 — size <span class="val">LED_Clearance</span>, the mounting rail and the tier pitch so a higher-output fixture can be retrofitted without changing the frame. The cost of that headroom is a few millimetres of clearance, which is the cheapest future-proofing in the whole design.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict" id="c5">
+    <header><span class="cid">C5</span><h3>Airflow: the benchmark rack design contradicts the cited CFD evidence</h3><span class="chip c-b">Detail</span></header>
+    <div class="body">
+      <div class="side">
+        <div><span class="who">Phase A §1.4</span><span class="says">Distributing inlets along the full shelf length dropped velocity CV from ~33% to ~10% versus supplying from one end.</span></div>
+        <div><span class="who">Prosumer benchmark</span><span class="says">One 120 mm axial fan per shelf, centred, blowing horizontally, 24/7 on high.</span></div>
+      </div>
+      <div class="res"><span class="who">Recommendation</span>
+        <p>The benchmark is the arrangement the CFD literature specifically shows to be poor. A single fan gives you a jet, a wake and two dead corners — precisely the stagnant boundary-layer condition that causes tip-burn-type disorders. Adopt a <strong>linear supply interface per tier</strong>: a perforated duct or plenum edge running the full shelf length, fed either from room HVAC or from a small EC fan at one end of the duct. This is more work than clipping on a fan and it is the right call — it is also, incidentally, exactly the "CFD-informed airflow design" that Phase B §3.1 identifies as absent from the Indian market and therefore a differentiator you can actually claim.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict" id="c6">
+    <header><span class="cid">C6</span><h3>Germination is required by the platform but absent from the documents</h3><span class="chip c-a">Closed · Rev B</span></header>
+    <div class="body">
+      <div class="side">
+        <div><span class="who">Phase A–E</span><span class="says">Microgreen germination is never discussed. Only saffron corm germination (23–30 °C) appears.</span></div>
+        <div><span class="who">Your brief</span><span class="says">A germination configuration and a germination rack are named platform deliverables.</span></div>
+      </div>
+      <div class="res"><span class="who">Recommendation</span>
+        <p>Do not solve this by dark-cycling a lit tier. Germination wants no lighting, no per-tier airflow, tight tier pitch and stacked/weighted trays; growing wants the opposite of all four. The efficient answer is <strong>the same uprights and beams with a different, cheaper tier module</strong> — no LED rail, no air duct, pitch around 150–200 mm, higher stacked load. That is what a platform is for, and it converts a documentation gap into a second SKU off one bill of materials.</p>
+        <p><strong>Closed at Rev B — see D1.</strong> Confirmed as a separate compact rack at 6–12 tiers, sharing sections and joints but not driving the growing rack's geometry. Where the two configurations disagree, the growing rack wins.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict" id="c7">
+    <header><span class="cid">C7</span><h3>Cleaning: SS304 mandated for trays, frame material left open, chemistry never specified</h3><span class="chip c-d">Blocking</span></header>
+    <div class="body">
+      <div class="side">
+        <div><span class="who">Phase D T2</span><span class="says">"SS304 minimum for food-contact microgreens trays/channels."</span></div>
+        <div><span class="who">Phase A/C</span><span class="says">Frame is anodised or powder-coated aluminium. No cleaning chemistry, concentration, frequency or method appears anywhere in five documents.</span></div>
+      </div>
+      <div class="res"><span class="who">Recommendation</span>
+        <p>This cannot be resolved by engineering judgement — the answer is entirely determined by what you will actually spray on it. Sodium hypochlorite or quaternary ammonium at food-industry strength will pit SS304 at welds and low-drainage points and will strip or blister anodising over time; peracetic acid and hydrogen peroxide are far kinder to both. PREN 18–20 for 304 against 24–26 for 316 quantifies the margin. If chlorine-based sanitisers are in the routine cycle, the wet-zone components move to 316 and the cost model changes. Q14 and Q16 are the two questions I most need answered.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict" id="c8">
+    <header><span class="cid">C8</span><h3>Mobility: bearings and "wheeled sub-modules" implied, never specified</h3><span class="chip c-b">Detail</span></header>
+    <div class="body">
+      <div class="side">
+        <div><span class="who">Phase A T1, Phase C 1.1</span><span class="says">"Wheeled sub-modules per zone." Phase D lists SKF/NBC bearings "for moving-rack and automation mechanisms."</span></div>
+        <div><span class="who">Not stated</span><span class="says">Whether racks roll for cleaning, roll on a mobile-aisle system, or sit fixed and levelled with anchors.</span></div>
+      </div>
+      <div class="res"><span class="who">Recommendation</span>
+        <p>These are three different products. Castors on a 2 m rack carrying ~215 kg with a raised centre of mass materially worsen tip-over and make levelling — which flood-and-drain requires — a repeatable task rather than a one-time commissioning step. My default is <strong>fixed, levelled feet with an optional castor kit</strong>, plus wall or ceiling anchoring provision. A mobile-aisle (rail-guided, hand-cranked) system is a different structural problem and should not be quietly designed in. Q21, Q22, Q23.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conflict" id="c9">
+    <header><span class="cid">C9</span><h3>Phase D plans a custom extrusion die that v1 does not need</h3><span class="chip c-b">Detail</span></header>
+    <div class="body">
+      <div class="side">
+        <div><span class="who">Phase D T2</span><span class="says">"Custom rack/heat-sink profiles… die-dependent, ~500 kg first run… plan profile designs early given die lead time" (30–60 days).</span></div>
+        <div><span class="who">External trade listings</span><span class="says">Standard 40 × 40 mm slot-8 T-profile is stocked in India at ~₹495–530/m, no tooling, no MOQ.</span></div>
+      </div>
+      <div class="res"><span class="who">Recommendation</span>
+        <p>The die constraint is real for the LED heat-sink profile (Product 1.2, where the section is genuinely bespoke) but it is not real for the rack, and Phase D applies it to both. Build v1 on standard stock section — zero tooling cost, zero lead time, immediate prototype iteration, and it protects Phase E's "vendor-ready now, fast time-to-market" claim for the first revenue product. A proprietary rack profile is a Phase 2 decision, justified by volume and by a specific functional gain a stock profile cannot give, not by aesthetics.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MISSING INFORMATION ============ -->
+<section>
+  <div class="snum">§5 · Missing information</div>
+  <h2>Dimensions I will not invent</h2>
+  <p class="lede prose">These are the values that would normally be quietly assumed. Each one propagates through the parametric model, so each is a question in §6 rather than a number in the CAD.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Missing input</th><th>Why it blocks</th><th>Parameter affected</th><th>Q</th></tr></thead>
+      <tbody>
+        <tr><td>Actual tray you will buy</td><td>Every other dimension derives from it. Indian 1020 trays are not guaranteed to match US ones.</td><td class="mono">Tray_L, Tray_W, Tray_H</td><td class="num">1</td></tr>
+        <tr><td>Measured loaded tray mass</td><td>Calculated below as ~5.1 kg peak, but that is arithmetic from a substrate paper, not a weighing.</td><td class="mono">Shelf_Load, Total_Rack_Load</td><td class="num">4</td></tr>
+        <tr><td>Trays per week target</td><td>Sets tier count, rack count, whether germination is a separate rack.</td><td class="mono">Number_of_Tiers, Tray_Count_Per_Tier</td><td class="num">3, 20</td></tr>
+        <tr><td>Room ceiling height in the real installation</td><td>The 12 ft R&amp;D room is not necessarily the customer's room.</td><td class="mono">Rack_Height</td><td class="num">2</td></tr>
+        <tr><td>Cleaning chemistry and method</td><td>Decides SS304 vs SS316 vs anodised aluminium, and decides whether open slots are acceptable at all.</td><td class="mono">Material, finish, joint design</td><td class="num">14, 16</td></tr>
+        <tr><td>Water supply pressure and quality</td><td>Chloride content drives grade selection; pressure drives fill time and manifold sizing.</td><td class="mono">Pipe_Diameter</td><td class="num">9, 16</td></tr>
+        <tr><td>Floor drain availability and position</td><td>Decides whether the rack drains to floor, to a header, or to a collection tank.</td><td class="mono">Drain_Diameter, rack base geometry</td><td class="num">8</td></tr>
+        <tr><td>LED fixture form factor and mass</td><td>Fixture length, width, mounting pattern and driver location define the LED rail.</td><td class="mono">LED_Clearance, rail pitch</td><td class="num">5</td></tr>
+        <tr><td>Central HVAC vs rack-level fans</td><td>Determines whether the rack carries ducts and a plenum interface or self-contained fans.</td><td class="mono">Fan_Clearance, tier depth</td><td class="num">6, 13</td></tr>
+        <tr><td>Supply voltage and phase</td><td>Sets isolator, RCBO and cable sizing; changes the electrical enclosure.</td><td class="mono">Cable_Channel_Size</td><td class="num">11</td></tr>
+        <tr><td>Target ex-works cost</td><td>Material selection is a price-point decision as much as an engineering one.</td><td class="mono">All of the above</td><td class="num">20</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Working load figure, shown so you can challenge it</h3>
+  <p class="prose">This is arithmetic, not a measurement. I am putting it here rather than in the CAD so the assumption is visible and you can correct it by weighing one loaded tray.</p>
+
+  <div class="calc">
+    <div class="cap">Peak loaded 1020 tray — <span class="chip c-c">Assumption</span> <span class="chip c-n">Low</span></div>
+    <div class="row"><span>Wetted area, 505 × 239 mm</span><span>0.1207 m²</span></div>
+    <div class="row"><span>Coco peat 25 mm @ 0.75 g/cm³ saturated</span><span>2.26 kg</span></div>
+    <div class="row"><span>Standing flood water, 15 mm, less displacement</span><span>1.30 kg</span></div>
+    <div class="row"><span>Crop at harvest, upper case (pea shoots)</span><span>0.45 kg</span></div>
+    <div class="row"><span>Outer tray + mesh insert</span><span>1.05 kg</span></div>
+    <div class="row"><span>Peak per tray</span><span>≈ 5.06 kg</span></div>
+  </div>
+
+  <div class="calc">
+    <div class="cap">Derived shelf and rack load — <span class="chip c-b">Recommendation</span></div>
+    <div class="row"><span>Design value per tray (×1.5 on peak)</span><span>7.5 kg</span></div>
+    <div class="row"><span>4 trays per tier</span><span>30 kg</span></div>
+    <div class="row"><span>Flood table / tray support module</span><span>6 kg</span></div>
+    <div class="row"><span>LED fixture + rail</span><span>4 kg</span></div>
+    <div class="row"><span>Duct / fan / baffle</span><span>2 kg</span></div>
+    <div class="row"><span>Manifold + charged pipework</span><span>3 kg</span></div>
+    <div class="row"><span>Proposed Shelf_Load (UDL)</span><span>80 kg</span></div>
+    <div class="row"><span>Proposed Total_Rack_Load, 4 tiers + frame</span><span>≈ 215 kg</span></div>
+  </div>
+
+  <div class="note"><strong>One deflection point worth raising now.</strong> ANSI MH16.1 sets beam deflection at L/180, and that is a serviceability consensus — the point at which a person perceives a beam as unsafe — not a structural criterion. It is too slack for this application. A flood-and-drain bed has to be <em>level</em>: if a loaded 1150 mm shelf sags 6 mm at midspan, the flood depth is not the same at the centre tray as at the end trays, and irrigation uniformity degrades before anything looks wrong. I will propose a flatness criterion of <span class="val">≤ 3 mm across the loaded tray bed</span> (≈ L/383) rather than a deflection ratio, and design the beam to that. It costs very little at this span and it is the kind of specification that separates an engineered product from a shelf.</div>
+</section>
+
+<!-- ============ PHASE 1 QUESTIONS ============ -->
+<section id="questions">
+  <div class="snum">§6 · Phase 1</div>
+  <h2>Requirement confirmation — 24 groups</h2>
+  <p class="lede prose">Only questions that materially change the design. Groups marked <span class="blocker" style="margin:0">blocking</span> stop Phase 2 entirely; the rest can be answered in parallel or deferred to Phase 3. Answer in any format — bullet replies against the numbers are fine, and "don't know yet" is a valid answer that I will convert into a labelled assumption.</p>
+
+  <div class="qgroup"><header><span class="qn">1</span><h3>Tray system</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Which 1020 tray will you actually standardise on — brand and supplier?<span class="hint">If you have one to hand: measure outer L × W × H, lip width, and base flatness, and weigh it empty. Every dimension in this design keys off that measurement.</span></li>
+    <li>Single tray, or a nested pair — a solid outer tray plus a perforated/mesh inner tray?<span class="hint">This is a flood-and-drain design decision, not a detail. A nested pair drains cleanly and lifts out; a single tray needs the shelf itself to be the water vessel.</span></li>
+    <li>Must the rack also accept a second tray format now — 1010 half-trays, deep 1020s (100 mm), or 10×10 propagation flats?</li>
+    <li>Do trays ever get stacked on a tier, or is it always a single layer?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">2</span><h3>Rack dimensions</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Is the design target the Ooty R&amp;D room (12 ft ceiling), a typical customer room, or both from one product?</li>
+    <li>Lowest ceiling the rack must fit under, and narrowest door it must pass through — assembled or knocked down?</li>
+    <li>Maximum footprint per rack, and available aisle width?</li>
+    <li>Single-sided access (against a wall) or double-sided (island)?<span class="hint">This changes rack depth, service access and where every pipe and cable runs.</span></li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">3</span><h3>Number of tiers</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Target trays in production per week, at launch and at 3-year scale?</li>
+    <li>Given C3 — 4 tiers as the ergonomic ceiling for hand harvesting, 5 only with a step platform — do you want 4 as the standard product, or 5 with the top tier accepted as step-access?</li>
+    <li>Should germination be a separate rack configuration, or handled on the same rack?</li>
+    <li>Will tier pitch ever be changed by the customer after installation, or only configured at build?<span class="hint">"Adjustable in service" and "configurable at build" are very different upright designs and very different price points.</span></li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">4</span><h3>Structural load</h3></header><ol>
+    <li>Can you weigh one fully loaded tray at peak — flooded, at harvest — and send me the number?</li>
+    <li>Is there any credible scenario where an operator stands, sits or leans heavily on a tier?</li>
+    <li>Should the rack be rated for a specified overload, or to a normal working load with the usual factors?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">5</span><h3>LED system</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Will the rack ship with your own Product 1.2 bar, third-party bars, or must it accept both?</li>
+    <li>Do you have a target fixture length, width, mass and mounting pattern for 1.2 yet — or should I define the mounting interface first and have 1.2 conform to it?<span class="hint">The second option is the better one, and this is the moment to take it. The rack and the light are being designed at the same time by the same company — that only happens once.</span></li>
+    <li>Driver onboard the fixture, or remote-mounted on the rack?</li>
+    <li>How many fixtures per tier, and how much vertical adjustment range do you want for close-canopy operation?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">6</span><h3>Airflow and fans</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Central room HVAC supplying air into the rack, rack-level fans, or both depending on configuration?</li>
+    <li>Given C5 — one fan per shelf is the arrangement the CFD evidence rejects — do you accept a linear duct or plenum interface per tier as the standard?</li>
+    <li>Preferred fan type: EC axial, cross-flow, or in-duct?</li>
+    <li>Is there an existing room HVAC design I should interface to, or is that still open?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">7</span><h3>Irrigation</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Confirming C2: flood-and-drain as primary, with the tier bay designed so other methods drop into the same interface — agreed?</li>
+    <li>Drain to waste, or recover to a treated reservoir?<span class="hint">My recommendation is not to recirculate directly. If you want recovery, it needs filtration and UV, which is a reservoir-side cost, not a rack cost.</span></li>
+    <li>Is the whole tier flooded as one bed, or is each tray fed individually?</li>
+    <li>One valve per tier, or one per rack with tier-level distribution?</li>
+    <li>Is manual watering a required fallback mode?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">8</span><h3>Drainage</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Is there a floor drain in the room, and where relative to the rack?</li>
+    <li>Should the rack collect drainage into its own header and discharge at one point, or drain per tier?</li>
+    <li>Must the rack contain a full tier's water in a failure — a burst line or a stuck valve — or is that the room's floor drain's job?<span class="hint">This decides whether the base is a bunded tray, which is a real cost and weight item.</span></li>
+    <li>Do you want drainage components removable for cleaning without tools?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">9</span><h3>Water lines</h3></header><ol>
+    <li>Water supply pressure and pipe size at the room?</li>
+    <li>Preferred plumbing standard — SS tube, PVC/CPVC, PE with push-fit, or food-grade silicone?</li>
+    <li>Quick-disconnect at the rack inlet so a rack can be isolated and rolled out?</li>
+    <li>Any requirement to sanitise the lines in place?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">10</span><h3>Sensor system</h3></header><ol>
+    <li>Do you agree with the allocation proposed in §7 — CO₂ and smoke at room level, water chemistry at the reservoir, one T/RH node plus leak detection per rack, tier-level sensing only on an instrumented R&amp;D variant?</li>
+    <li>Is the PAR sensor a permanent fixture or a portable commissioning instrument?<span class="hint">My recommendation is portable, on a standard mount. A per-tier quantum sensor is a significant cost for a measurement that changes only when the fixture height changes.</span></li>
+    <li>Does the R&amp;D rack at Ooty need instrumentation the commercial rack does not?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">11</span><h3>Electrical system</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Supply: 230 V single-phase or 415 V three-phase, and what breaker rating per circuit?</li>
+    <li>One feed per rack with onboard distribution, or a feed per tier from a room panel?</li>
+    <li>Does each rack need its own local isolator and emergency stop, or is isolation at the room panel?</li>
+    <li>Target IP rating for rack-mounted electrical enclosures — IP54 or IP65?</li>
+    <li>Is the frame to be bonded and earthed as a metallic enclosure?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">12</span><h3>Cable management</h3></header><ol>
+    <li>Confirm mains, LED dimming (0–10 V/DALI), Modbus/RS485 and sensor wiring are to be physically segregated in separate channels.</li>
+    <li>Should cable routing be concealed inside the structure or in an accessible external tray?<span class="hint">Concealed looks better and is worse to service. In a wet room I would take accessible-but-covered.</span></li>
+    <li>Are inter-rack cable links required, or is every rack independently fed?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">13</span><h3>HVAC interface</h3></header><ol>
+    <li>Is the room design fixed, or can the rack interface influence it?</li>
+    <li>Should the rack accept a duct spigot at a defined size and position?</li>
+    <li>Are side and rear panels required to force airflow through the canopy, or is the rack open?<span class="hint">Panels are what make per-tier airflow controllable. Open racks let room air short-circuit around the canopy.</span></li>
+    <li>Is condensate management on the rack in scope?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">14</span><h3>Cleaning and sanitation</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Which sanitiser chemistries will actually be used, at what concentration and frequency?<span class="hint">Specifically: chlorine/hypochlorite, quaternary ammonium, peracetic acid, hydrogen peroxide, or alcohol. This single answer decides the frame material.</span></li>
+    <li>Cleaning method: wipe-down, low-pressure spray, or full washdown?</li>
+    <li>Must the rack be cleanable in place, or is it acceptable to remove modules to clean them?</li>
+    <li>Are you pursuing any formal food-safety certification — FSSAI, NSF, or a customer's audit scheme?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">15</span><h3>Material</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Given C1, which do you want: pure aluminium extrusion as the documents specify, all-stainless, or the hybrid — SS wet structure with a bolt-on services rail?</li>
+    <li>Is the extrusion commitment in Phase C/E firm, or open to revision at Phase 0?</li>
+    <li>Is there a target rack mass, for shipping or for handling?</li>
+    <li>Does the finished product need to look metallic, or is a coated finish acceptable?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">16</span><h3>Corrosion resistance</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Chloride content of the water at Ooty and at Coimbatore, if you have an analysis?</li>
+    <li>Expected service life before refurbishment — 5, 10 or 15 years?</li>
+    <li>Will any part of the rack see standing water for extended periods?</li>
+    <li>Is SS316 acceptable on cost for wet-zone parts only, if Q14 makes 304 marginal?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">17</span><h3>Manufacturing process</h3></header><ol>
+    <li>Which Coimbatore vendors are already engaged, and what are their real capabilities and tolerances?</li>
+    <li>Is there an in-house assembly facility, or is assembly also outsourced?</li>
+    <li>Any process you want to avoid — welding SS, for instance, needs pickling and passivation to hold its corrosion resistance and not every shop does it properly?</li>
+    <li>Batch size for the first production run?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">18</span><h3>Modularity</h3></header><ol>
+    <li>How much of the modularity is for the customer versus for your own manufacturing and SKU rationalisation?</li>
+    <li>Is tool-less reconfiguration a genuine requirement, or is "reconfigurable with one hex key" acceptable?<span class="hint">Tool-less is meaningfully more expensive and, in a wet food environment, usually less hygienic.</span></li>
+    <li>Should a customer be able to buy a 3-tier rack and upgrade it to 4 tiers later with a kit?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">19</span><h3>Future upgrades</h3></header><ol>
+    <li>Which future configurations are real 12–24 month plans versus aspirations — germination, propagation, saffron, aquascaping, leafy greens?</li>
+    <li>Should saffron be in scope for this structural platform at all, given its 150–200 mm substrate bed and sub-chamber requirements?<span class="hint">My view is that it should be a configuration of the same uprights but a different tier module — and that forcing it into the microgreen shelf would compromise both.</span></li>
+    <li>Is automation — conveyors, robotic tray handling — a real roadmap item the structure must anticipate?</li>
+    <li>Do you want the accessory rail specified as a published open interface so third parties can build to it?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">20</span><h3>Cost target</h3><span class="blocker">Blocking</span></header><ol>
+    <li>Target ex-works manufacturing cost per rack, or target selling price?</li>
+    <li>What does a comparable local welded mild-steel rack sell for today?<span class="hint">This is the number the 35–45% margin premium has to be defended against.</span></li>
+    <li>Is the rack sold bare, or bundled with lights, irrigation and controls?</li>
+    <li>Annual volume assumption for costing?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">21</span><h3>Assembly and disassembly</h3></header><ol>
+    <li>Who assembles — your team, a dealer, or the end customer?</li>
+    <li>Target assembly time and crew size for one rack?</li>
+    <li>Must it be fully disassemblable for relocation, or is one-time assembly acceptable?</li>
+    <li>Any hand tools you want to exclude?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">22</span><h3>Shipping and transport</h3></header><ol>
+    <li>Flat-pack or assembled?</li>
+    <li>Maximum crate dimensions and mass for your logistics?</li>
+    <li>Shipping across India, exporting, or local delivery only?</li>
+    <li>Is it acceptable for the rack to exceed a standard courier limit and need freight?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">23</span><h3>Safety</h3></header><ol>
+    <li>Fixed and anchored, or mobile on castors — see C8?</li>
+    <li>Is wall or ceiling anchoring available in the target rooms?</li>
+    <li>Any standard you must comply with — a customer specification, or an insurer's requirement?</li>
+    <li>Are pinch-point, sharp-edge and load-labelling requirements formalised anywhere, or should I apply general good practice?</li>
+  </ol></div>
+
+  <div class="qgroup"><header><span class="qn">24</span><h3>Aesthetics and branding</h3></header><ol>
+    <li>Is there a brand identity — colours, logo, finish language — the rack should carry?</li>
+    <li>How much does visible design premium matter relative to cost?<span class="hint">Phase B is explicit that the rack is the most visible "premium engineering" cue to dealers and customers. That is a real design input, and it deserves a real budget line rather than being assumed free.</span></li>
+    <li>Should the rack visually match the LED bars and controllers as one family?</li>
+    <li>Are QR or asset-ID labels required, and where?</li>
+  </ol></div>
+</section>
+
+<!-- ============ ALLOCATION MATRIX ============ -->
+<section>
+  <div class="snum">§7 · Allocation proposal</div>
+  <h2>What the rack carries, and how</h2>
+  <p class="lede prose">Your brief asks which of the candidate components should be integrated, modular-mounted, external or optional. This is my proposal, not a decision — every row is <span class="chip c-b">Recommendation</span> unless a document dictates it. The guiding rule: <strong>anything that fails, drifts, or gets upgraded is modular; anything wet is external or removable; anything shared across racks lives in the room.</strong></p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Component</th><th>Proposal</th><th>Level</th><th>Reasoning</th></tr></thead>
+      <tbody>
+        <tr><td>1020 trays</td><td><span class="chip c-a">A · Integrated interface</span></td><td>Tier</td><td>The tray is the production interface. The tier bay is designed around it.</td></tr>
+        <tr><td>Tray support / flood table</td><td><span class="chip c-b">B · Modular mount</span></td><td>Tier</td><td>Independently removable per tier so a damaged bed is replaced, not the rack.</td></tr>
+        <tr><td>LED fixtures</td><td><span class="chip c-b">B · Modular mount</span></td><td>Tier</td><td>Explicitly must not be welded in. Height-adjustable for close-canopy operation.</td></tr>
+        <tr><td>LED drivers</td><td><span class="chip c-b">B · Modular mount</span></td><td>Rack</td><td>Dry zone, above canopy, on the services rail. Serviceable without disturbing the bed.</td></tr>
+        <tr><td>Cooling fans</td><td><span class="chip c-b">B · Modular mount</span></td><td>Tier</td><td>Standard mounting pattern so fan type can change without a frame change.</td></tr>
+        <tr><td>Air ducts / plenum</td><td><span class="chip c-b">B · Modular mount</span></td><td>Tier</td><td>Required by the CFD evidence in C5. Removable for cleaning.</td></tr>
+        <tr><td>Airflow baffles</td><td><span class="chip c-c">D · Optional accessory</span></td><td>Tier</td><td>Configuration-dependent; needed with side panels, not without.</td></tr>
+        <tr><td>Irrigation manifold</td><td><span class="chip c-b">B · Modular mount</span></td><td>Rack</td><td>One manifold per rack, tier drops off it. Quick-disconnect at rack inlet.</td></tr>
+        <tr><td>Water supply pipe</td><td><span class="chip c-c">C · External</span></td><td>Room</td><td>Room service. Rack presents one inlet.</td></tr>
+        <tr><td>Drain pipe</td><td><span class="chip c-b">B · Modular mount</span></td><td>Rack</td><td>Rack-side header, removable without dismantling. Room-side is external.</td></tr>
+        <tr><td>Solenoid valves</td><td><span class="chip c-b">B · Modular mount</span></td><td>Rack</td><td>One per rack minimum for leak-interlock shutoff. Per-tier is a configuration option.</td></tr>
+        <tr><td>Flow meters</td><td><span class="chip c-c">D · Optional accessory</span></td><td>Rack</td><td>Useful for R&amp;D and audit; not required for basic operation.</td></tr>
+        <tr><td>Filters</td><td><span class="chip c-c">C · External</span></td><td>Room</td><td>Reservoir-side. One filter serving many racks beats one per rack.</td></tr>
+        <tr><td>Temperature / RH sensor</td><td><span class="chip c-b">B · Modular mount</span></td><td>Rack</td><td>One node per rack at canopy height on the accessory rail.</td></tr>
+        <tr><td>CO₂ sensor</td><td><span class="chip c-c">C · External</span></td><td>Room</td><td>CO₂ is a room-level gas. Per-rack NDIR is cost with no control benefit — and it is a safety device.</td></tr>
+        <tr><td>PPFD / PAR sensor</td><td><span class="chip c-c">D · Optional accessory</span></td><td>Portable</td><td>A commissioning instrument on a standard mount, not a fixture. Re-measure when fixture height changes.</td></tr>
+        <tr><td>EC / TDS sensor</td><td><span class="chip c-c">C · External</span></td><td>Water system</td><td>Inline at the reservoir. Meaningless at the rack in a drain-to-waste design.</td></tr>
+        <tr><td>pH monitoring</td><td><span class="chip c-c">C · External</span></td><td>Water system</td><td>Same. Probes need routine calibration — keep them where a person can reach them.</td></tr>
+        <tr><td>Water temperature sensor</td><td><span class="chip c-c">C · External</span></td><td>Water system</td><td>Reservoir-side.</td></tr>
+        <tr><td>Leak sensor</td><td><span class="chip c-a">A · Integrated</span></td><td>Rack</td><td>Mandated by Phase A §2.6 with solenoid interlock. Needs a defined lowest-wet-point position.</td></tr>
+        <tr><td>Electrical distribution</td><td><span class="chip c-b">B · Modular mount</span></td><td>Rack</td><td>One enclosure per rack in the dry zone, IP-rated per Q11.</td></tr>
+        <tr><td>Power supplies</td><td><span class="chip c-b">B · Modular mount</span></td><td>Rack</td><td>Same enclosure. Kept off the wet structure entirely.</td></tr>
+        <tr><td>Smart relays / controllers</td><td><span class="chip c-c">C · External</span></td><td>Room</td><td>Phase A §2.5 is local-first but zone-level. The rack is a client. A small rack I/O box is an option — Q11.</td></tr>
+        <tr><td>Comms / RS485 cabling</td><td><span class="chip c-a">A · Integrated</span></td><td>Rack</td><td>Continuous segregated channel along the rack with inter-rack continuity.</td></tr>
+        <tr><td>Cable trays</td><td><span class="chip c-a">A · Integrated</span></td><td>Rack</td><td>Phase C 1.1 explicitly lists integrated cable and tubing channels.</td></tr>
+        <tr><td>Junction boxes</td><td><span class="chip c-b">B · Modular mount</span></td><td>Rack</td><td>On the services rail, dry zone.</td></tr>
+        <tr><td>Emergency isolation</td><td><span class="chip c-d">D · Needs approval</span></td><td>Rack or room</td><td>Per-rack isolator versus room panel is a real safety architecture choice — Q11.</td></tr>
+        <tr><td>Drainage collection</td><td><span class="chip c-d">D · Needs approval</span></td><td>Rack</td><td>Bunded base or not — Q8. Significant cost, mass and geometry consequence.</td></tr>
+        <tr><td>Identification / QR labels</td><td><span class="chip c-b">B · Modular mount</span></td><td>Tier + rack</td><td>Cheap, and it makes traceability per tray batch possible. Standard label position on the beam face.</td></tr>
+        <tr><td>Future automation modules</td><td><span class="chip c-c">D · Optional accessory</span></td><td>Rack</td><td>Served by the published accessory-rail interface, not by pre-installed provisions.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ FLOOD AND DRAIN ============ -->
+<section>
+  <div class="snum">§8 · Irrigation research</div>
+  <h2>Does flood-and-drain cost you crop quality?</h2>
+  <p class="lede prose">The short answer is no — and the documented effects run in its favour, not against it. Three extension sources agree, and none of them reports a quality penalty for microgreens. The one real risk is not in the rack.</p>
+
+  <h3>What the evidence says</h3>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Finding</th><th>Source</th><th>Conf.</th><th>Consequence</th></tr></thead>
+      <tbody>
+        <tr><td>"Sub-irrigation, such as with ebb-and-flow systems, works well for watering microgreens trays… helps keep leaves and stems dry, which is important to avoid disease"</td><td>Penn State Extension</td><td><span class="chip c-n">High</span></td><td>Direct endorsement for this crop. Dry foliage is a disease control, not a side effect.</td></tr>
+        <tr><td>Standard practice at the CEA Innovation Center is bottom-watering nested 1020 trays — perforated inner inside solid outer — from once every two days to several times daily by growth stage</td><td>Virginia Tech Extension</td><td><span class="chip c-n">High</span></td><td>Confirms the nested-tray arrangement and gives the duty cycle the valve and controller must support.</td></tr>
+        <tr><td>Flood depth ¾–1 in (19–25 mm), held 10 minutes or until the media has absorbed the solution, then drained quickly by gravity with the bench top designed to dry rapidly</td><td>UMass Extension</td><td><span class="chip c-n">High</span></td><td>The first hard engineering numbers available for this subsystem. Drives flood volume, pipe sizing and cycle timing.</td></tr>
+        <tr><td>Ebb-and-flow benches "must be installed perfectly level to maintain a uniform depth of liquid"</td><td>UMass Extension</td><td><span class="chip c-n">High</span></td><td>Independent confirmation of the flatness criterion proposed in §5. This is now a requirement, not a recommendation.</td></tr>
+        <tr><td>Water and fertiliser use falls at least 50% versus overhead; foliage remains dry; growth is more vigorous</td><td>UMass Extension</td><td><span class="chip c-n">Med</span></td><td>Quality effect is positive, not neutral. Also a marketable efficiency claim.</td></tr>
+        <tr><td>Damping-off from <em>Pythium</em> or <em>Phytophthora</em> is the primary microgreen disease concern; recirculating systems are scrubbed and run through with a hydrogen-peroxide-based sanitiser between every crop</td><td>Virginia Tech Extension</td><td><span class="chip c-n">High</span></td><td>The real risk, and it lives in the reservoir and the return line — not in the rack structure.</td></tr>
+        <tr><td>Recirculated solution needs pH and soluble-salt correction as make-up water is added; growers treat with chlorine, UV or ozone</td><td>UMass Extension</td><td><span class="chip c-n">High</span></td><td>Recovery is a reservoir-side capital and labour cost. It should be priced as such, not assumed free.</td></tr>
+        <tr><td>Substrate water-holding capacity changes irrigation rate substantially — hemp mat high, burlap low — and a single substrate type should be used throughout one production system</td><td>Virginia Tech Extension</td><td><span class="chip c-n">Med</span></td><td>Do not mix media within a rack. Worth stating in the operating manual, and it argues for per-rack rather than per-tier valve control.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The one caveat, and why it does not apply here</h3>
+  <p class="prose">The classic objection to sub-irrigation is <strong>salt accumulation at the substrate surface</strong>: water moves upward by capillarity and evaporates, leaving salts behind, with no downward leaching fraction to flush them. In long-cycle container crops this is a genuine problem that forces periodic overhead leaching.</p>
+  <p class="prose">It is largely moot for microgreens. The crop is harvested at 7–21 days, the media is replaced every cycle rather than carried over, and fertilisation is light or absent until after germination. Salts do not have time to accumulate to a damaging concentration before the tray is stripped and reset. This is worth knowing precisely <em>because</em> it is the objection someone will raise — and the answer is that the crop cycle solves it.</p>
+
+  <h3>Revised flood parameters</h3>
+  <div class="calc">
+    <div class="cap">Per-tier flood, 4 trays — <span class="chip c-b">Recommendation</span> <span class="chip c-n">Med</span></div>
+    <div class="row"><span>Flood depth (UMass)</span><span>19–25 mm</span></div>
+    <div class="row"><span>Dwell at depth</span><span>10 min</span></div>
+    <div class="row"><span>Bed area, provisional 1180 × 620 mm</span><span>0.73 m²</span></div>
+    <div class="row"><span>Delivered volume per tier fill @ 25 mm</span><span>≈ 18 L</span></div>
+    <div class="row"><span>Fill in ≤ 2 min ⇒ supply flow</span><span>≥ 9 L/min</span></div>
+    <div class="row"><span>Drain must exceed fill ⇒ drain flow</span><span>≥ 20 L/min</span></div>
+    <div class="row"><span>Provisional Pipe_Diameter / Drain_Diameter</span><span>20 mm / 40 mm</span></div>
+  </div>
+  <div class="note"><strong>Two corrections to Rev A.</strong> First, I had assumed a 15 mm flood; the extension figure is 19–25 mm, which raises the peak tray mass from ~5.1 to ~5.9 kg. The proposed 7.5 kg design value still covers it, at a factor of 1.27 rather than 1.48 — narrower than I would like, and another reason to weigh a real loaded tray (Q4). Second, the rule that <strong>drain bore must substantially exceed supply bore</strong> is what makes an ebb-and-flow bed safe: a bed that fills faster than it empties overflows on a stuck valve. That asymmetry is now a design rule, not a preference.</div>
+
+  <h3>The interchangeable tier bay — provisional interface TB-1</h3>
+  <p class="prose">This is the answer to "design the irrigation to be interchangeable with other methods." Rather than committing the rack to flood-and-drain, the rack commits only to a <strong>bay</strong> — a level, drained, ported opening between two tier beams. What sits in the bay is a separate, independently serviceable module. The rack does not know which irrigation method it is running, which is exactly what makes the platform a platform.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Interface feature</th><th>Provisional spec</th><th>Why it is fixed</th></tr></thead>
+      <tbody>
+        <tr><td>Datum</td><td>Top face of tier beams, level within 3 mm across the bed</td><td>UMass: uniform liquid depth requires a level bench. Sets the beam stiffness requirement.</td></tr>
+        <tr><td>Bay envelope</td><td>Width and depth from tray count — pending Q1</td><td>Every module is built to the same envelope so any module fits any tier.</td></tr>
+        <tr><td>Support</td><td>Continuous perimeter rail plus intermediate support; module lifts out with no tools</td><td>Cleaning, replacement and crop changeover all need the bed to come out.</td></tr>
+        <tr><td>Supply port</td><td>Fixed position, one end, quick-connect, 20 mm</td><td>A module that fits mechanically but not hydraulically is not interchangeable.</td></tr>
+        <tr><td>Drain port</td><td>Fixed position, opposite end, 40 mm, at the low point</td><td>Drain &gt; supply is the overflow safeguard.</td></tr>
+        <tr><td>Leak sensor</td><td>Fixed pocket at the lowest wet point of the bay</td><td>Mandated by Phase A §2.6 with solenoid interlock.</td></tr>
+        <tr><td>Load rating</td><td>80 kg UDL, flatness ≤ 3 mm under load</td><td>Common rating so no module needs its own structural check.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>Modules that drop into TB-1</h4>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Module</th><th>Method</th><th>Uses ports</th><th>Configuration</th></tr></thead>
+      <tbody>
+        <tr><td>Flood table</td><td>Flood-and-drain</td><td>Supply + drain</td><td>Microgreens — default</td></tr>
+        <tr><td>Drained tray shelf</td><td>Manual or bottom watering, drain to waste</td><td>Drain only</td><td>Microgreens — low-cost variant, and the manual fallback for Q7.4</td></tr>
+        <tr><td>Capillary matting shelf</td><td>Capillary</td><td>Supply + drain</td><td>Propagation, aquatic emersed</td></tr>
+        <tr><td>Deep substrate bed</td><td>Drip or hand, 150–200 mm media</td><td>Supply + drain</td><td>Saffron corms — subject to Q19.2</td></tr>
+        <tr><td>NFT channel set</td><td>NFT</td><td>Supply + drain</td><td>Preserves the Phase C Product 1.3 catalogue entry without imposing it</td></tr>
+        <tr><td>Plain shelf</td><td>None</td><td>Neither</td><td>Germination rack, dry storage, packing</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">Note what this buys commercially: the same rack sells into a microgreen grower, a propagation nursery and a research institute, and the difference between those three orders is which module ships in the box. That is the modularity Phase B says you are charging a premium for, made specific.</p>
+</section>
+
+<!-- ============ MATERIAL COMPARISON ============ -->
+<section>
+  <div class="snum">§9 · Material comparison</div>
+  <h2>Costed frame comparison — and why cost does not decide it</h2>
+  <p class="lede prose">Built on Q3-2026 Indian trade rates for a provisional 5-tier-capable frame. The finding is not the one I expected, and it undermines a premise carried through Phase C and Phase E.</p>
+
+  <div class="note"><strong>Read this as directional, not as a quotation.</strong> Trade-listing rates carry wide spreads and move with the steel and aluminium cycles; fabrication and joint costs are estimates against typical Coimbatore job-shop practice, not quotes. Confidence <span class="chip c-n">Low–Med</span> throughout. Q17 (vendors engaged) and Q20 (target cost) would convert this from an argument into a number. The frame envelope below is itself provisional and depends on Q1.</div>
+
+  <h3>Basis</h3>
+  <div class="calc">
+    <div class="cap">Provisional frame take-off — <span class="chip c-c">Assumption</span></div>
+    <div class="row"><span>Shelf envelope, 4 trays across (536 mm front-to-back)</span><span>1180 × 620 mm</span></div>
+    <div class="row"><span>Rack height, 5-tier capable</span><span>2100 mm</span></div>
+    <div class="row"><span>Uprights, 4 × 2.1 m</span><span>8.4 m</span></div>
+    <div class="row"><span>Tier + base frames, 6 × 3.6 m</span><span>21.6 m</span></div>
+    <div class="row"><span>Total section length</span><span>30.0 m</span></div>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Option</th><th>Section</th><th>Mass</th><th>Material</th><th>Finish</th><th>Joints</th><th>Fabrication</th><th>Frame total</th></tr></thead>
+      <tbody>
+        <tr><td>SS304</td><td class="mono">40×40×1.5 SHS</td><td class="num">55 kg</td><td class="num">₹12,100</td><td class="num">₹2,500</td><td class="num">₹2,700</td><td class="num">₹4,500</td><td class="num">₹21,800</td></tr>
+        <tr><td>SS316</td><td class="mono">40×40×1.5 SHS</td><td class="num">55 kg</td><td class="num">₹14,000</td><td class="num">₹2,500</td><td class="num">₹2,700</td><td class="num">₹4,500</td><td class="num">₹23,700</td></tr>
+        <tr><td>Aluminium T-slot</td><td class="mono">40×40 slot-8</td><td class="num">44 kg</td><td class="num">₹15,300</td><td class="num">included</td><td class="num">₹6,000</td><td class="num">₹2,000</td><td class="num">₹23,300</td></tr>
+        <tr><td>Hybrid, SS304 wet</td><td class="mono">SS 21 m + Al 9 m</td><td class="num">51 kg</td><td class="num">₹13,040</td><td class="num">₹1,800</td><td class="num">₹3,700</td><td class="num">₹3,900</td><td class="num">₹22,440</td></tr>
+        <tr><td>Hybrid, SS316 wet</td><td class="mono">SS 21 m + Al 9 m</td><td class="num">51 kg</td><td class="num">₹14,380</td><td class="num">₹1,800</td><td class="num">₹3,700</td><td class="num">₹3,900</td><td class="num">₹23,780</td></tr>
+        <tr><td>Powder-coated MS</td><td class="mono">40×40×2.0 SHS</td><td class="num">72 kg</td><td class="num">₹5,700</td><td class="num">₹2,850</td><td class="num">₹600</td><td class="num">₹2,500</td><td class="num">₹11,650</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The finding</h3>
+  <p class="prose"><strong>Aluminium T-slot is not the cheap option.</strong> At Indian rates it lands within about 7% of SS304 and slightly above the SS304 hybrid — and it does so for two reasons that Phase C and Phase E do not account for.</p>
+  <p class="prose">First, extrusion carries a large conversion premium over commodity tube. Standard 40×40 slot-8 profile trades around ₹495–530 per metre; SS304 40×40×1.5 hollow section works out near ₹400 per metre at ₹220/kg. Stainless is <em>cheaper per metre</em> than aluminium T-slot in this market. Second — and this is the cost nobody budgets for — <strong>a T-slot frame has roughly forty joints, and every one of them needs corner brackets, T-nuts and bolts.</strong> At ₹120–180 per joint that is ₹5,000–7,000 of connectors on a single rack, which quietly consumes the entire profile saving.</p>
+  <p class="prose">The result: among the three premium options, the spread is under ₹2,000 on a frame of roughly ₹22,000. <strong>Cost is not the deciding variable.</strong> Phase C rates the extrusion rack "Low" complexity with a 35–45% margin partly on the assumption that extrusion is the economical path; at these rates that assumption does not survive contact with the connector line item.</p>
+
+  <h3>A stiffness point that changes the section sizing</h3>
+  <div class="calc">
+    <div class="cap">Bending stiffness, same nominal 40 × 40 section</div>
+    <div class="row"><span>SS304 SHS · I ≈ 57,200 mm⁴ · E = 193 GPa</span><span>EI ≈ 11.0 kN·m²</span></div>
+    <div class="row"><span>Al 6063 slot-8 · I ≈ 67,000 mm⁴ · E = 70 GPa</span><span>EI ≈ 4.7 kN·m²</span></div>
+    <div class="row"><span>Stainless is stiffer by</span><span>≈ 2.3×</span></div>
+  </div>
+  <p class="prose">This matters because §8 turned "level bench" from a nicety into a requirement. To hold ≤3 mm across a loaded 1180 mm bed, aluminium beams would need to step up to 40×80 — which adds roughly ₹700 per metre on the beam runs and pushes the extrusion option clearly above both stainless variants. Stainless meets the flatness requirement at 40×40.</p>
+
+  <h3>Non-cost scoring</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Criterion</th><th>SS304</th><th>SS316</th><th>Al T-slot</th><th>Hybrid</th><th>Coated MS</th></tr></thead>
+      <tbody>
+        <tr><td>Hygiene / cleanability</td><td>Good — closed section, wipeable; welds need passivation</td><td>Good</td><td>Poor — open slots run the full length, trap media, cannot be wiped</td><td>Good in the wet zone; slots confined above canopy</td><td>Poor — a chipped coating in a wet food room is a failure</td></tr>
+        <tr><td>Corrosion vs sanitisers</td><td>Marginal with chlorides (PREN 18–20); fine with PAA / H₂O₂</td><td>Safe with chlorides (PREN 24–26)</td><td>Anodising attacked by strong acid and alkali; scratches expose bare metal</td><td>Follows the SS grade chosen</td><td>Fails at first coating breach</td></tr>
+        <tr><td>Sustained &gt;80% RH (Zone B)</td><td>Pass</td><td>Pass</td><td>Pass</td><td>Pass</td><td>Fail over service life</td></tr>
+        <tr><td>Stiffness at 40×40</td><td>Meets 3 mm flatness</td><td>Meets</td><td>Needs 40×80 beams</td><td>Meets</td><td>Meets</td></tr>
+        <tr><td>Coimbatore capability</td><td>Present, but Phase C flags SS fab as "less specialised"; pickling and passivation must be vendor-verified</td><td>Same, plus more demanding welding</td><td>Deepest local capability; no welding at all</td><td>Both skills needed; more vendor coordination</td><td>Universal</td></tr>
+        <tr><td>Lead time</td><td>Stocked (ASTM A554)</td><td>Stocked</td><td>Stocked — no die needed, per C9</td><td>Stocked</td><td>Stocked</td></tr>
+        <tr><td>Reconfigurability</td><td>Bolted at pitched holes — good, not tool-less</td><td>Same</td><td>Genuinely tool-less and continuous</td><td>Tool-less where it matters, on the accessory rail</td><td>Welded — poor</td></tr>
+        <tr><td>Mass</td><td class="num">55 kg</td><td class="num">55 kg</td><td class="num">44 kg</td><td class="num">51 kg</td><td class="num">72 kg</td></tr>
+        <tr><td>Brand signal</td><td>Food-grade, hospital/kitchen language</td><td>Same, with a certification story</td><td>Precision-machinery language — Phase B's "premium cue"</td><td>Both, if detailed well</td><td>Reads as exactly the generic local fabrication Phase B says you are differentiating from</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Recommendation</h3>
+  <p class="prose">Powder-coated mild steel is genuinely cheaper — about half the frame cost — and should be discounted anyway. It fails the sustained-high-humidity case in the propagation configuration, it fails the food-contact hygiene case at the first coating chip, and it is the exact product Phase B positions you against. Saving ₹10,000 to become indistinguishable from a local welded rack is not a saving.</p>
+  <p class="prose">Between the other three, since cost is within noise, the decision falls to hygiene and to fabrication risk — and those point in opposite directions. <strong>Hygiene favours stainless. Local capability favours aluminium</strong>, because Phase C itself says SS fabrication in Coimbatore is less specialised than aluminium work and that food-grade finishing has to be verified vendor by vendor. That vendor risk is real and it is not priced in the table above.</p>
+  <p class="prose">My recommendation is unchanged and now better supported: <strong>the hybrid.</strong> SS304 hollow-section uprights and tier beams for the wet, food-contact, cleanable structure; a bolt-on aluminium accessory rail above the canopy for LED fixtures, drivers, sensors, cabling and future accessories, where slots are an asset rather than a contamination trap. It costs ₹22,400 against ₹21,800 for pure stainless and ₹23,300 for pure extrusion — a rounding error — and it is the only option that gets the cleanable wet structure and the tool-less accessory interface at the same time.</p>
+  <p class="prose">Two conditions on that recommendation. It moves to SS316 in the wet zone, at about ₹1,340 more per rack, if Q14 comes back with chloride sanitisers. And it depends on finding a Coimbatore fabricator who pickles and passivates stainless welds properly — if that vendor does not exist at an acceptable price, the honest fallback is all-aluminium with the hygiene compromise stated openly to customers, not stainless welded badly.</p>
+  <div class="note"><strong>Superseded at Rev D — see §11.</strong> This comparison asked the wrong question. It priced four ways of building a frame that is food-contact grade throughout, when only the wet zone ever touches the crop. Separating structure from wet zone from accessory plane brings the core rack to ₹15,640 and keeps the modular interface intact. The scoring below is still valid for choosing a <em>wet-zone</em> material, and the SS304-versus-316 logic carries forward to the Pro tier. The frame conclusion does not.</div>
+</section>
+
+<!-- ============ PROPOSED FREEZE ============ -->
+<section>
+  <div class="snum">§10 · Proposed freeze</div>
+  <h2>The nine blocking questions, answered</h2>
+  <p class="lede prose">Six of the nine I can resolve with a defensible engineering default for you to override. Three genuinely need you — and one of those has turned up a commercial problem that matters more than anything else in this document.</p>
+
+  <div class="note"><strong>Read the classification.</strong> Everything below marked <span class="chip c-b">B · Recommendation</span> is a default I am proposing so work can continue; reject any of it freely. Everything marked <span class="chip c-c">C · Assumption</span> must be retired before Phase 4. Nothing here is in CAD.</div>
+
+  <h3>Q1 · Tray — resolved by designing to a band, not to a tray</h3>
+  <div class="tags" style="display:flex;gap:6px;margin-bottom:10px"><span class="chip c-b">Recommendation</span><span class="chip c-c">Design tray is an assumption</span></div>
+  <p class="prose">You still need to measure a real tray, but the design does not have to wait for it. The known market spread is narrow — 533 to 536 mm long, 279 mm wide across every source checked — so rather than keying the model to one supplier's tray, the bay is built to a <strong>tolerance band</strong> with compliant tray rails instead of a hard pocket.</p>
+  <div class="calc">
+    <div class="cap">Tray design band — any tray inside this fits without modification</div>
+    <div class="row"><span>Length</span><span>530 – 545 mm</span></div>
+    <div class="row"><span>Width</span><span>275 – 285 mm</span></div>
+    <div class="row"><span>Height</span><span>55 – 70 mm</span></div>
+    <div class="row"><span>Design tray for calculation</span><span>536 × 279 × 64 mm</span></div>
+    <div class="row"><span>Design mass, peak loaded</span><span>5.9 kg</span></div>
+  </div>
+  <p class="prose">This costs almost nothing — 12 mm of clearance per tray gap — and it buys real freedom: you can change tray supplier without changing tooling, and a customer's existing trays will fit. If the tray you settle on falls outside the band, tell me and the band moves. If it falls inside, nothing changes.</p>
+
+  <h3>Q2 · Rack dimensions — resolved, and the ergonomics gave a surprising answer</h3>
+  <div class="tags" style="display:flex;gap:6px;margin-bottom:10px"><span class="chip c-b">Recommendation</span><span class="chip c-n">High</span></div>
+  <p class="prose">I ran the tray handling through the revised NIOSH lifting equation rather than guessing at a comfortable height. The result changes how the fifth tier should be built.</p>
+  <div class="calc">
+    <div class="cap">NIOSH RWL for a 5.9 kg tray · RWL = LC × HM × VM × DM × AM × FM × CM</div>
+    <div class="row"><span>Load constant LC</span><span>23 kg</span></div>
+    <div class="row"><span>Horizontal multiplier HM, reach ≈ 450 mm</span><span>0.556</span></div>
+    <div class="row"><span>Vertical multiplier VM = 1 − 0.003|V − 75 cm|</span><span>varies</span></div>
+    <div class="row"><span>Frequency FM (harvest-day cadence) · Coupling CM</span><span>0.75 · 0.95</span></div>
+    <div class="row"><span>RWL at bed height 1600 mm ⇒ lifting index</span><span>5.93 kg ⇒ LI 0.99</span></div>
+    <div class="row"><span>RWL at bed height 200 mm ⇒ lifting index</span><span>6.69 kg ⇒ LI 0.88</span></div>
+    <div class="row"><span>Above 1750 mm, VM = 0 ⇒ NIOSH does not sanction the lift</span><span>RWL 0</span></div>
+  </div>
+  <p class="prose">Two consequences. First, <strong>1600 mm is the top-bed ceiling</strong> — that is where the lifting index reaches 1.0 for this tray mass, and 1750 mm is a hard wall where the equation returns zero. The 1900 mm top bed a naive 5-tier stack would produce is not a stretch, it is outside the standard entirely.</p>
+  <p class="prose">Second, and this is the useful part: <strong>a low tier scores better than a high one.</strong> At a 200 mm bed the lifting index is 0.88 against 0.99 at 1600 mm. So the fifth tier should be added <em>at the bottom</em>, not the top — the opposite of the instinctive answer, and it keeps every bed inside the ergonomic envelope.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Configuration</th><th>Bed heights (mm)</th><th>Pitch</th><th>LED clearance available</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>4-tier, default</td><td class="mono">300 · 700 · 1100 · 1500</td><td class="num">400 mm</td><td class="num">151 mm</td><td>Comfortable. All beds well inside NIOSH.</td></tr>
+        <tr><td>5-tier, option</td><td class="mono">200 · 550 · 900 · 1250 · 1600</td><td class="num">350 mm</td><td class="num">101 mm</td><td>Workable for microgreens only. Tight on LED clearance; no headroom for taller crops.</td></tr>
+        <tr><td>3-tier, R&amp;D variant</td><td class="mono">400 · 900 · 1400</td><td class="num">500 mm</td><td class="num">251 mm</td><td>Generous. Suits instrumented work and future taller crops.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">All three come off one upright drilled at 50 mm pitch, which is what makes this a platform rather than three products. Note the honest cost of the fifth tier: it is not free, it buys 25% more capacity by spending your LED clearance headroom and locking that rack to short crops.</p>
+
+  <h3>Q5 · LED — resolved by defining the interface first</h3>
+  <div class="tags" style="display:flex;gap:6px;margin-bottom:10px"><span class="chip c-b">Recommendation</span></div>
+  <p class="prose">You did not answer this, and I think the answer is the one I flagged as the better option: <strong>define the mounting interface now and have Product 1.2 conform to it.</strong> The rack and the light are being designed by the same company at the same time. That alignment is available exactly once, and taking it means every future fixture — yours or a third party's — has a defined thing to bolt to.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Interface feature</th><th>Spec</th><th>Reasoning</th></tr></thead>
+      <tbody>
+        <tr><td>Rail form</td><td>Two parallel slotted rails spanning the tier, fixed gauge</td><td>Accepts any fixture with two mounting points, regardless of maker.</td></tr>
+        <tr><td>Height adjustment</td><td>80–200 mm above bed, 20 mm steps, default 150</td><td>Close-canopy operation is a stated energy strategy (Phase A §1.5), not an option.</td></tr>
+        <tr><td>Fixture envelope</td><td>1000–1200 mm long, ≤ 80 mm wide, ≤ 4 kg</td><td>Covers your bar and every common third-party bar.</td></tr>
+        <tr><td>Driver location</td><td>Remote, on the services rail — not onboard the fixture</td><td>Keeps fixture mass and heat out of the canopy zone, keeps mains out of the wet zone, lets one driver serve a tier, and makes driver failure a two-minute swap.</td></tr>
+        <tr><td>Connector</td><td>IP65 keyed, at a fixed position per tier</td><td>A fixture change must not become a rewiring job.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Q6 · Airflow — resolved with one plenum and two feed options</h3>
+  <div class="tags" style="display:flex;gap:6px;margin-bottom:10px"><span class="chip c-b">Recommendation</span></div>
+  <p class="prose">The central-HVAC-versus-rack-fans question does not have to be answered to proceed, because the same component serves both. A <strong>linear plenum runs the full length of each tier at the rear, with a perforated face toward the canopy</strong> — which is what the CFD evidence in Phase A §1.4 requires. It is then fed either by an EC fan in one end cap, for a standalone rack, or by a duct spigot from room HVAC in the same end cap, for an integrated room. One plenum, two end caps, decision deferred without blocking anything.</p>
+  <div class="calc">
+    <div class="cap">Plenum and fan sizing — <span class="chip c-b">Recommendation</span></div>
+    <div class="row"><span>Effective canopy cross-section, 1176 mm × 120 mm</span><span>0.141 m²</span></div>
+    <div class="row"><span>Target canopy velocity (Phase A §1.4)</span><span>0.35 m/s</span></div>
+    <div class="row"><span>Required flow per tier</span><span>≈ 178 m³/h</span></div>
+    <div class="row"><span>Satisfied by one 120 mm EC fan per tier</span><span>100–200 m³/h class</span></div>
+    <div class="row"><span>Uniformity target across the bed</span><span>CV ≤ 15%</span></div>
+  </div>
+  <p class="prose">Same fan the prosumer benchmark uses — but discharging into a distributed plenum rather than blowing a jet down the shelf. That single change is the difference between the ~33% and the ~10% velocity coefficient of variation in the cited CFD work, and it costs a sheet-metal part.</p>
+
+  <h3>Q8 · Drainage — resolved, with one deliberate omission</h3>
+  <div class="tags" style="display:flex;gap:6px;margin-bottom:10px"><span class="chip c-b">Recommendation</span></div>
+  <ul class="prose">
+    <li>Each tier drains to a <strong>vertical rack-side header</strong> with a single discharge at the base — one connection to the room, not four.</li>
+    <li>Header joins are clamp connections so the whole drain stack lifts out for cleaning <strong>without dismantling the frame</strong>.</li>
+    <li><strong>Air gap at the discharge</strong>, not a direct connection. Back-siphonage from a floor drain into a food-crop irrigation system is the kind of thing that ends a food-safety audit.</li>
+    <li>Drain bore 40 mm against a 20 mm supply, per the asymmetry rule in §8.</li>
+    <li><strong>No bunded base by default.</strong> Containing 18 litres in the rack base adds mass, cost and a cleaning trap, and duplicates the room's floor drain. The primary control is the leak sensor and solenoid interlock that Phase A §2.6 already mandates. A bunded base becomes an option for rooms with no floor drain — which is what Q8.1 was really asking.</li>
+  </ul>
+
+  <h3>Q11 · Electrical — resolved on the Indian default</h3>
+  <div class="tags" style="display:flex;gap:6px;margin-bottom:10px"><span class="chip c-b">Recommendation</span></div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Item</th><th>Proposal</th><th>Reasoning</th></tr></thead>
+      <tbody>
+        <tr><td>Supply</td><td>230 V single phase, one feed per rack</td><td>At ~280 W a rack draws about 1.3 A. Three-phase would be engineering for a load that does not exist.</td></tr>
+        <tr><td>Circuit</td><td>16 A RCBO, 30 mA, serving 4–5 racks</td><td>RCD on every wet circuit is mandated by Phase A §2.6.</td></tr>
+        <tr><td>Local isolation</td><td>Lockable isolator on each rack</td><td>Servicing one rack's LEDs must not require killing the room — and a room-only isolator makes lock-out/tag-out impractical.</td></tr>
+        <tr><td>IP rating</td><td>IP54 above canopy, IP65 at or below bed level</td><td>Matches the wet/dry zoning the frame already uses.</td></tr>
+        <tr><td>Earthing</td><td>Frame bonded and earthed as a metallic enclosure</td><td>Conductive frame, wet environment, mains present.</td></tr>
+        <tr><td>Segregation</td><td>Four channels: mains · LED DC · 0–10 V dimming · RS485 + sensors</td><td>Dimming and Modbus both suffer from mains coupling; separating them in metal is cheaper than debugging it later.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Q14 · Cleaning — worst case stands, now with a written spec</h3>
+  <div class="tags" style="display:flex;gap:6px;margin-bottom:10px"><span class="chip c-c">Assumption</span></div>
+  <p class="prose">Still undecided, so SS316 in the wet zone remains the working assumption. What I can add is the specification that makes stainless actually deliver its corrosion resistance, because a badly finished stainless weld is worse than no stainless at all: <strong>cleaning, descaling and pickling to ASTM A380, passivation verified to ASTM A967.</strong> That is the line that goes on the drawing and into the vendor purchase order, and it is the single most likely thing for a general fabrication shop to skip.</p>
+
+  <h3>Q17 · Vendors — I cannot answer this, but here is what to ask them</h3>
+  <div class="tags" style="display:flex;gap:6px;margin-bottom:10px"><span class="chip c-d">Needs you</span></div>
+  <p class="prose">Phase C flags that stainless fabrication in Coimbatore is "less specialised than pump/motor aluminium work" and that food-grade finishing must be verified vendor by vendor. That vendor risk is the main threat to the hybrid recommendation, so it is worth qualifying before committing. Six questions to put to each candidate:</p>
+  <ol class="prose">
+    <li>Do you pickle and passivate stainless welds in-house, or subcontract it — and to whom?</li>
+    <li>Can you certify to ASTM A380 and A967, and will you supply the certificate per batch?</li>
+    <li>Do you use dedicated stainless tooling, or shared with carbon steel?<span class="hint" style="display:block;font-size:13.5px;color:var(--ink-3)">Carbon contamination from shared grinding wheels and wire brushes causes rust spots on stainless that look like a material failure and are not. This question separates shops that understand stainless from shops that merely cut it.</span></li>
+    <li>What tolerance do you hold on a 1200 mm cut length, and on hole position across a 2 m upright?</li>
+    <li>What is your minimum order and lead time at 10 units, and at 100?</li>
+    <li>Can you back-purge stainless tube welds?</li>
+  </ol>
+
+  <h3>Q20 · Cost — the finding that matters most in this document</h3>
+  <div class="tags" style="display:flex;gap:6px;margin-bottom:10px"><span class="chip c-d">Needs you</span><span class="chip c-n">Med</span></div>
+  <p class="prose">I went looking for a price anchor and found one that reframes the whole product. Storack (Rajkot) sells racks marketed specifically for microgreens and tissue culture, in India, today:</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Competing product</th><th>Tiers</th><th>Rated load/shelf</th><th>Price</th></tr></thead>
+      <tbody>
+        <tr><td>MS height-adjustable microgreen grow rack</td><td class="num">6</td><td class="num">150 kg</td><td class="num">₹9,999</td></tr>
+        <tr><td>SS rack for microgreen / tissue culture</td><td class="num">6</td><td class="num">80–120 kg</td><td class="num">₹11,999</td></tr>
+        <tr><td>Agricultural rack, 54 × 24 × 72 in</td><td class="num">7</td><td class="num">150 kg</td><td class="num">₹11,940</td></tr>
+        <tr><td>SS wire rack, 4 shelf</td><td class="num">4</td><td class="num">100 kg</td><td class="num">₹6,999</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">The Indian market price for a bare microgreen rack is <strong>₹7,000 to ₹12,000</strong>. My frame-only cost in §9 is ₹21,800 to ₹23,700 — before shelves, flood tables, LED rails, plenums, manifold, drain stack or electrical. A complete 4-tier growing rack is likely to land near ₹40,000 manufactured, which at a 40% gross margin prices at roughly ₹67,000.</p>
+  <p class="prose"><strong>That is five to nine times the visible market price, and no amount of engineering argument closes that gap if the customer is comparing racks.</strong> Two honest observations. Those competing products are chrome or zinc-plated wire shelving — the "SS" at ₹6,999 for four shelves is not structural SS304 — and none of them has lighting, irrigation, drainage, cable management or a modular interface. They are the generic tier Phase B explicitly positions you against. But that is exactly the point: <strong>this product cannot be sold as a rack.</strong> Sold as a rack it loses on price to a wire shelf. Sold as an integrated growing system it is not competing with a wire shelf at all.</p>
+  <p class="prose">That has a real consequence for sequencing. Phase E puts the bare rack first as the low-risk revenue product and the turnkey room package (2.6) last. This anchor suggests the bare rack is the <em>hardest</em> thing to sell at a premium, not the easiest, and that the rack needs at least the LED rail and the flood table shipping with it to make sense commercially. That is a strategy question, not an engineering one, and it is yours.</p>
+
+  <h3>Derived master parameters</h3>
+  <p class="lede prose">Everything above collapses into this. These are the parameters the Fusion model will be driven by — equations where a relationship exists, fixed values only where a decision has been taken. Nothing is hard-coded that could be derived.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Parameter</th><th>Value / equation</th><th>Class</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">Tray_L · Tray_W · Tray_H</td><td class="mono">536 · 279 · 64 mm (band 530–545 / 275–285 / 55–70)</td><td><span class="chip c-c">C</span></td><td>Q1 band</td></tr>
+        <tr><td class="mono">Tray_Design_Mass</td><td class="mono">7.5 kg (peak 5.9 × 1.27)</td><td><span class="chip c-c">C</span></td><td>§5 · §8</td></tr>
+        <tr><td class="mono">Tray_Count_Per_Tier</td><td class="mono">4 (evaluate 2/3/4 in Phase 3)</td><td><span class="chip c-b">B</span></td><td>Open</td></tr>
+        <tr><td class="mono">Tray_Clearance</td><td class="mono">12 mm</td><td><span class="chip c-b">B</span></td><td>Q1 band tolerance</td></tr>
+        <tr><td class="mono">Bed_Width</td><td class="mono">= Tray_Count × Tray_W + (Tray_Count + 1) × Tray_Clearance = 1176</td><td><span class="chip c-b">B</span></td><td>Derived</td></tr>
+        <tr><td class="mono">Bed_Depth</td><td class="mono">= Tray_L + 2 × Tray_Clearance = 560</td><td><span class="chip c-b">B</span></td><td>Derived</td></tr>
+        <tr><td class="mono">Post_Size</td><td class="mono">40 × 40 × 1.6 GI SHS, powder-coated</td><td><span class="chip c-b">B</span></td><td>§11</td></tr>
+        <tr><td class="mono">Beam_Size</td><td class="mono">30 × 30 × 1.5 GI SHS · I = 23,213 mm⁴ vs 13,850 required</td><td><span class="chip c-b">B</span></td><td>§11 section check</td></tr>
+        <tr><td class="mono">Accessory_Grid_Pitch</td><td class="mono">50 mm punched hole grid, all uprights and beams</td><td><span class="chip c-b">B</span></td><td>§11</td></tr>
+        <tr><td class="mono">Rack_Width</td><td class="mono">= Bed_Width + 2 × Post_Size = 1256</td><td><span class="chip c-b">B</span></td><td>Derived</td></tr>
+        <tr><td class="mono">Service_Clearance</td><td class="mono">90 mm (rear plenum + pipe run)</td><td><span class="chip c-b">B</span></td><td>Q6</td></tr>
+        <tr><td class="mono">Rack_Depth</td><td class="mono">= Bed_Depth + Service_Clearance = 650</td><td><span class="chip c-b">B</span></td><td>Derived</td></tr>
+        <tr><td class="mono">Number_of_Tiers</td><td class="mono">4 default, range 3–5</td><td><span class="chip c-a">A</span></td><td>D1, Rev B</td></tr>
+        <tr><td class="mono">Shelf_Pitch</td><td class="mono">400 (4-tier) · 350 (5-tier) · 500 (3-tier)</td><td><span class="chip c-b">B</span></td><td>Q2 · NIOSH</td></tr>
+        <tr><td class="mono">Bed_Height_1</td><td class="mono">300 (4-tier) · 200 (5-tier)</td><td><span class="chip c-b">B</span></td><td>Q2 · NIOSH</td></tr>
+        <tr><td class="mono">Top_Bed_Height</td><td class="mono">= Bed_Height_1 + (Number_of_Tiers − 1) × Shelf_Pitch · constraint ≤ 1600</td><td><span class="chip c-a">A</span></td><td>NIOSH LI ≤ 1.0</td></tr>
+        <tr><td class="mono">Rack_Height</td><td class="mono">= Top_Bed_Height + Shelf_Pitch + 50 = 1950–2000</td><td><span class="chip c-b">B</span></td><td>Derived</td></tr>
+        <tr><td class="mono">Upright_Hole_Pitch</td><td class="mono">50 mm</td><td><span class="chip c-b">B</span></td><td>Serves all three configs off one part</td></tr>
+        <tr><td class="mono">LED_Clearance</td><td class="mono">80–200 mm, default 150, 20 mm steps</td><td><span class="chip c-b">B</span></td><td>Q5 · Phase A §1.5</td></tr>
+        <tr><td class="mono">Fan_Clearance</td><td class="mono">90 mm plenum depth</td><td><span class="chip c-b">B</span></td><td>Q6</td></tr>
+        <tr><td class="mono">Flood_Depth</td><td class="mono">22 mm (band 19–25)</td><td><span class="chip c-a">A</span></td><td>UMass Extension</td></tr>
+        <tr><td class="mono">Flood_Volume_Per_Tier</td><td class="mono">= Bed_Width × Bed_Depth × Flood_Depth ≈ 14.5 L</td><td><span class="chip c-b">B</span></td><td>Derived</td></tr>
+        <tr><td class="mono">Pipe_Diameter · Drain_Diameter</td><td class="mono">20 mm · 40 mm (drain &gt; supply, always)</td><td><span class="chip c-b">B</span></td><td>§8</td></tr>
+        <tr><td class="mono">Shelf_Load</td><td class="mono">80 kg UDL</td><td><span class="chip c-b">B</span></td><td>§5</td></tr>
+        <tr><td class="mono">Shelf_Flatness</td><td class="mono">≤ 3 mm across the loaded bed</td><td><span class="chip c-a">A</span></td><td>UMass: bench must be level</td></tr>
+        <tr><td class="mono">Total_Rack_Load</td><td class="mono">= Number_of_Tiers × Shelf_Load + frame ≈ 375 kg at full rating</td><td><span class="chip c-b">B</span></td><td>Derived</td></tr>
+        <tr><td class="mono">Cable_Channel_Size</td><td class="mono">4 × segregated channels, 40 × 40</td><td><span class="chip c-b">B</span></td><td>Q11</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ COST-DOWN ARCHITECTURE ============ -->
+<section>
+  <div class="snum">§11 · Cost-down architecture</div>
+  <h2>Stop buying one material to do three jobs</h2>
+  <p class="lede prose">You are right that ₹22,000 on a frame alone is not defensible. But the answer is not a cheaper stainless — it is noticing that the frame was being asked to satisfy a requirement it never actually has.</p>
+
+  <h3>The mistake in Rev B and C</h3>
+  <p class="prose">Both the hybrid and the all-stainless option were specified to be <em>food-contact grade throughout</em>. That was wrong. Three different jobs were being bundled into one material, and only one of them needs stainless:</p>
+
+  <div class="keygrid">
+    <div><h4>Structure</h4><p>Carries load, resists impact, holds the beds level. Sees humidity and occasional splash. <strong>Never touches the crop or standing water.</strong> Needs corrosion protection, not food-grade metallurgy.</p></div>
+    <div><h4>Wet zone</h4><p>Contains the flood, touches the crop. <strong>This is the only part that must be food-grade</strong> — and it is per-tier, replaceable, and optional depending on irrigation method.</p></div>
+    <div><h4>Accessory plane</h4><p>Carries LEDs, sensors, cabling, future modules. Needs to be repositionable and extensible. <strong>Needs a defined interface, not a particular alloy.</strong></p></div>
+  </div>
+
+  <p class="prose">Separating these is not a compromise, it is what the industry already does. US commercial greenhouse benching uses <strong>heavy-gauge galvanised steel legs with hot-dip galvanised expanded-metal decks</strong>, with tube ends capped "to seal out moisture and chemicals" — not stainless. Stainless appears in horticulture on food-contact surfaces, not on bench structure. Rev C had the boundary in the wrong place.</p>
+
+  <h3>Revised build</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Element</th><th>Material</th><th>Why this is enough</th></tr></thead>
+      <tbody>
+        <tr><td>Uprights</td><td class="mono">GI 40 × 40 × 1.6 SHS, powder-coated</td><td>Duplex coating — zinc plus polyester powder — in a climate-controlled indoor room. Capped ends, no drilled holes below bed level.</td></tr>
+        <tr><td>Beams</td><td class="mono">GI 30 × 30 × 1.5 SHS, powder-coated</td><td>Dropped from 40 × 40 because the section was over-specified by 4× — see the check below.</td></tr>
+        <tr><td>Deck</td><td class="mono">GI expanded metal in an edge frame</td><td>76% open area drains and passes air, supports the wet module, costs almost nothing. Direct from greenhouse-bench practice.</td></tr>
+        <tr><td>Wet module</td><td class="mono">Food-grade HDPE 3 mm (SS304 0.8 mm on the Pro tier)</td><td>The only food-contact structural part. Per-tier, drops out for cleaning, optional by configuration.</td></tr>
+        <tr><td>Accessory interface</td><td class="mono">50 mm punched hole grid, all uprights and beams</td><td>The universal mounting plane. Free — it is a punching operation on a part already being cut.</td></tr>
+        <tr><td>Accessory rail</td><td class="mono">Aluminium 20 × 40 T-slot — optional</td><td>For continuous rather than 50 mm positioning. 9.6 m per rack, not 30.</td></tr>
+        <tr><td>Fasteners</td><td class="mono">M8 SS304</td><td>Stainless where it is cheap and where corrosion actually bites — at the joints.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="calc">
+    <div class="cap">Section check — the 40 × 40 beam was 4× oversized</div>
+    <div class="row"><span>Shelf UDL 80 kg shared by two beams, span 1176 mm</span><span>334 N/m</span></div>
+    <div class="row"><span>I required for the 3 mm flatness limit</span><span>13,850 mm⁴</span></div>
+    <div class="row"><span>40 × 40 × 1.5 (Rev C)</span><span>57,153 mm⁴ · 4.1×</span></div>
+    <div class="row"><span>30 × 30 × 1.5 (Rev D)</span><span>23,213 mm⁴ · 1.68×</span></div>
+    <div class="row"><span>Predicted deflection at 30 × 30 × 1.5</span><span>1.79 mm — passes</span></div>
+  </div>
+  <p class="prose">Worth noting: mild steel at E = 200 GPa is marginally <em>stiffer</em> than stainless at 193 GPa. The flatness requirement that made aluminium awkward in §9 costs nothing here.</p>
+
+  <h3>Costed</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Line</th><th>Detail</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td>GI hollow section</td><td class="mono">45.2 kg @ ₹100/kg</td><td class="num">₹4,520</td></tr>
+        <tr><td>Powder coat over GI</td><td class="mono">4.2 m² @ ₹60/sq ft</td><td class="num">₹2,700</td></tr>
+        <tr><td>Punch / laser</td><td class="mono">50 mm hole grid, end prep</td><td class="num">₹1,800</td></tr>
+        <tr><td>Connector plates</td><td class="mono">20 pcs laser-cut</td><td class="num">₹1,400</td></tr>
+        <tr><td>Fasteners</td><td class="mono">~80 pcs M8 SS304</td><td class="num">₹700</td></tr>
+        <tr><td>Feet and end caps</td><td class="mono">4 levellers + caps</td><td class="num">₹700</td></tr>
+        <tr><td>Assembly labour</td><td class="mono">bolted, no welding</td><td class="num">₹1,200</td></tr>
+        <tr><td><strong>Frame subtotal</strong></td><td></td><td class="num"><strong>₹13,020</strong></td></tr>
+        <tr><td>Decks × 4</td><td class="mono">expanded mesh + edge frame</td><td class="num">₹2,620</td></tr>
+        <tr><td><strong>Core rack</strong></td><td class="mono">frame + decks, 4 tier</td><td class="num"><strong>₹15,640</strong></td></tr>
+        <tr><td>Flood trays × 4</td><td class="mono">food-grade HDPE, fabricated</td><td class="num">₹4,912</td></tr>
+        <tr><td><strong>With flood-and-drain</strong></td><td></td><td class="num"><strong>₹20,552</strong></td></tr>
+        <tr><td>Aluminium T-slot rail</td><td class="mono">optional, 9.6 m</td><td class="num">₹3,588</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">Against Rev C's SS hybrid at ₹22,400 for the frame alone — or ₹30,500 once four stainless flood tables are added — this is <strong>a 33% reduction on comparable scope, and the frame itself drops 42%.</strong> Rates are Q3-2026 trade listings at low volume; a 100-unit batch should improve on the section and coating lines materially.</p>
+
+  <h3>What you actually give up</h3>
+  <p class="prose">Stated plainly, because these are real and you should decide with them in view rather than discover them later.</p>
+  <ul class="prose">
+    <li><strong>The frame is no longer food-contact rated.</strong> Defensible only because it genuinely is not in contact — the crop touches trays and the wet module, both of which stay food-grade. That zone separation has to be explicit on the drawings and in the audit pack, not implied.</li>
+    <li><strong>Coating breach is progressive.</strong> A scratch on stainless is cosmetic; a scratch through powder and zinc starts corrosion. Mitigations: capped tube ends, no drilled holes below bed level, and touch-up coating in the maintenance kit.</li>
+    <li><strong>Service life around 10–15 years</strong> in a controlled indoor room, against 20–25 for stainless. Acceptable for equipment that will likely be superseded by your own later products.</li>
+    <li><strong>A harder audit conversation.</strong> Stainless answers the question before it is asked. GI plus powder needs the zone argument made — which is fine, but it needs making.</li>
+    <li><strong>Less perceived premium.</strong> This is the one to design against rather than accept: finish quality, a considered brand colour, and the aluminium accessory rail as a visible accent are what stop this reading as a painted local fabrication.</li>
+  </ul>
+
+  <h3>What you keep — the modularity is unchanged</h3>
+  <p class="prose">This is the part worth being clear about, because cost-down usually means losing exactly what you asked to keep. It does not here.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Requirement</th><th>How it is served</th></tr></thead>
+      <tbody>
+        <tr><td>Lighting</td><td>Two slotted rails per tier as specified in §10, mounting to the 50 mm grid. <strong>Continuous height adjustment comes from the hanger, not the rail</strong> — a cam or threaded-rod hanger gives smooth close-canopy adjustment on a discrete grid. You get continuous positioning at punched-hole cost.</td></tr>
+        <tr><td>Irrigation</td><td>The TB-1 tier bay from §8 is untouched. The deck is the constant; the flood table, capillary tray, drained tray, deep bed or NFT channel drops onto it. Ports stay at fixed positions.</td></tr>
+        <tr><td>Drainage</td><td>Unchanged — per-tier drop to a removable rack-side header, air gap at discharge, 40 mm drain against 20 mm supply.</td></tr>
+        <tr><td>Sensors, future-proofing</td><td>Any bracket bolts to the 50 mm grid. No drilling, no welding, no rack redesign — which was the Phase 12 requirement. This is how 19-inch racks and industrial shelving have worked for decades; it is proven and infinitely extensible.</td></tr>
+        <tr><td>Continuous positioning</td><td>Optional aluminium T-slot rail for customers or configurations that need finer than 50 mm. Sold as an accessory rather than built into every rack.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>One convergence worth taking</h3>
+  <div class="note"><strong>The Core rack is the germination rack.</strong> Same uprights, same beams, same 50 mm grid, same decks — just more tiers at a tighter pitch and no wet module, no LED rail, no ports. The germination product you specified in D1 as a separate rack turns out to be a configuration of this one, and its development cost falls close to zero. That was not available while the frame was stainless and expensive; it is available now.</div>
+
+  <h3>Proposed product ladder</h3>
+  <p class="prose">This is what answers the Q20 price-anchor problem. Not one product priced against wire shelving, but a ladder where the entry rung is a real platform and the value climbs with integration. Prices at 40% gross margin, mid-band of Phase C's 35–45%.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Tier</th><th>Contents</th><th>Est. cost</th><th>Indicative price</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Core</strong></td><td>GI frame, 50 mm grid, decks, levelling feet</td><td class="num">₹15,640</td><td class="num">₹26,000</td><td>Entry platform, germination rack, bench stock. Upgradeable in place.</td></tr>
+        <tr><td><strong>Grow</strong></td><td>Core + flood trays, LED rails, manifold, drain stack, electrical enclosure</td><td class="num">₹30,650</td><td class="num">₹51,000</td><td>The flagship — the "high-tech stacking" product. Excludes LED fixtures.</td></tr>
+        <tr><td><strong>Pro</strong></td><td>Grow + SS304 wet zone, T-slot rail, sensor node, instrumentation</td><td class="num">₹41,940</td><td class="num">₹70,000</td><td>R&amp;D, institutional, your own Ooty facility. The audit-proof configuration.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">Core at ₹26,000 still sits well above a ₹9,999 wire shelf, and it should — it is a different object. But it is now within a factor the market can be argued into, rather than a factor of seven. And the ladder means a customer who buys Core is buying into your interface, which is the only thing that makes the accessory roadmap in Phase 12 commercially real.</p>
+  <div class="note"><strong>Superseded at Rev E — see §12.</strong> The frame was attacked again on conversion cost and part count. Core falls to ₹19,000, and to roughly ₹13,500 once the beam-end tooling is made. The architecture in this section is unchanged; only the numbers move.</div>
+
+  <div class="note"><strong>Two things I need before this becomes the frozen answer.</strong> The powder-coat and section rates are trade listings, not quotes — Q17 would firm them. And the HDPE flood tray at ₹1,228 each is the least certain line in the table; if a vacuum-formed tray is viable at volume, tooling of roughly ₹1–1.5 lakh would take it under ₹700, but Phase C is explicit about deferring tooling at low volume, so fabricated sheet is the right v1 answer.</div>
+</section>
+
+<!-- ============ FRAME COST REDUCTION ============ -->
+<section>
+  <div class="snum">§12 · Frame cost reduction</div>
+  <h2>₹13,020 → ₹8,818 now, ₹5,812 at volume</h2>
+  <p class="lede prose">Frame only — no decks, no trays. Every feature in §11 survives intact. The saving comes from conversion cost and part count, because that is where the money actually was.</p>
+
+  <div class="calc">
+    <div class="cap">Where the Rev D frame cost sat</div>
+    <div class="row"><span>Material — GI hollow section</span><span>₹4,520 · 35%</span></div>
+    <div class="row"><span>Conversion — coating, punching, plates, labour</span><span>₹7,100 · 55%</span></div>
+    <div class="row"><span>Hardware — fasteners, feet, caps</span><span>₹1,400 · 11%</span></div>
+  </div>
+  <p class="prose">Material is the third-largest line. Chasing a cheaper steel would have moved 35% of the cost by a few percent. Conversion is 55%, and that is a design problem rather than a purchasing one.</p>
+
+  <h3>Four levers, all available now</h3>
+
+  <h4>L1 · Delete the per-tier cross beams — ₹562</h4>
+  <p class="prose">Rev D gave every tier a full rectangular frame: two long beams plus two short cross beams. But the deck already has its own edge frame, and its side members run front-to-back — so <strong>the deck is the cross tie.</strong> Building a second one in steel underneath it was duplication. Each tier drops to two long beams; the base keeps a full rectangle, and two flat rear diagonals handle racking in the depth plane. Beam length falls from 21.6 m to 15.4 m and frame mass from 45.1 to 39.6 kg.</p>
+  <div class="note"><strong>This one is <span class="chip c-n">NEEDS VALIDATION</span>, not PASS.</strong> Removing cross members and relying on the decks plus two diagonals for depth-plane stability is sound in principle — it is a braced box — but I have not run the frame stability check, and I am not going to claim it is safe on reasoning alone. It goes into Phase 17 as an explicit item. If it fails, the cross beams come back at ₹562 and nothing else in this section changes.</div>
+
+  <h4>L2 · Make the finish a choice rather than a default — ₹2,700</h4>
+  <p class="prose">The single biggest line, and the one worth thinking hardest about. Powder coating over galvanising is a duplex system — genuinely excellent, and genuinely optional. Commercial greenhouse benching runs on mill-finish hot-dip galvanised steel with no topcoat at all, in wetter conditions than your room will ever see. The zinc is the corrosion protection; the powder is appearance and a smoother wipe-down surface.</p>
+  <p class="prose">So: <strong>mill GI on Core, powder coat as a ₹2,700 option on Grow and Pro.</strong> That puts the money where the customer is paying for finish and takes it out of the rung that has to survive a price comparison. It is a positioning decision as much as a cost one, and it is yours — but note that hiding a ₹2,700 finish inside every rack was costing you the entry price point.</p>
+
+  <h4>L3 · Twelve L-brackets instead of twenty plates — ₹560</h4>
+  <p class="prose">Rev D used a pair of laser-cut plates per beam-to-upright joint. A single formed L-bracket does the same job with half the parts, half the picking and half the bolt count.</p>
+
+  <h4>L4 · Correct the hardware and labour rates — ₹380</h4>
+  <p class="prose">M12 levelling feet are ₹80–120 each in India, not the ₹150 I carried; caps are ₹15. With fewer parts to assemble, labour drops from ₹1,200 to ₹1,000.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Line</th><th>Rev D</th><th>Rev E v1</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td>GI hollow section</td><td class="num">₹4,520</td><td class="num">₹3,958</td><td class="num">−₹562</td></tr>
+        <tr><td>Finish</td><td class="num">₹2,700</td><td class="num">₹0</td><td class="num">−₹2,700</td></tr>
+        <tr><td>Punch — 50 mm grid</td><td class="num">₹1,800</td><td class="num">₹1,800</td><td class="num">—</td></tr>
+        <tr><td>Beam connectors</td><td class="num">₹1,400</td><td class="num">₹840</td><td class="num">−₹560</td></tr>
+        <tr><td>Fasteners, M8 SS304</td><td class="num">₹700</td><td class="num">₹700</td><td class="num">—</td></tr>
+        <tr><td>Feet and end caps</td><td class="num">₹700</td><td class="num">₹520</td><td class="num">−₹180</td></tr>
+        <tr><td>Assembly labour</td><td class="num">₹1,200</td><td class="num">₹1,000</td><td class="num">−₹200</td></tr>
+        <tr><td><strong>Frame total</strong></td><td class="num"><strong>₹13,020</strong></td><td class="num"><strong>₹8,818</strong></td><td class="num"><strong>−32%</strong></td></tr>
+        <tr><td>With powder coat option</td><td class="num">—</td><td class="num">₹11,518</td><td class="num">−12%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The volume step — ₹5,812</h3>
+  <p class="prose">The remaining conversion cost exists because v1 is built with general-purpose processes: laser piercing every hole, bolting every joint. At volume both become tooled operations, and this is the case where Phase C's "defer tooling" advice stops applying.</p>
+  <p class="prose">The move is <strong>formed beam-end hooks engaging keyhole slots in the upright</strong> — the mechanism every boltless rack uses. It deletes the connector plates entirely, removes the fasteners at the beam-to-upright joint, and turns assembly from bolting into dropping a beam in and tapping it down. Punching moves from a laser to a dedicated die.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Line</th><th>v1 now</th><th>v2 at 100+ units</th></tr></thead>
+      <tbody>
+        <tr><td>GI section (₹100 → ₹90/kg at volume)</td><td class="num">₹3,958</td><td class="num">₹3,562</td></tr>
+        <tr><td>Punch — laser → dedicated die</td><td class="num">₹1,800</td><td class="num">₹500</td></tr>
+        <tr><td>Beam connectors — deleted by formed hooks</td><td class="num">₹840</td><td class="num">₹0</td></tr>
+        <tr><td>Amortised forming and keyhole tooling</td><td class="num">—</td><td class="num">₹500</td></tr>
+        <tr><td>Fasteners — beam joint now tool-less</td><td class="num">₹700</td><td class="num">₹350</td></tr>
+        <tr><td>Feet and caps</td><td class="num">₹520</td><td class="num">₹450</td></tr>
+        <tr><td>Assembly labour</td><td class="num">₹1,000</td><td class="num">₹450</td></tr>
+        <tr><td><strong>Frame total</strong></td><td class="num"><strong>₹8,818</strong></td><td class="num"><strong>₹5,812</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">Tooling is roughly ₹1–1.5 lakh for the beam-end forming die and the keyhole punch. At ₹3,000 saved per rack the breakeven is <strong>about 40 racks</strong> — which is a decision you can take on your first year's order book rather than on faith. It also makes assembly tool-less at the joint that matters, which was a Q18 question I had flagged as expensive; here it arrives as a side effect of the cost reduction rather than as a premium.</p>
+
+  <h3>What I did not cut, and why</h3>
+  <p class="lede prose">You asked to sustain all the features. These four were available and I left them, because each one trades something you have said you want.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Available cut</th><th>Saving</th><th>Why I left it</th></tr></thead>
+      <tbody>
+        <tr><td>Drop or coarsen the 50 mm punch grid</td><td class="num">₹1,800</td><td>This is the largest single remaining line and it <em>is</em> the modularity. Cutting it takes 20% off the frame and removes the interface that lighting, irrigation, sensors and every future accessory mount to. It would be cutting the product, not the cost.</td></tr>
+        <tr><td>Zinc-plated fasteners in the dry zone</td><td class="num">₹330</td><td>Mixed fastener kits are an assembly-error risk, and the failure mode is a rusting bolt visible in a food room. ₹330 is not worth that conversation with a customer.</td></tr>
+        <tr><td>30 × 30 uprights instead of 40 × 40</td><td class="num">₹490</td><td>Structurally fine — buckling margin is over 300×. But a 2 m rack that people pull loaded trays out of should not feel flimsy, and dent resistance is not something the calculation captures.</td></tr>
+        <tr><td>Thinner beam section</td><td class="num">—</td><td>Already at 1.68× the flatness requirement. There is nothing left here without breaking the level-bed spec that flood-and-drain depends on.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong>Where the floor is.</strong> ₹5,812 is close to the practical minimum for this frame without removing capability. Below it, the next cuts are the punch grid, the levelling feet, or the section — and each of those takes out something you have specified. If the frame still needs to come down after that, the honest lever is not the frame: it is the tray count per shelf, the rack width, or accepting a shorter service life on a thinner-walled section. Say the word and I will price those, but they are capability trades, not efficiencies.</div>
+
+  <h3>Revised product ladder</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Tier</th><th>Frame</th><th>Est. cost</th><th>Price @ 40% GM</th><th>Was (Rev D)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Core</strong></td><td>Mill GI, v1</td><td class="num">₹11,438</td><td class="num">₹19,000</td><td class="num">₹26,000</td></tr>
+        <tr><td><strong>Grow</strong></td><td>Powder-coated GI</td><td class="num">₹29,150</td><td class="num">₹48,500</td><td class="num">₹51,000</td></tr>
+        <tr><td><strong>Pro</strong></td><td>Powder-coated GI + SS wet zone</td><td class="num">₹40,440</td><td class="num">₹67,000</td><td class="num">₹70,000</td></tr>
+        <tr><td><strong>Core at 100+ units</strong></td><td>Mill GI, v2 tooled</td><td class="num">≈ ₹8,000</td><td class="num">≈ ₹13,500</td><td class="num">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">That last row is the one to look at. A tooled Core rack at around <strong>₹13,500</strong> sits within striking distance of the ₹9,999 wire shelf from §10 — while being a bolted structural rack with level beds, a drainage interface, a 50 mm accessory grid and a documented upgrade path to the Grow and Pro configurations. That is a comparison you can win rather than one you have to argue around, and it makes the entry rung a genuine volume product rather than a loss-leader.</p>
+</section>
+
+<!-- ============ CAD ============ -->
+<section>
+  <div class="snum">§13 · Fusion 360 model</div>
+  <h2>Built, checked, saved</h2>
+  <p class="lede prose">Document <span class="val">CEA_RACK_PLATFORM_RackA_v1</span>. Eleven components, 69 occurrences, 40 driving parameters. The interference check found two real errors, both now fixed. The model also validated the Rev E cost estimate to within 1.5%.</p>
+
+  <div class="keygrid">
+    <div><h4>Envelope</h4><p>1266 × 570 × 1960 mm overall, 4 tiers, beds at 300 / 700 / 1100 / 1500 mm.</p></div>
+    <div><h4>Interference</h4><p><span class="chip c-a">0 across 69 bodies</span> after fixes. Was 32.</p></div>
+    <div><h4>Rack mass</h4><p>73.8 kg complete with decks and trays; 34.4 kg frame only.</p></div>
+    <div><h4>LED clearance</h4><p>144 mm to canopy, against a 150 mm target and an 80–200 band.</p></div>
+  </div>
+
+  <h3>What the interference check caught</h3>
+  <p class="prose">Worth recording, because both were errors of reasoning rather than typing, and neither was visible in a screenshot.</p>
+  <ul class="prose">
+    <li><strong>The rear X-brace ran through every deck and flood tray.</strong> I had placed it in the rear structural plane at Y 527–530 mm, which is inside the bed footprint. It belongs on the outside rear face, at Y 560–563, where it bolts to the back of the uprights. Three tray crossings and three deck crossings.</li>
+    <li><strong>The deck panel intersected its own frame.</strong> The panel spanned the full bed while sitting at the same height as the rails carrying it. Resolved by restacking the tier so the panel's top face <em>is</em> the bed datum: beam 243.4–273.4, deck rail 273.4–298.4, panel 298.4–300.0, tray from 300.0. The tray support surface is now exactly <span class="val">Bed_Height</span>, which is what the NIOSH analysis in §10 assumed.</li>
+  </ul>
+
+  <h3>The LED interface changed during modelling</h3>
+  <p class="prose">The first attempt put a dedicated LED rail under each tier and it clashed with the tier above by 4 mm — the 400 mm pitch will not carry a separate rail once tray, crop, clearance and fixture are stacked up. The resolution is the one §11 already implied: <strong>the fixture for tier N hangs from the underside of tier N+1's deck structure</strong>, on the same 50 mm grid, with height trimmed by the hanger rather than the rail. Only the top tier needs a dedicated overhead rail. That deletes a part, removes the clash, and is exactly the "continuous adjustment from the hanger, not the rail" principle from the cost-down section.</p>
+
+  <h3>Parametric behaviour, tested</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Test</th><th>Bed_Width</th><th>Beam</th><th>Flood tray</th><th>Deck panel</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>Baseline, 4 trays</td><td class="num">1176</td><td class="num">1176</td><td class="num">1176</td><td class="num">1176</td><td>—</td></tr>
+        <tr><td>Change to 3 trays</td><td class="num">885</td><td class="num">885</td><td class="num">885</td><td class="num">885</td><td>Propagates</td></tr>
+        <tr><td>5-tier, 350 pitch</td><td class="num">1176</td><td class="num">1176</td><td class="num">1176</td><td class="num">1176</td><td>Top bed 1600 — at NIOSH ceiling</td></tr>
+        <tr><td>Reverted</td><td class="num">1176</td><td class="num">1176</td><td class="num">1176</td><td class="num">1176</td><td>Clean</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">Changing the tray count drives bed width, beam length, tray length and panel length together — the tray really is the master interface. The 5-tier configuration lands the top bed at exactly 1600 mm, the ergonomic ceiling derived in §10.</p>
+
+  <h3>Bill of materials as modelled</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Part</th><th>Qty</th><th>Mass</th><th>Material</th><th>Cut length</th></tr></thead>
+      <tbody>
+        <tr><td>02_UPRIGHT</td><td class="num">4</td><td class="num">14.59 kg</td><td class="mono">GI 40×40×1.6 SHS</td><td class="num">1950 mm</td></tr>
+        <tr><td>03_BEAM_LONG</td><td class="num">10</td><td class="num">15.79 kg</td><td class="mono">GI 30×30×1.5 SHS</td><td class="num">1176 mm</td></tr>
+        <tr><td>03_BEAM_SHORT</td><td class="num">2</td><td class="num">1.29 kg</td><td class="mono">GI 30×30×1.5 SHS</td><td class="num">480 mm</td></tr>
+        <tr><td>04_DECK_RAIL_LONG</td><td class="num">8</td><td class="num">10.41 kg</td><td class="mono">GI 25×25×1.5 SHS</td><td class="num">1176 mm</td></tr>
+        <tr><td>04_DECK_RAIL_CROSS</td><td class="num">16</td><td class="num">9.03 kg</td><td class="mono">GI 25×25×1.5 SHS</td><td class="num">510 mm</td></tr>
+        <tr><td>04_DECK_PANEL</td><td class="num">4</td><td class="num">7.9 kg</td><td class="mono">GI expanded mesh 1.6</td><td class="num">1176 × 560</td></tr>
+        <tr><td>05_REAR_BRACE</td><td class="num">1</td><td class="num">2.07 kg</td><td class="mono">GI flat 25×3</td><td class="num">X-brace pair</td></tr>
+        <tr><td>06_LED_RAIL</td><td class="num">8</td><td class="num">2.82 kg</td><td class="mono">Al 6061 20×20</td><td class="num">1176 mm</td></tr>
+        <tr><td>08_FLOOD_TRAY</td><td class="num">4</td><td class="num">9.25 kg</td><td class="mono">HDPE 3 mm</td><td class="num">1176 × 560</td></tr>
+        <tr><td>13_FOOT</td><td class="num">4</td><td class="num">0.62 kg</td><td class="mono">M12 levelling foot</td><td class="num">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong>The model corrected the costing in two directions, and they nearly cancel.</strong> The frame came out at 34.4 kg rather than the 39.6 kg assumed in §12, cutting material from ₹3,958 to ₹3,435. But the deck was under-costed: the 19.4 kg of deck rails were never in the ₹2,620 deck line, which should be about ₹3,314. Net effect on the Core rack: <strong>₹11,609 against the ₹11,438 estimate — 1.5% over.</strong> The Rev E numbers stand.</div>
+
+  <h3>What is not yet in the model</h3>
+  <ul class="prose">
+    <li><strong>Occurrence count is script-driven, not parametric.</strong> Part geometry rebuilds from the parameters, but changing <span class="val">Number_of_Tiers</span> does not add a tier of beams by itself — the placement script re-runs. Normal for a scripted assembly; worth knowing before you edit a parameter and expect a fifth tier to appear.</li>
+    <li><strong>No assembly joints.</strong> Components are positioned by transform, not mated. Joints come with the connector detail, once the L-bracket is designed.</li>
+    <li><strong>The deck panel is a solid plate standing in for expanded mesh.</strong> Mass is corrected by the 0.24 open-area factor everywhere it is reported, but the geometry is not perforated.</li>
+    <li><strong>Not yet modelled:</strong> L-bracket connectors, fasteners, the rear plenum, irrigation manifold and drain stack, electrical enclosure, sensor brackets.</li>
+    <li><strong>No structural FEA.</strong> The 1.79 mm beam deflection is hand-calculated, not simulated, and the depth-plane bracing question from §12 is still <span class="chip c-n">NEEDS VALIDATION</span>.</li>
+  </ul>
+</section>
+
+<!-- ============ LOADS AND ENCLOSURE ============ -->
+<section>
+  <div class="snum">§14 · Loads and enclosure</div>
+  <h2>Real load cases, and the white enclosure</h2>
+
+  <div class="note"><strong>Correction first: the tray count was never changed.</strong> The rack is 4 trays per bed, <span class="val">Bed_Width 1176 mm</span>, and always has been. The 3-tray figure in §13 was a <em>parametric propagation test</em> — I changed it to 3, confirmed beam, tray and panel all rebuilt to 885 mm, then reverted to 4 in the same script. Presenting that in a results table without saying so was misleading. Live model confirmed: <span class="val">Tray_Count_Per_Tier = 4</span>.</div>
+
+  <h3>A · Tray mass — assumed, with the arithmetic shown</h3>
+  <p class="prose">You do not have a weighed figure, so here are five load cases computed from first principles rather than one guessed number. Coco peat properties from the Indian substrate study in §3; flood depth from UMass.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Case</th><th>Water</th><th>Media</th><th>Hardware</th><th>Crop</th><th>Tier total</th></tr></thead>
+      <tbody>
+        <tr><td>1 · Microgreens, coir 25 mm, flooded 22 mm, at harvest</td><td class="num">12.5</td><td class="num">2.0</td><td class="num">6.2</td><td class="num">1.8</td><td class="num">22.5 kg</td></tr>
+        <tr><td>2 · Microgreens, no media, flood soak</td><td class="num">13.2</td><td class="num">—</td><td class="num">6.2</td><td class="num">—</td><td class="num">19.4 kg</td></tr>
+        <tr><td>3 · Aquatics emersed, substrate 50 mm, flood 10 mm</td><td class="num">5.0</td><td class="num">18.1</td><td class="num">6.2</td><td class="num">2.0</td><td class="num">31.3 kg</td></tr>
+        <tr><td>4 · <strong>Fault — drain blocked, bed to rim 47 mm, loaded</strong></td><td class="num">28.9</td><td class="num">1.1</td><td class="num">6.2</td><td class="num">1.8</td><td class="num"><strong>38.0 kg</strong></td></tr>
+        <tr><td>5 · Cleaning, bed full, trays out</td><td class="num">31.0</td><td class="num">—</td><td class="num">2.3</td><td class="num">—</td><td class="num">33.3 kg</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">The governing case is not the crop — it is <strong>a blocked drain</strong>, at 38.0 kg. Against the 80 kg design shelf load that is a factor of 2.11, with 3.55 in normal operation. The aquatics case at 31.3 kg is the heaviest working load, because saturated substrate at 50 mm outweighs everything microgreens do. Both Ooty crops are covered.</p>
+  <div class="calc">
+    <div class="cap">Beam deflection against the 3 mm flatness limit</div>
+    <div class="row"><span>Normal operation, 22.5 kg</span><span>0.50 mm</span></div>
+    <div class="row"><span>Aquatics, 31.3 kg</span><span>0.70 mm</span></div>
+    <div class="row"><span>Blocked-drain fault, 38.0 kg</span><span>0.85 mm</span></div>
+    <div class="row"><span>Design load, 80 kg</span><span>1.79 mm</span></div>
+  </div>
+  <p class="prose">In service the bed deflects half a millimetre. Flood levelness — the thing that made this spec matter — is comfortably held.</p>
+
+  <h3>B · The lift is lighter than I assumed, and that changes the 5-tier answer</h3>
+  <p class="prose">An operator lifts one drained 1020 tray, not a flooded bed: <strong>3.59 kg drained, 4.49 kg if lifted wet.</strong> I had been carrying 5.9 kg since §5, which was conservative. Re-running NIOSH:</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Bed</th><th>RWL</th><th>Lifting index at 4.49 kg</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td class="num">300 mm</td><td class="num">7.25 kg</td><td class="num">0.62</td><td>Pass</td></tr>
+        <tr><td class="num">700 mm</td><td class="num">8.97 kg</td><td class="num">0.50</td><td>Pass — the sweet spot</td></tr>
+        <tr><td class="num">1100 mm</td><td class="num">7.74 kg</td><td class="num">0.58</td><td>Pass</td></tr>
+        <tr><td class="num">1500 mm</td><td class="num">6.21 kg</td><td class="num">0.72</td><td>Pass</td></tr>
+        <tr><td class="num">1600 mm (5-tier top)</td><td class="num">5.93 kg</td><td class="num">0.76</td><td>Pass — comfortable, not marginal</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose"><strong>This revises §10.</strong> I said the 5-tier top bed sat "right at LI 1.0" and would not be free. On the real tray mass it is 0.76 — genuinely comfortable. The 5-tier configuration is more attractive than I represented; its remaining cost is LED clearance (101 mm at 350 pitch), not operator strain.</p>
+  <div class="note"><strong>One operating rule falls out of this.</strong> Drain before harvesting. An outer 1020 lifted with 22 mm of standing water in it carries an extra 2.65 kg — 7.1 kg total, which puts the lifting index at 1.20 at the top tier and outside the standard. Drain-then-lift is free; it just has to be in the SOP.</p>
+
+  <h3>C · What the X-brace actually does</h3>
+  <p class="prose">It is doing a specific job created by a specific decision. In §12 I deleted the per-tier cross beams to save ₹562, on the grounds that the decks tie front to rear. That left the rack with no diagonal anywhere, so the load path now is:</p>
+  <ul class="prose">
+    <li><strong>Side-sway (rack leaning left–right):</strong> resisted by the rear X-brace. This is its job. The front plane deliberately has no diagonal — it must stay open for tray access — so the rear brace carries that plane for both.</li>
+    <li><strong>Front–back leaning:</strong> resisted by the decks acting as horizontal diaphragms plus the base cross beams. This is the <span class="chip c-n">NEEDS VALIDATION</span> item from §12, still open.</li>
+  </ul>
+  <p class="prose">So it is not optional in the current design — it is the only diagonal in the structure, and it costs 2.07 kg of flat bar, roughly ₹210. Four ways to go:</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Option</th><th>Cost</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr><td>Keep the X-brace</td><td class="num">₹210</td><td><strong>Recommended.</strong> Cheapest bracing per unit of stiffness, rear plane only, blocks no access.</td></tr>
+        <tr><td>Keep brace + non-structural white panels</td><td class="num">+₹1,720</td><td><strong>Recommended pairing</strong> — see D. Panels stay removable because they carry no load.</td></tr>
+        <tr><td>Delete brace, make the rear panel structural</td><td class="num">−₹210</td><td><strong>Advise against.</strong> It makes a part you take off to wash into a part the rack depends on. Structure should never rely on a cleaning item.</td></tr>
+        <tr><td>Delete brace, restore per-tier cross beams</td><td class="num">+₹352 net</td><td>Better torsional behaviour and a cleaner rear face. This is the fallback if the Phase 17 check on depth-plane bracing fails.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note"><strong>One clash to design around:</strong> the brace occupies Y 560–563 mm, which is the front of the rear service zone. The plenum must mount outboard of it, from Y 563.</div>
+
+  <h3>D · The white enclosure — yes, and it does three jobs at once</h3>
+  <p class="prose">Your instinct is right, and the airflow benefit is probably larger than the light one.</p>
+
+  <h4>Light</h4>
+  <p class="prose">Phase A §1.5 already establishes the principle: photons that strike walls, aisles and empty positions are pure waste, and capturing them is why close-canopy lighting saves energy. The geometry here, as an <strong>engineering estimate</strong> rather than a cited figure:</p>
+  <div class="calc">
+    <div class="cap">Edge spill, two bars at 144 mm above canopy, 120° beam — ENGINEERING ESTIMATE</div>
+    <div class="row"><span>Half-spread each side, 144 × tan 60°</span><span>249 mm</span></div>
+    <div class="row"><span>Bar footprint across the bed depth</span><span>≈ 498 mm</span></div>
+    <div class="row"><span>Flux falling outside the 560 mm bed</span><span>≈ 14%</span></div>
+    <div class="row"><span>Plus end losses along the bar</span><span>≈ 3–5%</span></div>
+    <div class="row"><span>Recovered by matte white at 85–90% reflectance</span><span>≈ 8–12% more on canopy</span></div>
+  </div>
+  <p class="prose">Treat that as a range to verify, not a promise — measure it with the portable PAR sensor from §7 at commissioning, which is exactly what that instrument is for. The more valuable effect is not the average but the <strong>uniformity</strong>: the outer trays in a four-across bed currently receive less light than the inner two, and edge reflectors close that gap. Uniformity is what decides whether all four trays crop evenly enough to harvest on the same day.</p>
+  <p class="prose">Use <strong>matte white, not mylar or foil.</strong> Specular surfaces create bright spots and make uniformity worse; diffuse white scatters. This is consistent across the horticultural lighting guidance.</p>
+
+  <h4>Airflow — the stronger argument</h4>
+  <p class="prose">This is what §7 Q13.3 was asking about. An open rack lets plenum air short-circuit around the canopy rather than through it. Side and rear panels turn each tier into a duct, which is what makes the 0.2–0.5 m/s canopy velocity and the low coefficient of variation from Phase A §1.4 actually achievable rather than aspirational. If you are building the distributed plenum at all, the panels are what make it work.</p>
+
+  <h4>Structure — but do not use it</h4>
+  <p class="prose">A rear panel is an excellent shear diaphragm, far stiffer than a diagonal. Resist the temptation. Keep it non-structural so it comes off for cleaning without compromising the frame.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Panel set, as modelled</th><th>Position</th><th>Qty</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>09_PANEL_REAR</td><td class="mono">Y 563–565 mm</td><td class="num">4</td><td>Outboard of the brace — also forms the plenum front face. Perforate it and one part does air distribution and reflection.</td></tr>
+        <tr><td>09_PANEL_SIDE</td><td class="mono">X 38–40 and 1216–1218</td><td class="num">8</td><td>Inboard faces of the uprights, bolted to the 50 mm grid.</td></tr>
+        <tr><td>Front</td><td>—</td><td class="num">0</td><td>Stays open for access. A roll-down curtain is the option if you want full enclosure.</td></tr>
+        <tr><td>Ceiling</td><td>—</td><td class="num">0</td><td><strong>Free:</strong> specify the flood tray in white HDPE and the underside of the tray above becomes the canopy reflector.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">Modelled at 343 mm high × 563 mm deep, 2 mm white PP: <strong>6.02 kg for the full 12-panel set, roughly ₹1,720</strong> including clips. Interference re-checked at 81 bodies — 18 face contacts, all zero volume, which is what a bolted-on panel should show.</p>
+
+  <h3>E · Plastic moulding in the family — worth pursuing, with one caution</h3>
+  <p class="prose">This could change the flood tray economics, but the process matters more than the access. For a 1176 × 560 × 47 mm tray:</p>
+  <ul class="prose">
+    <li><strong>Thermoforming / vacuum forming is the right process</strong> — tooling is a single aluminium or resin form, typically ₹30,000–80,000 at this size, and it would take the tray from about ₹1,228 fabricated to well under ₹700.</li>
+    <li><strong>Injection moulding is not viable at this size</strong> for a startup — a 1176 mm part needs a very large press and a tool costing several lakh. If his shop is injection, the tray is the wrong part to bring him.</li>
+    <li><strong>What is worth bringing him either way:</strong> the 1020 trays themselves, sensor and junction enclosures, cable clips, tube end caps, LED end caps, corner covers, and the NFT channel from Phase C Product 1.3. Those are all injection-scale parts.</li>
+  </ul>
+  <p class="prose">Worth asking him: which processes, what maximum platen or shot size, and does he run food-grade material with documented resin traceability — that last one matters for anything touching the crop.</p>
+</section>
+
+<!-- ============ NEXT ============ -->
+<section style="border-bottom:0">
+  <div class="snum">§15 · Next</div>
+  <h2>What happens after you answer</h2>
+  <p class="lede prose">Per the workflow rule, I stop here and wait. Nothing proceeds to geometry until the requirements are frozen and the architecture is approved.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Step</th><th>Output</th><th>Needs from you</th></tr></thead>
+      <tbody>
+        <tr><td>Now</td><td>Measure and weigh one loaded tray</td><td>Q1 and Q4. The band absorbs ±10 mm, but a mass over 5.9 kg lowers the top tier.</td></tr>
+        <tr><td>Now</td><td>Q14 cleaning chemistry · Q17 vendor status</td><td>The two questions still genuinely open</td></tr>
+        <tr><td>Next in CAD</td><td>L-bracket connector, fasteners, assembly joints</td><td>Turns the positioned model into a real assembly</td></tr>
+        <tr><td>Next in CAD</td><td>Rear plenum, manifold, drain stack, electrical enclosure</td><td>The Grow-tier content</td></tr>
+        <tr><td>Phase 17</td><td>FEA on the beam, and the depth-plane bracing check</td><td>The one open NEEDS VALIDATION item from §12</td></tr>
+        <tr><td>Phase 20</td><td>Drawings, DXF cut files, assembly instructions, QC checklist</td><td>Manufacturing release for the Ooty build</td></tr>
+        <tr><td>Phase 2</td><td>Two or three full rack architectures around the chosen material, scored on serviceability, part count and configuration coverage</td><td>Architecture selection</td></tr>
+        <tr><td>Phase 3</td><td>Parametric dimensional system with the master parameters driven off your measured tray, plus the trays-per-shelf evaluation across 2, 3 and 4</td><td>Approval of the parameter set</td></tr>
+        <tr><td>Phase 4–5</td><td>Structural design and calculation, shelf module selection, material decision with the reasoning written out</td><td>Approval before CAD</td></tr>
+        <tr><td>Phase 16</td><td>Fusion 360 model, built to the approved parameter set</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong>On the tray-count question you flagged.</strong> You asked that four trays per shelf not be chosen merely because they fit, and it will not be. But the evaluation is not neutral between the options, and it is worth saying why now: the width of a shelf is set by tray count, and shelf width sets beam span, which sets beam section, which sets cost and deflection — and deflection, for a flooded bed, is an irrigation-uniformity problem rather than a cosmetic one. Three trays across gives a materially stiffer, cheaper beam and better reach from the front; four gives roughly 33% more capacity per square metre of floor. That trade will be presented properly in Phase 3 with numbers on both sides, once the tray is measured.</div>
+</section>
+
+<footer>
+  <p>Doc RACK-P0 Rev G · 04 September 2026 · Prepared from Phase A–E of the R&amp;D strategy report series, with Level 2 external sources cited inline in §3. Level 3 engineering inferences are labelled as recommendations throughout and are not presented as established fact. No dimension in this document has been carried into CAD.</p>
+</footer>
+
+</main>

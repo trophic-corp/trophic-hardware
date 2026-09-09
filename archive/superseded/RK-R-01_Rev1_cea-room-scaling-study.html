@@ -1,0 +1,382 @@
+<title>CEA Room Scaling Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+ --paper:#F3F6F8; --sheet:#FFFFFF; --card:#FAFCFD; --band:#E9EEF2; --band2:#DDE5EA;
+ --ink:#0F161C; --ink2:#43535E; --ink3:#75858F; --rule:#CFD9E0; --rule2:#AAB8C2;
+ --water:#15628F; --water-s:#DCEAF3; --air:#256B4E; --air-s:#DCECE4;
+ --power:#8E5A0E; --power-s:#F4E9D6; --warn:#963224; --warn-s:#F6E1DD;
+ --ok:#256B4E; --ok-s:#DCECE4; --rack:#E4EBEF;
+ --mono:"JetBrains Mono",ui-monospace,monospace; --sans:"Instrument Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --paper:#0B0F12; --sheet:#121A1F; --card:#111820; --band:#18222A; --band2:#1F2B34;
+ --ink:#E8EFF3; --ink2:#A2B1BB; --ink3:#74838D; --rule:#23303A; --rule2:#35454F;
+ --water:#6FB4DC; --water-s:#10242F; --air:#6FBF98; --air-s:#0F2620;
+ --power:#D4A055; --power-s:#2A2013; --warn:#DD8878; --warn-s:#2C1815;
+ --ok:#6FBF98; --ok-s:#0F2620; --rack:#1D2831;
+}}
+:root[data-theme="dark"]{
+ --paper:#0B0F12; --sheet:#121A1F; --card:#111820; --band:#18222A; --band2:#1F2B34;
+ --ink:#E8EFF3; --ink2:#A2B1BB; --ink3:#74838D; --rule:#23303A; --rule2:#35454F;
+ --water:#6FB4DC; --water-s:#10242F; --air:#6FBF98; --air-s:#0F2620;
+ --power:#D4A055; --power-s:#2A2013; --warn:#DD8878; --warn-s:#2C1815;
+ --ok:#6FBF98; --ok-s:#0F2620; --rack:#1D2831;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.62}
+.w{max-width:1200px;margin:0 auto;padding:0 26px}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+a{color:var(--water)} :focus-visible{outline:2px solid var(--water);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.top{background:var(--sheet);border-bottom:1px solid var(--rule2)}
+.top-in{max-width:1200px;margin:0 auto;padding:40px 26px 0}
+.eb{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--water)}
+h1{font-size:clamp(32px,5.4vw,58px);font-weight:700;letter-spacing:-.025em;line-height:1.02;margin:14px 0 12px}
+.dek{font-size:17.5px;color:var(--ink2);max-width:68ch;margin:0 0 26px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(146px,1fr));border-top:1px solid var(--rule)}
+.kv div{padding:11px 15px 13px;border-right:1px solid var(--rule)} .kv div:last-child{border-right:0}
+.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.kv dd{margin:4px 0 0;font-size:19px;font-weight:600}
+section{padding:46px 0;border-bottom:1px solid var(--rule)}
+.sn{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;margin-bottom:7px}
+.sn.w1{color:var(--water)} .sn.a1{color:var(--air)} .sn.p1{color:var(--power)} .sn.x1{color:var(--warn)}
+h2{font-size:clamp(23px,3.1vw,33px);font-weight:700;letter-spacing:-.018em;margin-bottom:9px}
+h3{font-size:19px;font-weight:600;margin:30px 0 8px}
+h4{font-size:15.5px;font-weight:600;margin:18px 0 5px}
+p{margin:0 0 12px} ul,ol{margin:0 0 12px;padding-left:1.2em} li{margin-bottom:5px}
+.lede{font-size:17px;color:var(--ink2);max-width:70ch;margin-bottom:8px}
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet);margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:13.2px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+   padding:9px 12px;background:var(--band);border-bottom:1px solid var(--rule2);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2)}
+tr:last-child td{border-bottom:0} td:first-child{color:var(--ink);font-weight:500}
+.m{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.n{font-family:var(--mono);font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;font-weight:600;white-space:nowrap}
+.t-o{background:var(--ok-s);color:var(--ok)} .t-x{background:var(--warn-s);color:var(--warn)}
+.t-n{background:var(--band2);color:var(--ink2)} .t-w{background:var(--water-s);color:var(--water)}
+.note{background:var(--band);border-left:3px solid var(--water);padding:14px 18px;margin:16px 0;font-size:14.6px;color:var(--ink2)}
+.note strong{color:var(--ink)}
+.note.wa{background:var(--warn-s);border-left-color:var(--warn)}
+.note.ai{background:var(--air-s);border-left-color:var(--air)}
+.note.po{background:var(--power-s);border-left-color:var(--power)}
+.dwg{background:var(--sheet);border:1px solid var(--rule2);padding:14px;margin:20px 0;overflow-x:auto}
+.dwg svg{display:block;width:100%;height:auto;min-width:720px}
+.cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+     margin-top:10px;padding-top:8px;border-top:1px solid var(--rule)}
+.g2{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:18px 0;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g2>div{background:var(--sheet);padding:15px 17px}
+.g2 h4{margin:0 0 5px} .g2 p{font-size:14px;color:var(--ink2);margin:0}
+footer{padding:38px 0 60px;color:var(--ink3);font-size:13px}
+</style>
+
+<header class="top">
+ <div class="top-in">
+  <div class="eb">RK-R-01 · Rev 1 · 04 Sep 2026 · Phase 2 scaling study</div>
+  <h1>CEA Room<br>Scaling Study</h1>
+  <p class="dek">A simulated 20 × 12 ft room built from Rack A, to test whether the single-rack architecture scales without redesign. It does — with one exception, which is the most useful thing in this document.</p>
+  <dl class="kv">
+   <div><dt>Room</dt><dd>22.3 m²</dd></div>
+   <div><dt>Racks</dt><dd>9 or 12</dd></div>
+   <div><dt>Trays</dt><dd>144 – 192</dd></div>
+   <div><dt>Power</dt><dd>5.8 – 7.5 kW</dd></div>
+   <div><dt>HVAC</dt><dd>1.5 – 2 TR</dd></div>
+   <div><dt>Redesign</dt><dd>1 item</dd></div>
+  </dl>
+ </div>
+</header>
+
+<main class="w">
+
+<!-- ============ 1 FINDINGS ============ -->
+<section>
+  <div class="sn x1">01 · Findings</div>
+  <h2>Two things the room reveals that the rack could not</h2>
+  <p class="lede">This is what a scaling study is for. Both findings only appear when you multiply the rack by twelve and look at the totals.</p>
+
+  <h3>Finding 1 — drain-to-waste does not survive scaling</h3>
+  <p class="prose">At rack level I recommended draining to waste rather than recirculating, because recirculated nutrient solution moves <em>Pythium</em> from one tray to every tray and a 7–21 day crop gives no time to amortise UV and filtration. That reasoning is still correct at two racks. It stops being affordable at twelve.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Configuration</th><th>Consumed by crop</th><th>Drained away</th><th>Wasted per year</th></tr></thead><tbody>
+    <tr><td>2 racks, Ooty R&amp;D, 1 cycle/day</td><td class="n">24 L/day</td><td class="n">92 L/day</td><td class="n">34 m³</td></tr>
+    <tr><td>9 racks, 1 cycle/day</td><td class="n">108 L/day</td><td class="n">414 L/day</td><td class="n">151 m³</td></tr>
+    <tr><td>12 racks, 1 cycle/day</td><td class="n">144 L/day</td><td class="n">552 L/day</td><td class="n">201 m³</td></tr>
+    <tr><td><strong>12 racks, 3 cycles/day</strong></td><td class="n">432 L/day</td><td class="n"><strong>1,656 L/day</strong></td><td class="n"><strong>604 m³</strong></td></tr>
+    </tbody></table></div>
+  <div class="note wa"><strong>1,656 litres a day down the drain is not a rounding error, and it is not defensible for a company whose whole positioning is resource efficiency.</strong> Only about a fifth of each flood is actually taken up by the media; the rest is perfectly good solution that has touched the crop for ten minutes. <strong>A room needs a treated recovery loop — catch tank, filtration, UV, return to reservoir.</strong> The UV duty is small: at 40 mJ/cm² the worst case is about 1.15 L/min of continuous treatment, because recovery is spread across the day rather than arriving in a slug.<br><br>This does not change the rack. The rack already drains to a header and discharges over an air gap. <strong>What changes is what sits under the air gap</strong> — a catch tank and treatment skid instead of a floor drain. That is a room-level addition, which is exactly the outcome a scaling study is supposed to produce: a change that lands outside the thing you already designed.</div>
+  <p class="prose">The crossover is roughly four racks. Below it, drain-to-waste with mains top-up is simpler and cheaper. Above it, recovery pays for itself in water alone, before counting the nutrient.</p>
+
+  <h3>Finding 2 — the floor multiplier is smaller than vertical farming's reputation suggests</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Layout</th><th>Racks</th><th>Tiers</th><th>Bed area</th><th>Floor multiplier</th></tr></thead><tbody>
+    <tr><td>B — serviceable</td><td class="n">9</td><td class="n">4</td><td class="n">23.7 m²</td><td class="n">1.06×</td></tr>
+    <tr><td>A — max density</td><td class="n">12</td><td class="n">4</td><td class="n">31.6 m²</td><td class="n">1.42×</td></tr>
+    <tr><td>B, 5-tier</td><td class="n">9</td><td class="n">5</td><td class="n">29.6 m²</td><td class="n">1.33×</td></tr>
+    <tr><td>A, 5-tier</td><td class="n">12</td><td class="n">5</td><td class="n">39.5 m²</td><td class="n">1.77×</td></tr>
+    </tbody></table></div>
+  <p class="prose">A four-tier rack does not give four times the floor. In a room this small it gives between one and one-and-a-half, because aisles, rack depth and wall clearance consume most of the gain. <strong>Nine four-tier racks in 22.3 m² produce 23.7 m² of growing bed — a 1.06× multiplier, essentially the same as growing on the floor.</strong> The multiplier is a function of room size, not rack height: aisle area is roughly fixed while bed area grows, so the same racks in a 100 m² room reach 2.5–3×. This is worth knowing before anyone writes it into a business plan, and it is an argument for the 5-tier configuration — which the ergonomics now support, at a lifting index of 0.76.</p>
+</section>
+
+<!-- ============ 2 LAYOUT ============ -->
+<section>
+  <div class="sn w1">02 · Layout</div>
+  <h2>Nine racks, serviceable — or twelve, on castors</h2>
+
+  <div class="dwg">
+  <svg viewBox="0 0 1520 960" role="img" aria-label="Room plan, 20 by 12 feet, nine racks in three rows with service gaps, showing water, drain and power routes">
+   <defs>
+    <marker id="ra" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L9,4.5 L0,8 Z" fill="var(--water)"/></marker>
+   </defs>
+   <g font-family="JetBrains Mono, monospace" font-size="15">
+    <text x="30" y="32" font-size="20" font-weight="600" fill="var(--water)">ROOM PLAN — LAYOUT B</text>
+    <text x="30" y="54" font-size="14" fill="var(--ink3)">6096 × 3658 mm · 9 racks · 150 mm service gaps · every rack serviced in place</text>
+
+    <!-- room -->
+    <rect x="96" y="92" width="1280" height="768" fill="var(--card)" stroke="var(--ink2)" stroke-width="3"/>
+    <!-- dims -->
+    <text x="736" y="82" font-size="14" fill="var(--ink3)" text-anchor="middle">6096</text>
+    <text x="70" y="480" font-size="14" fill="var(--ink3)" text-anchor="middle" transform="rotate(-90 70 480)">3658</text>
+
+    <!-- cross aisle -->
+    <rect x="96" y="92" width="189" height="768" fill="var(--band)" stroke="none"/>
+    <text x="190" y="480" font-size="14" fill="var(--ink3)" text-anchor="middle" transform="rotate(-90 190 480)">CROSS AISLE 900</text>
+    <!-- door -->
+    <path d="M96 500 A 60 60 0 0 1 156 560" fill="none" stroke="var(--ink3)" stroke-width="2"/>
+    <line x1="96" y1="440" x2="96" y2="500" stroke="var(--card)" stroke-width="6"/>
+    <text x="112" y="600" font-size="13" fill="var(--ink3)">DOOR</text>
+
+    <!-- racks: 3 rows x 3, rack 266 x 130 px, gaps 32 px -->
+    <g>
+     <!-- row A y=92..222 -->
+     <g>
+      <rect x="285" y="92" width="266" height="130" fill="var(--rack)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="583" y="92" width="266" height="130" fill="var(--rack)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="881" y="92" width="266" height="130" fill="var(--rack)" stroke="var(--ink2)" stroke-width="2"/>
+      <text x="418" y="150" font-size="14" fill="var(--ink2)" text-anchor="middle">RACK A1</text>
+      <text x="716" y="150" font-size="14" fill="var(--ink2)" text-anchor="middle">RACK A2</text>
+      <text x="1014" y="150" font-size="14" fill="var(--ink2)" text-anchor="middle">RACK A3</text>
+      <line x1="285" y1="218" x2="551" y2="218" stroke="var(--air)" stroke-width="4"/>
+      <line x1="583" y1="218" x2="849" y2="218" stroke="var(--air)" stroke-width="4"/>
+      <line x1="881" y1="218" x2="1147" y2="218" stroke="var(--air)" stroke-width="4"/>
+     </g>
+     <!-- row B y=411..541 -->
+     <g>
+      <rect x="285" y="411" width="266" height="130" fill="var(--rack)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="583" y="411" width="266" height="130" fill="var(--rack)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="881" y="411" width="266" height="130" fill="var(--rack)" stroke="var(--ink2)" stroke-width="2"/>
+      <text x="418" y="469" font-size="14" fill="var(--ink2)" text-anchor="middle">RACK B1</text>
+      <text x="716" y="469" font-size="14" fill="var(--ink2)" text-anchor="middle">RACK B2</text>
+      <text x="1014" y="469" font-size="14" fill="var(--ink2)" text-anchor="middle">RACK B3</text>
+      <line x1="285" y1="415" x2="551" y2="415" stroke="var(--air)" stroke-width="4"/>
+      <line x1="583" y1="415" x2="849" y2="415" stroke="var(--air)" stroke-width="4"/>
+      <line x1="881" y1="415" x2="1147" y2="415" stroke="var(--air)" stroke-width="4"/>
+     </g>
+     <!-- row C y=730..860 -->
+     <g>
+      <rect x="285" y="730" width="266" height="130" fill="var(--rack)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="583" y="730" width="266" height="130" fill="var(--rack)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="881" y="730" width="266" height="130" fill="var(--rack)" stroke="var(--ink2)" stroke-width="2"/>
+      <text x="418" y="788" font-size="14" fill="var(--ink2)" text-anchor="middle">RACK C1</text>
+      <text x="716" y="788" font-size="14" fill="var(--ink2)" text-anchor="middle">RACK C2</text>
+      <text x="1014" y="788" font-size="14" fill="var(--ink2)" text-anchor="middle">RACK C3</text>
+      <line x1="285" y1="734" x2="551" y2="734" stroke="var(--air)" stroke-width="4"/>
+      <line x1="583" y1="734" x2="849" y2="734" stroke="var(--air)" stroke-width="4"/>
+      <line x1="881" y1="734" x2="1147" y2="734" stroke="var(--air)" stroke-width="4"/>
+     </g>
+    </g>
+    <!-- service gaps -->
+    <g fill="var(--water)" font-size="11">
+     <rect x="551" y="92" width="32" height="130" fill="var(--water-s)"/><rect x="849" y="92" width="32" height="130" fill="var(--water-s)"/>
+     <rect x="551" y="411" width="32" height="130" fill="var(--water-s)"/><rect x="849" y="411" width="32" height="130" fill="var(--water-s)"/>
+     <rect x="551" y="730" width="32" height="130" fill="var(--water-s)"/><rect x="849" y="730" width="32" height="130" fill="var(--water-s)"/>
+    </g>
+    <text x="567" y="252" font-size="11.5" fill="var(--water)" text-anchor="middle">150 SERVICE GAP</text>
+
+    <!-- aisles -->
+    <text x="716" y="322" font-size="15" fill="var(--ink3)" text-anchor="middle">AISLE 1 · 899 mm · working faces of rows A and B</text>
+    <text x="716" y="642" font-size="15" fill="var(--ink3)" text-anchor="middle">AISLE 2 · 899 mm · working faces of rows B and C</text>
+
+    <!-- plant zone -->
+    <rect x="1155" y="92" width="221" height="768" fill="var(--band)" stroke="var(--rule2)" stroke-width="1.5"/>
+    <text x="1266" y="126" font-size="14" fill="var(--ink2)" text-anchor="middle">PLANT ZONE</text>
+    <rect x="1175" y="146" width="180" height="86" rx="3" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.8"/>
+    <text x="1265" y="180" font-size="13" fill="var(--water)" text-anchor="middle">RESERVOIR</text>
+    <text x="1265" y="200" font-size="11.5" fill="var(--ink3)" text-anchor="middle">pH · EC · temp · level</text>
+    <text x="1265" y="218" font-size="11.5" fill="var(--ink3)" text-anchor="middle">dosing</text>
+    <rect x="1175" y="248" width="180" height="86" rx="3" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.8"/>
+    <text x="1265" y="282" font-size="13" fill="var(--water)" text-anchor="middle">RECOVERY SKID</text>
+    <text x="1265" y="302" font-size="11.5" fill="var(--ink3)" text-anchor="middle">catch tank · filter</text>
+    <text x="1265" y="320" font-size="11.5" fill="var(--ink3)" text-anchor="middle">UV 1.2 L/min</text>
+    <rect x="1175" y="350" width="180" height="70" rx="3" fill="var(--power-s)" stroke="var(--power)" stroke-width="1.8"/>
+    <text x="1265" y="380" font-size="13" fill="var(--power)" text-anchor="middle">GROUP PANEL</text>
+    <text x="1265" y="400" font-size="11.5" fill="var(--ink3)" text-anchor="middle">3-phase · 9 RCBO</text>
+    <rect x="1175" y="436" width="180" height="70" rx="3" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.8"/>
+    <text x="1265" y="466" font-size="13" fill="var(--water)" text-anchor="middle">ROOM CONTROLLER</text>
+    <text x="1265" y="486" font-size="11.5" fill="var(--ink3)" text-anchor="middle">local DB · dashboard</text>
+    <rect x="1175" y="522" width="180" height="96" rx="3" fill="var(--air-s)" stroke="var(--air)" stroke-width="1.8"/>
+    <text x="1265" y="556" font-size="13" fill="var(--air)" text-anchor="middle">HVAC 1.5 TR</text>
+    <text x="1265" y="576" font-size="11.5" fill="var(--ink3)" text-anchor="middle">+ DEHUMIDIFIER</text>
+    <text x="1265" y="594" font-size="11.5" fill="var(--ink3)" text-anchor="middle">38 L/day</text>
+    <text x="1265" y="612" font-size="11.5" fill="var(--ink3)" text-anchor="middle">CO₂ dosing</text>
+
+    <!-- supply main along north wall -->
+    <line x1="1160" y1="300" x2="300" y2="300" stroke="var(--water)" stroke-width="3.5" marker-end="url(#ra)"/>
+    <text x="700" y="292" font-size="12" fill="var(--water)" text-anchor="middle">DN32 SUPPLY MAIN · HIGH LEVEL IN AISLE 1 · DN20 BRANCH + BALL VALVE PER RACK</text>
+    <g stroke="var(--water)" stroke-width="2"><line x1="418" y1="300" x2="418" y2="226"/><line x1="716" y1="300" x2="716" y2="226"/><line x1="1014" y1="300" x2="1014" y2="226"/><line x1="418" y1="300" x2="418" y2="407"/><line x1="716" y1="300" x2="716" y2="407"/><line x1="1014" y1="300" x2="1014" y2="407"/></g>
+    <!-- drain main along south wall -->
+    <line x1="300" y1="700" x2="1160" y2="700" stroke="var(--ink3)" stroke-width="4"/>
+    <text x="700" y="692" font-size="12" fill="var(--ink3)" text-anchor="middle">DN63 DRAIN MAIN · FLOOR CHANNEL IN AISLE 2 · FALL 1:100 TO CATCH TANK</text>
+    <g stroke="var(--ink3)" stroke-width="2"><line x1="470" y1="700" x2="470" y2="726"/><line x1="768" y1="700" x2="768" y2="726"/><line x1="1066" y1="700" x2="1066" y2="726"/><line x1="470" y1="700" x2="470" y2="545"/><line x1="768" y1="700" x2="768" y2="545"/><line x1="1066" y1="700" x2="1066" y2="545"/></g>
+    <!-- rs485 -->
+    <path d="M1175 470 L1151 470 L1151 340 L320 340 L320 660 L1151 660 L1151 500 L1175 500"
+          fill="none" stroke="var(--water)" stroke-width="2" stroke-dasharray="10 6"/>
+    <text x="700" y="334" font-size="11.5" fill="var(--water)" text-anchor="middle">RS485 DAISY CHAIN · 9 NODES + SKID + ROOM I/O · 120 Ω BOTH ENDS</text>
+
+    <!-- legend -->
+    <g transform="translate(96,884)">
+     <line x1="0" y1="10" x2="34" y2="10" stroke="var(--water)" stroke-width="3.5"/><text x="42" y="15" font-size="12.5" fill="var(--ink2)">supply</text>
+     <line x1="120" y1="10" x2="154" y2="10" stroke="var(--ink3)" stroke-width="4"/><text x="162" y="15" font-size="12.5" fill="var(--ink2)">drain</text>
+     <line x1="230" y1="10" x2="264" y2="10" stroke="var(--water)" stroke-width="2" stroke-dasharray="9 5"/><text x="272" y="15" font-size="12.5" fill="var(--ink2)">RS485</text>
+     <line x1="350" y1="10" x2="384" y2="10" stroke="var(--air)" stroke-width="4"/><text x="392" y="15" font-size="12.5" fill="var(--ink2)">rack front · working face</text>
+     <rect x="600" y="3" width="16" height="14" fill="var(--water-s)"/><text x="624" y="15" font-size="12.5" fill="var(--ink2)">service gap, end access to pipes and fans</text>
+    </g>
+   </g>
+  </svg>
+  <div class="cap">RK-R-01-P01 · room plan, layout B · 9 racks · all services reachable without moving a rack</div>
+  </div>
+
+  <div class="scroll"><table>
+    <thead><tr><th></th><th>Layout A — density</th><th>Layout B — serviceable</th></tr></thead><tbody>
+    <tr><td>Racks</td><td class="n">12 (3 × 4, butted)</td><td class="n">9 (3 × 3, 150 mm gaps)</td></tr>
+    <tr><td>Trays</td><td class="n">192</td><td class="n">144</td></tr>
+    <tr><td>Bed area</td><td class="n">31.6 m²</td><td class="n">23.7 m²</td></tr>
+    <tr><td>Aisles</td><td class="n">2 × 899 mm</td><td class="n">2 × 899 mm + 900 cross</td></tr>
+    <tr><td>Rear/end service</td><td>By pulling a rack into the aisle. <strong>Requires the castor kit</strong></td><td>In place, through the 150 mm gaps</td></tr>
+    <tr><td>Room electrical</td><td class="n">7.49 kW · 10.4 A 3ph</td><td class="n">5.84 kW · 8.1 A 3ph</td></tr>
+    <tr><td>HVAC</td><td class="n">2.0 TR + 51 L/day</td><td class="n">1.5 TR + 38 L/day</td></tr>
+    <tr><td>Verdict</td><td>Production rooms, where the extra 33% capacity pays for the castors and the handling</td><td><strong>Recommended for Ooty.</strong> An R&amp;D room is worked on far more than a production room</td></tr>
+    </tbody></table></div>
+
+  <div class="note"><strong>Why the 150 mm gap is enough.</strong> Every rack service is at its <em>ends</em>, not across its back: supply riser and fill manifold on the left upright, drain header on the right, fan end caps at the right of each plenum. Nothing needs access across the full rear face. A 150 mm gap between racks puts every one of those within arm's reach from the aisle — which is only true because the rack was laid out that way in Phase 1, not by luck.</div>
+</section>
+
+<!-- ============ 3 UTILITIES ============ -->
+<section>
+  <div class="sn w1">03 · Utilities</div>
+  <h2>Room services</h2>
+  <div class="g2">
+   <div><h4>Irrigation</h4><p>DN32 supply main along the north wall at high level, DN20 branch drops to each rack with a ball valve and union. <strong>Pump duty stays 7.2 L/min regardless of rack count</strong> because the controller fires one tier at a time across the whole room. Fill window is 72 min per cycle for 9 racks — 8% of a 16 h photoperiod.</p></div>
+   <div><h4>Drainage</h4><p>DN63 main along the south wall at 1:100 fall, taking each rack's DN40 header over its air gap. Terminates at the catch tank, not a floor drain. Peak flow is one tier at 30.7 L/min because draining is sequenced — a hard requirement, not a preference.</p></div>
+   <div><h4>Water recovery</h4><p>Catch tank → 100 µm filter → UV at 40 mJ/cm² → back to reservoir. Duty 0.9–1.2 L/min continuous. Reservoir top-up on level switch. <strong>This is the one room-level addition the rack design did not anticipate.</strong></p></div>
+   <div><h4>Electrical</h4><p>3-phase supply, group panel in the plant zone, 3 racks per phase for balance. One 16 A Type A RCBO per rack. Type 2 SPD at the panel, Type 1+2 at the building intake. TN-S earthing to IS 3043, every frame bonded.</p></div>
+   <div><h4>HVAC</h4><p>1.5 TR for 9 racks — 2.46 kW sensible from LEDs and fans, 0.91 kW latent from 32 L/day of transpiration. Ooty's climate means heating and VPD management dominate for much of the year, so specify a reverse-cycle unit rather than cooling-only.</p></div>
+   <div><h4>Dehumidification</h4><p>38 L/day for 9 racks, 51 for 12. Size at 1.2× the transpiration figure. This is the load people under-size: the water the crop does not keep, it exhales.</p></div>
+  </div>
+
+  <div class="scroll"><table>
+    <thead><tr><th>Room load</th><th>9 racks</th><th>12 racks</th></tr></thead><tbody>
+    <tr><td>Racks (LED, fans, valves, controls)</td><td class="n">2.84 kW</td><td class="n">3.79 kW</td></tr>
+    <tr><td>HVAC</td><td class="n">1.50 kW</td><td class="n">2.00 kW</td></tr>
+    <tr><td>Dehumidifier</td><td class="n">0.60 kW</td><td class="n">0.80 kW</td></tr>
+    <tr><td>Pump</td><td class="n">0.50 kW</td><td class="n">0.50 kW</td></tr>
+    <tr><td>Controls, room lighting, misc</td><td class="n">0.40 kW</td><td class="n">0.40 kW</td></tr>
+    <tr><td><strong>Total connected</strong></td><td class="n"><strong>5.84 kW</strong></td><td class="n"><strong>7.49 kW</strong></td></tr>
+    <tr><td>Single phase equivalent</td><td class="n">25.4 A</td><td class="n">32.6 A</td></tr>
+    <tr><td>Three phase</td><td class="n">8.1 A</td><td class="n">10.4 A</td></tr>
+    <tr><td>Floor load</td><td class="n">94 kg/m²</td><td class="n">125 kg/m²</td></tr>
+    </tbody></table></div>
+  <div class="note po"><strong>Take the three-phase supply even at nine racks.</strong> 25.4 A single phase is technically possible and operationally awkward — it leaves no headroom for a second dehumidifier, a heater, or the twelfth rack. Three phase costs a little more at connection and makes the room's future somebody else's problem instead of yours.</div>
+</section>
+
+<!-- ============ 4 SENSORS ============ -->
+<section>
+  <div class="sn a1">04 · Sensor network</div>
+  <h2>What the room measures</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Level</th><th>Sensors</th><th>Count, 9 racks</th><th>Connected via</th></tr></thead><tbody>
+    <tr><td><span class="tag t-n">Rack</span></td><td>Air T/RH at tier 3 canopy; leak at drain header base; header high-level switch</td><td class="n">27 (3 × 9)</td><td>Rack controller, then RS485</td></tr>
+    <tr><td><span class="tag t-w">Water</span></td><td>pH, EC, water temperature, reservoir level, supply flow, supply pressure, catch-tank level</td><td class="n">7</td><td>Water skid node on the same bus</td></tr>
+    <tr><td><span class="tag t-n">Room</span></td><td>CO₂ ×2, air T/RH at supply and return, smoke, floor flood</td><td class="n">6</td><td>Room I/O node</td></tr>
+    <tr><td><span class="tag t-n">Portable</span></td><td>PAR quantum sensor on a grid jig</td><td class="n">1</td><td>Manual, at commissioning</td></tr>
+    <tr><td><strong>Total</strong></td><td></td><td class="n"><strong>40 fixed</strong></td><td>11 bus nodes</td></tr>
+    </tbody></table></div>
+  <p class="prose">Forty sensors for a room of nine racks, of which twenty-seven are on the racks. Compare that with what a naive per-rack allocation would produce: a CO₂ sensor, a PAR sensor, pH and EC on every rack would add fifty-four devices that all measure the same thing as their neighbours and all need calibrating. <strong>The level allocation is worth roughly ₹1.5 lakh in this room alone</strong>, and more in calibration labour every year after.</p>
+</section>
+
+<!-- ============ 5 AUTOMATION ============ -->
+<section>
+  <div class="sn p1">05 · Automation</div>
+  <h2>Control from rack to app</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Layer</th><th>Runs</th><th>Survives loss of</th></tr></thead><tbody>
+    <tr><td>Rack controller</td><td>Tier fill/dwell/drain sequence, fan PWM, leak and header interlocks, last-known-good schedule</td><td>The bus, the room controller, the internet</td></tr>
+    <tr><td>Room controller</td><td>Cross-rack sequencing, water skid dosing, HVAC and CO₂ setpoints, alarms, local time-series database, local dashboard</td><td>The internet</td></tr>
+    <tr><td>Cloud</td><td>Remote view, historical analytics, notifications, multi-site later</td><td>—</td></tr>
+    </tbody></table></div>
+  <h4>Automation logic the room owns</h4>
+  <ul class="prose">
+    <li><strong>Irrigation sequencing.</strong> The room controller holds one token. Only the rack and tier holding it may fill or drain. That single rule is what keeps the pump at 7.2 L/min and the drain main inside DN63 at any rack count.</li>
+    <li><strong>Photoperiod and dimming</strong> per rack, so different crops or stages can run on different racks from one schedule.</li>
+    <li><strong>VPD control</strong> computed from room T/RH, driving HVAC and dehumidifier rather than raw humidity — the Phase A requirement.</li>
+    <li><strong>CO₂ dosing</strong> to setpoint, interlocked to ventilation and to occupancy. This interlock is a safety function, not a comfort one.</li>
+    <li><strong>Fault containment.</strong> A leak or header trip takes one rack out and alarms; the other eight keep running.</li>
+  </ul>
+  <h4>Alarms, by what they cost you</h4>
+  <div class="scroll"><table>
+    <thead><tr><th>Priority</th><th>Condition</th><th>Action</th></tr></thead><tbody>
+    <tr><td><span class="tag t-x">Critical</span></td><td>Leak detected · header high level · CO₂ above safe occupancy · smoke</td><td>Immediate push and SMS. Automatic isolation of the affected rack</td></tr>
+    <tr><td><span class="tag t-x">High</span></td><td>Fan stopped (tacho loss) · reservoir low-low · pump dry-run · rack offline</td><td>Push within minutes. A dead fan is silent and costs a crop</td></tr>
+    <tr><td><span class="tag t-n">Medium</span></td><td>pH or EC drift out of band · room T/RH outside VPD window · missed irrigation</td><td>Dashboard and daily digest</td></tr>
+    <tr><td><span class="tag t-n">Low</span></td><td>Filter due · UV lamp hours · sensor calibration due</td><td>Maintenance list</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ============ 6 VALIDATION ============ -->
+<section>
+  <div class="sn w1">06 · Scaling validation</div>
+  <h2>Does the rack survive the room?</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Rack property</th><th>At room scale</th><th>Verdict</th></tr></thead><tbody>
+    <tr><td>Sequential tier filling</td><td>Pump stays 7.2 L/min and supply stays DN32 at 9 or 12 racks. Fill window 8–10% of the photoperiod</td><td><span class="tag t-o">Scales</span></td></tr>
+    <tr><td>Sequential draining</td><td>Peak stays 30.7 L/min. DN63 main is generous</td><td><span class="tag t-o">Scales</span></td></tr>
+    <tr><td>One RS485 node per rack</td><td>11 nodes on a bus rated for 32. Adding a rack is a spur and an address</td><td><span class="tag t-o">Scales</span></td></tr>
+    <tr><td>Local fail-safe control</td><td>Room controller can be replaced without stopping the racks</td><td><span class="tag t-o">Scales</span></td></tr>
+    <tr><td>Ball valve + union per rack</td><td>Any rack isolated in four actions, room keeps running</td><td><span class="tag t-o">Scales</span></td></tr>
+    <tr><td>End-mounted services</td><td>150 mm gaps give in-place access. Only true because Phase 1 put services at the ends</td><td><span class="tag t-o">Scales</span></td></tr>
+    <tr><td>Rack fans + room HVAC split</td><td>Room sized for thermal and moisture load only; rack count changes the load, not the architecture</td><td><span class="tag t-o">Scales</span></td></tr>
+    <tr><td>Air gap at every discharge</td><td>Still correct, and now discharges into a catch tank instead of a drain</td><td><span class="tag t-o">Scales</span></td></tr>
+    <tr><td><strong>Drain to waste</strong></td><td><strong>1,656 L/day at 12 racks and 3 cycles. Needs a recovery loop above roughly four racks</strong></td><td><span class="tag t-x">Changes</span></td></tr>
+    <tr><td>Single-phase rack feed</td><td>Fine per rack; the room needs three phase and phase balancing</td><td><span class="tag t-n">Room only</span></td></tr>
+    </tbody></table></div>
+  <div class="note ai"><strong>Nine of ten properties scale without touching the rack, and the tenth changes something outside it.</strong> No rack part, dimension, interface or control behaviour has to be redesigned to build this room. The recovery loop bolts on under an air gap that already exists. That is the result the study was run to find, and it is a good one — but it is worth being clear that it was not luck: sequential firing, end-mounted services and local fail-safe control were each chosen in Phase 1 <em>because</em> of how they would behave at room scale.</div>
+</section>
+
+<!-- ============ 7 CAPEX ============ -->
+<section style="border-bottom:0">
+  <div class="sn p1">07 · Room capex</div>
+  <h2>Order of magnitude</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Element</th><th>9 racks</th><th>Note</th></tr></thead><tbody>
+    <tr><td>Racks, Grow-S build</td><td class="n">₹389,600</td><td>9 × ₹43,286</td></tr>
+    <tr><td>LED fixtures</td><td class="n">₹—</td><td>Product 1.2, priced separately. 36 bars</td></tr>
+    <tr><td>Reservoir, pump, dosing, filtration</td><td class="n">₹85,000</td><td>Includes pH/EC/level/flow instrumentation</td></tr>
+    <tr><td>Recovery skid — catch tank, filter, UV</td><td class="n">₹65,000</td><td><strong>The Phase 2 addition</strong></td></tr>
+    <tr><td>Room mains — DN32 supply, DN63 drain</td><td class="n">₹32,000</td><td></td></tr>
+    <tr><td>Electrical — 3-phase panel, RCBOs, SPD, earthing, cabling</td><td class="n">₹95,000</td><td></td></tr>
+    <tr><td>HVAC 1.5 TR + dehumidifier 45 L/day</td><td class="n">₹145,000</td><td>Reverse cycle for Ooty</td></tr>
+    <tr><td>CO₂ dosing and safety interlock</td><td class="n">₹38,000</td><td></td></tr>
+    <tr><td>Room controller, room I/O, dashboard</td><td class="n">₹75,000</td><td>Software effort not included</td></tr>
+    <tr><td>Envelope, panels, floor, drain channel</td><td class="n">₹210,000</td><td>Per the Phase A PIR sandwich-panel design</td></tr>
+    <tr><td><strong>Room total, excluding LED fixtures</strong></td><td class="n"><strong>≈ ₹11.35 lakh</strong></td><td>±25% at this stage</td></tr>
+    </tbody></table></div>
+  <div class="note wa"><strong>Read the split before the total.</strong> The racks are 34% of the room. The other two-thirds is envelope, HVAC, water and electrical infrastructure that exists whether you have nine racks or one. That is the honest answer to the earlier pricing anxiety: <strong>a customer buying a room is not comparing your rack to a ₹9,999 wire shelf</strong> — they are comparing a working, instrumented growing room to building one themselves. It is also the argument for selling rooms rather than racks wherever you can.</div>
+  <div class="note"><strong>What has not been done.</strong> No CFD on room air distribution, no thermal model of the envelope against Ooty's actual year, no detailed HVAC selection, and no dashboard or firmware design beyond architecture. The layout, loads and sizing here are closed-form and adequate to commit to a room shape and a service strategy — not to order equipment. Before purchase, the HVAC figure in particular should be checked against a proper year-round load model, because Ooty's heating season is the case that a cooling-led calculation will get wrong.</div>
+</section>
+</main>
+<footer><div class="w"><p>RK-R-01 Rev 1 · 04 September 2026 · Phase 2 scaling study · Built on RK-A-SYS Rev 2. Loads and sizing are closed-form calculations. No CFD, no FEA, no envelope thermal model.</p></div></footer>

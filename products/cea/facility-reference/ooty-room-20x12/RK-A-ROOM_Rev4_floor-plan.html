@@ -1,0 +1,493 @@
+<title>CEA Room Floor Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+ --paper:#F3F5F2; --sheet:#FFFFFF; --card:#F9FBF8; --band:#E9EDE6; --band2:#DCE3D8;
+ --ink:#111611; --ink2:#465146; --ink3:#778375;
+ --rule:#CFD8CB; --rule2:#A9B6A4;
+ --water:#15628F; --water-s:#DCEAF3;
+ --recov:#0E6E68; --recov-s:#D6EAE8;
+ --air:#256B4E; --air-s:#DCECE4;
+ --power:#8E5A0E; --power-s:#F4E9D6;
+ --warn:#963224; --warn-s:#F6E1DD;
+ --ok:#256B4E; --ok-s:#DCECE4;
+ --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+ --sans:"Instrument Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --paper:#090B09; --sheet:#141814; --card:#111511; --band:#1A201A; --band2:#232B22;
+ --ink:#E9EEE7; --ink2:#A6B2A4; --ink3:#75826F;
+ --rule:#263024; --rule2:#3A473A;
+ --water:#6FB4DC; --water-s:#0F2430; --recov:#5CC2B8; --recov-s:#0A2624;
+ --air:#6FBF98; --air-s:#0F2620; --power:#D4A055; --power-s:#2A2013;
+ --warn:#DD8878; --warn-s:#2C1815; --ok:#6FBF98; --ok-s:#0F2620;
+}}
+:root[data-theme="dark"]{
+ --paper:#090B09; --sheet:#141814; --card:#111511; --band:#1A201A; --band2:#232B22;
+ --ink:#E9EEE7; --ink2:#A6B2A4; --ink3:#75826F;
+ --rule:#263024; --rule2:#3A473A;
+ --water:#6FB4DC; --water-s:#0F2430; --recov:#5CC2B8; --recov-s:#0A2624;
+ --air:#6FBF98; --air-s:#0F2620; --power:#D4A055; --power-s:#2A2013;
+ --warn:#DD8878; --warn-s:#2C1815; --ok:#6FBF98; --ok-s:#0F2620;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.62}
+.w{max-width:1240px;margin:0 auto;padding:0 26px}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+a{color:var(--air)}
+:focus-visible{outline:2px solid var(--air);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.top{background:var(--sheet);border-bottom:1px solid var(--rule2)}
+.top-in{max-width:1240px;margin:0 auto;padding:40px 26px 0}
+.eb{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--air)}
+h1{font-size:clamp(32px,5.4vw,56px);font-weight:700;letter-spacing:-.025em;line-height:1.03;margin:14px 0 12px}
+.dek{font-size:17.5px;color:var(--ink2);max-width:66ch;margin:0 0 26px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid var(--rule)}
+.kv div{padding:11px 15px 13px;border-right:1px solid var(--rule)}
+.kv div:last-child{border-right:0}
+.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.kv dd{margin:4px 0 0;font-size:19px;font-weight:600;font-variant-numeric:tabular-nums}
+section{padding:46px 0;border-bottom:1px solid var(--rule)}
+.sn{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;margin-bottom:7px;color:var(--air)}
+.sn.w1{color:var(--water)} .sn.p1{color:var(--power)} .sn.x1{color:var(--warn)} .sn.r1{color:var(--recov)}
+h2{font-size:clamp(23px,3.1vw,33px);font-weight:700;letter-spacing:-.018em;margin-bottom:9px}
+h3{font-size:19px;font-weight:600;margin:30px 0 8px;letter-spacing:-.01em}
+h4{font-size:15.5px;font-weight:600;margin:18px 0 5px}
+p{margin:0 0 12px} ul,ol{margin:0 0 12px;padding-left:1.2em} li{margin-bottom:5px}
+.lede{font-size:17px;color:var(--ink2);max-width:70ch;margin-bottom:8px}
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet);margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:13.2px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+   padding:9px 12px;background:var(--band);border-bottom:1px solid var(--rule2);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:500}
+.m{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.n{font-family:var(--mono);font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+th.n{text-align:right}
+tr.tot td{background:var(--band);color:var(--ink);font-weight:600;border-top:1px solid var(--rule2)}
+.tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;font-weight:600;white-space:nowrap}
+.t-w{background:var(--water-s);color:var(--water)} .t-r{background:var(--recov-s);color:var(--recov)}
+.t-a{background:var(--air-s);color:var(--air)} .t-p{background:var(--power-s);color:var(--power)}
+.t-x{background:var(--warn-s);color:var(--warn)} .t-o{background:var(--ok-s);color:var(--ok)}
+.t-n{background:var(--band2);color:var(--ink2)}
+.note{background:var(--band);border-left:3px solid var(--air);padding:14px 18px;margin:16px 0;font-size:14.6px;color:var(--ink2)}
+.note strong{color:var(--ink)}
+.note.wa{background:var(--warn-s);border-left-color:var(--warn)}
+.note.po{background:var(--power-s);border-left-color:var(--power)}
+.note.rc{background:var(--recov-s);border-left-color:var(--recov)}
+.dwg{background:var(--sheet);border:1px solid var(--rule2);padding:14px;margin:20px 0;overflow-x:auto}
+.dwg svg{display:block;width:100%;height:auto;min-width:880px}
+.cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+     margin-top:10px;padding-top:8px;border-top:1px solid var(--rule)}
+.g2{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:18px 0;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g2>div{background:var(--sheet);padding:15px 17px}
+.g2 h4{margin:0 0 5px} .g2 p{font-size:14px;color:var(--ink2);margin:0}
+.calc{background:var(--card);border:1px solid var(--rule);padding:14px 17px;margin:14px 0;font-family:var(--mono);font-size:12.6px;color:var(--ink2);overflow-x:auto}
+.calc b{color:var(--ink);font-weight:600}
+.calc .r{color:var(--air);font-weight:600}
+.calc .x{color:var(--warn);font-weight:600}
+footer{padding:38px 0 60px;color:var(--ink3);font-size:13px}
+</style>
+
+<header class="top">
+ <div class="top-in">
+  <div class="eb">RK-A-ROOM · Rev 4 · 09 Sep 2026 · terrace plant · 11 racks</div>
+  <h1>CEA Room<br>Floor Plan</h1>
+  <p class="dek">A 20 × 12 ft room set out from the validated rack envelope, with the nutrient plant moved to the terrace and only a 1.02 m² service corner left indoors. Eleven racks, every rack coordinate fixed, every service routed, and the two constraints that decide the room's clock stated plainly.</p>
+  <dl class="kv">
+   <div><dt>Room</dt><dd>6096 × 3658</dd></div>
+   <div><dt>Racks</dt><dd>11</dd></div>
+   <div><dt>Beds</dt><dd>44 · 176 trays</dd></div>
+   <div><dt>Grow area</dt><dd>29.0 m²</dd></div>
+   <div><dt>Floor multiplier</dt><dd>1.30×</dd></div>
+   <div><dt>Max demand</dt><dd>5.7 kW</dd></div>
+  </dl>
+ </div>
+</header>
+
+<main class="w">
+
+<section>
+ <div class="sn">01 · Setting out</div>
+ <h2>What changed, and what it was worth</h2>
+ <p class="lede">Rev 2 gave the room a 5.73 m² water plant bay and nine racks. Moving both reservoirs to the terrace leaves one service corner and buys back two racks.</p>
+ <div class="calc">
+ room internal            <b>6096 × 3658 mm</b> = 22.3 m²<br>
+ rack installed envelope  <b>1456 × 690 × 1960 mm</b> (integrated model Rev 5, 112.7 kg dry, interference-clean)<br><br>
+ across the 3658 mm depth:<br>
+ &nbsp;3 rows × 690       = 2070   →  2 aisles of <b>794 mm</b><br>
+ &nbsp;4 rows would need 4×690 + 3×700 = 4860  →  <span class="x">does not fit. Three rows is the maximum</span><br><br>
+ along the 6096 mm length:<br>
+ &nbsp;4 racks at 1476 pitch = 5904, ending at 5984, 112 mm to the east wall<br>
+ &nbsp;row A gives up its east bay for the service corner<br>
+ &nbsp;<b>11 racks</b> + a <b>1476 × 690</b> service corner<br><br>
+ grow area   11 × 4 × (1.176 × 0.560) = <b>29.0 m²</b><br>
+ multiplier  29.0 / 22.3 = <span class="r">1.30×</span>   (was 1.06× with the plant indoors)
+ </div>
+ <p>Rows B and C sit back to back at Y = 2174, bolted to each other through the wall-anchor brackets — that pair is self-stabilising, which removes eight of the eleven racks' dependence on the building fabric. Row A anchors to the north wall.</p>
+ <div class="note rc"><strong>Set the room out for 690 mm even though Phase 1 is only 648 mm deep.</strong> With the plenum deferred (§6) the deepest item on a rack is the supply riser at Y 643, so a Phase-1 rack is 648 mm deep. Do <em>not</em> use that to tighten the rows. Setting out at the final 690 mm means the plenum retrofit in month two or three is a bolt-on, not a room re-plan — and 42 mm × 3 rows is 126 mm of aisle you will never notice.</div>
+</section>
+
+<section>
+ <div class="sn">02 · Plan</div>
+ <h2>General arrangement</h2>
+ <div class="dwg">
+ <svg viewBox="0 0 1310 900" role="img" aria-label="Dimensioned floor plan of the 20 by 12 foot CEA room with eleven racks in three rows and a service corner">
+  <defs>
+   <marker id="r3d" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L9,4.5 L0,8 Z" fill="var(--ink3)"/></marker>
+   <marker id="r3r" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,1 L9,4.5 L0,8 Z" fill="var(--recov)"/></marker>
+   <pattern id="r3h" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+     <rect width="7" height="7" fill="var(--band)"/><line x1="0" y1="0" x2="0" y2="7" stroke="var(--rule2)" stroke-width="1"/>
+   </pattern>
+  </defs>
+  <g font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink3)">
+
+  <rect x="78" y="118" width="1184" height="720" fill="url(#r3h)"/>
+  <rect x="90" y="130" width="1160" height="696" fill="var(--sheet)" stroke="var(--ink)" stroke-width="2"/>
+  <rect x="90" y="261" width="1160" height="151" fill="var(--band)"/>
+  <rect x="90" y="675" width="1160" height="151" fill="var(--band)"/>
+  <text x="330" y="350" font-size="11" fill="var(--ink2)">AISLE 1 · 794 mm clear</text>
+  <text x="330" y="764" font-size="11" fill="var(--ink2)">AISLE 2 · 794 mm clear · egress route</text>
+
+  <!-- racks -->
+  <g stroke="var(--ink2)" stroke-width="1.4" fill="var(--card)">
+   <rect x="109" y="130" width="277.1" height="131.3"/><rect x="389.9" y="130" width="277.1" height="131.3"/><rect x="670.8" y="130" width="277.1" height="131.3"/>
+   <rect x="109" y="412.4" width="277.1" height="131.3"/><rect x="389.9" y="412.4" width="277.1" height="131.3"/><rect x="670.8" y="412.4" width="277.1" height="131.3"/><rect x="951.7" y="412.4" width="277.1" height="131.3"/>
+   <rect x="109" y="543.7" width="277.1" height="131.3"/><rect x="389.9" y="543.7" width="277.1" height="131.3"/><rect x="670.8" y="543.7" width="277.1" height="131.3"/><rect x="951.7" y="543.7" width="277.1" height="131.3"/>
+  </g>
+  <g fill="var(--air-s)" stroke="var(--air)" stroke-width="0.8">
+   <rect x="116.6" y="130" width="246.5" height="106.6"/><rect x="397.5" y="130" width="246.5" height="106.6"/><rect x="678.4" y="130" width="246.5" height="106.6"/>
+   <rect x="116.6" y="437.1" width="246.5" height="106.6"/><rect x="397.5" y="437.1" width="246.5" height="106.6"/><rect x="678.4" y="437.1" width="246.5" height="106.6"/><rect x="959.3" y="437.1" width="246.5" height="106.6"/>
+   <rect x="116.6" y="543.7" width="246.5" height="106.6"/><rect x="397.5" y="543.7" width="246.5" height="106.6"/><rect x="678.4" y="543.7" width="246.5" height="106.6"/><rect x="959.3" y="543.7" width="246.5" height="106.6"/>
+  </g>
+  <g font-size="11" fill="var(--ink)" text-anchor="middle" font-weight="600">
+   <text x="248" y="192">A1</text><text x="528" y="192">A2</text><text x="809" y="192">A3</text>
+   <text x="248" y="500">B1</text><text x="528" y="500">B2</text><text x="809" y="500">B3</text><text x="1090" y="500">B4</text>
+   <text x="248" y="612">C1</text><text x="528" y="612">C2</text><text x="809" y="612">C3</text><text x="1090" y="612">C4</text>
+  </g>
+  <line x1="109" y1="543.7" x2="1228.8" y2="543.7" stroke="var(--warn)" stroke-width="2.2"/>
+  <text x="1232" y="540" text-anchor="end" font-size="9" fill="var(--warn)">B/C bolted rear to rear</text>
+
+  <!-- service corner -->
+  <rect x="951.7" y="130" width="280.9" height="131.3" fill="var(--recov-s)" stroke="var(--recov)" stroke-width="1.8"/>
+  <text x="1092" y="146" text-anchor="middle" font-size="9.5" fill="var(--recov)">SERVICE CORNER 1476 × 690 · 1.02 m²</text>
+  <rect x="984.4" y="138.6" width="228.4" height="114.1" fill="var(--sheet)" stroke="var(--recov)" stroke-width="1.4"/>
+  <text x="1098" y="172" text-anchor="middle" font-size="11" fill="var(--recov)" font-weight="600">TK-02</text>
+  <text x="1098" y="188" text-anchor="middle" font-size="9.5">catch trough 1400 × 650 × 200</text>
+  <text x="1098" y="203" text-anchor="middle" font-size="9.5">inlet +87 · working 79 L</text>
+  <text x="1098" y="218" text-anchor="middle" font-size="9.5">EC · pH · temp — gate decided here</text>
+  <rect x="969" y="133.8" width="259" height="123.7" fill="none" stroke="var(--recov)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="1098" y="240" text-anchor="middle" font-size="9.5" fill="var(--recov)">skid frame over, 700–1900: P-02 A/B · F-01 · F-02 · UV-01 · FV-01</text>
+  <circle cx="965" cy="150" r="5.5" fill="none" stroke="var(--water)" stroke-width="1.6"/>
+  <circle cx="965" cy="172" r="5.5" fill="none" stroke="var(--recov)" stroke-width="1.6"/>
+  <text x="946" y="153" text-anchor="end" font-size="9" fill="var(--water)">down-main</text>
+  <text x="946" y="175" text-anchor="end" font-size="9" fill="var(--recov)">rising main</text>
+  <rect x="1240" y="150" width="10" height="95" fill="var(--power-s)" stroke="var(--power)" stroke-width="1.4"/>
+  <text x="1236" y="200" text-anchor="end" font-size="9" fill="var(--power)" transform="rotate(-90 1236 200)">PANEL · east wall, 1400–1900</text>
+
+  <!-- overhead supply -->
+  <g stroke="var(--water)" stroke-width="1.8" fill="none" stroke-dasharray="8 4">
+   <path d="M960,337.4 L140,337.4"/>
+   <path d="M960,750.3 L140,750.3"/>
+   <path d="M1243,337.4 L1243,750.3"/>
+   <path d="M960,337.4 L1243,337.4"/>
+  </g>
+  <g stroke="var(--water)" stroke-width="1.4">
+   <path d="M152.8,337.4 L152.8,261.3"/><path d="M433.6,337.4 L433.6,261.3"/><path d="M714.5,337.4 L714.5,261.3"/>
+   <path d="M152.8,337.4 L152.8,412.4"/><path d="M433.6,337.4 L433.6,412.4"/><path d="M714.5,337.4 L714.5,412.4"/><path d="M995.4,337.4 L995.4,412.4"/>
+   <path d="M152.8,750.3 L152.8,675"/><path d="M433.6,750.3 L433.6,675"/><path d="M714.5,750.3 L714.5,675"/><path d="M995.4,750.3 L995.4,675"/>
+  </g>
+  <text x="300" y="331" font-size="9" fill="var(--water)">DN32 SUPPLY MAIN, OVERHEAD AT 2100 — gravity from the terrace · drop to each rack riser</text>
+
+  <!-- drainage -->
+  <g stroke="var(--recov)" stroke-width="2" fill="none">
+   <path d="M354.7,170 L946,170" marker-end="url(#r3r)"/>
+   <path d="M354.7,503.7 L1236,503.7"/>
+   <path d="M354.7,583.6 L1236,583.6"/>
+   <path d="M1239.6,583.6 L1239.6,262" marker-end="url(#r3r)"/>
+  </g>
+  <g fill="var(--recov)">
+   <circle cx="354.7" cy="170" r="3.6"/><circle cx="635.6" cy="170" r="3.6"/><circle cx="916.5" cy="170" r="3.6"/>
+   <circle cx="354.7" cy="503.7" r="3.6"/><circle cx="635.6" cy="503.7" r="3.6"/><circle cx="916.5" cy="503.7" r="3.6"/><circle cx="1197.4" cy="503.7" r="3.6"/>
+   <circle cx="354.7" cy="583.6" r="3.6"/><circle cx="635.6" cy="583.6" r="3.6"/><circle cx="916.5" cy="583.6" r="3.6"/><circle cx="1197.4" cy="583.6" r="3.6"/>
+  </g>
+  <text x="380" y="164" font-size="9" fill="var(--recov)">DN63 gravity main, 1:80 · ● tundish drop at +170</text>
+  <text x="380" y="498" font-size="9" fill="var(--recov)">row B main</text>
+  <text x="380" y="578" font-size="9" fill="var(--recov)">row C main</text>
+  <text x="1250" y="430" font-size="9" fill="var(--recov)" transform="rotate(-90 1250 430)">east-wall collector, 112 mm strip</text>
+
+  <!-- door -->
+  <rect x="450" y="820" width="172.2" height="10" fill="var(--sheet)" stroke="var(--ink)" stroke-width="1.4"/>
+  <path d="M450,830 A172,172 0 0,1 450,858" fill="none" stroke="var(--ink3)" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="536" y="876" text-anchor="middle" font-size="10" fill="var(--ink2)">DOOR 900, opens out</text>
+
+  <!-- dims -->
+  <g stroke="var(--ink3)" stroke-width="0.9">
+   <line x1="90" y1="98" x2="1250" y2="98" marker-start="url(#r3d)" marker-end="url(#r3d)"/>
+   <line x1="90" y1="130" x2="90" y2="94"/><line x1="1250" y1="130" x2="1250" y2="94"/>
+   <line x1="58" y1="130" x2="58" y2="826" marker-start="url(#r3d)" marker-end="url(#r3d)"/>
+   <line x1="90" y1="130" x2="54" y2="130"/><line x1="90" y1="826" x2="54" y2="826"/>
+   <line x1="74" y1="130" x2="74" y2="261"/><line x1="74" y1="261" x2="74" y2="412"/>
+  </g>
+  <text x="670" y="90" text-anchor="middle" font-size="11.5" fill="var(--ink2)">6096  (20 ft)</text>
+  <text x="44" y="478" text-anchor="middle" font-size="11.5" fill="var(--ink2)" transform="rotate(-90 44 478)">3658  (12 ft)</text>
+  <g font-size="9.5" fill="var(--ink3)">
+   <text x="68" y="196" text-anchor="middle" transform="rotate(-90 68 196)">690</text>
+   <text x="68" y="336" text-anchor="middle" transform="rotate(-90 68 336)">794</text>
+  </g>
+  <text x="94" y="852" font-size="9.5">N ↑ · origin X0 Y0 at north-west internal corner · all dimensions in mm · dashed blue = overhead at 2100</text>
+  </g>
+ </svg>
+ <div class="cap">Fig 1 — Rev 3 general arrangement. Blue dashed is the gravity supply main, overhead at 2100 mm with a drop to each rack. Teal is DN63 gravity drainage, run inside the rack footprints and collected in the 112 mm strip against the east wall.</div>
+ </div>
+
+ <h3>Rack setting-out</h3>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Rack</th><th class="n">X left</th><th class="n">Y front</th><th>Faces</th><th class="n">Supply riser X</th><th class="n">Tundish X</th><th class="n">Tundish Y</th><th>Anchored to</th></tr></thead>
+   <tbody>
+    <tr><td class="m">A1</td><td class="n">100</td><td class="n">690</td><td>South, Aisle 1</td><td class="n">330</td><td class="n">1451</td><td class="n">210</td><td>North wall, 2 × M10</td></tr>
+    <tr><td class="m">A2</td><td class="n">1576</td><td class="n">690</td><td>South, Aisle 1</td><td class="n">1806</td><td class="n">2927</td><td class="n">210</td><td>North wall, 2 × M10</td></tr>
+    <tr><td class="m">A3</td><td class="n">3052</td><td class="n">690</td><td>South, Aisle 1</td><td class="n">3282</td><td class="n">4403</td><td class="n">210</td><td>North wall, 2 × M10</td></tr>
+    <tr><td class="m">B1</td><td class="n">100</td><td class="n">1484</td><td>North, Aisle 1</td><td class="n">330</td><td class="n">1451</td><td class="n">1964</td><td>C1, rear to rear</td></tr>
+    <tr><td class="m">B2</td><td class="n">1576</td><td class="n">1484</td><td>North, Aisle 1</td><td class="n">1806</td><td class="n">2927</td><td class="n">1964</td><td>C2, rear to rear</td></tr>
+    <tr><td class="m">B3</td><td class="n">3052</td><td class="n">1484</td><td>North, Aisle 1</td><td class="n">3282</td><td class="n">4403</td><td class="n">1964</td><td>C3, rear to rear</td></tr>
+    <tr><td class="m">B4</td><td class="n">4528</td><td class="n">1484</td><td>North, Aisle 1</td><td class="n">4758</td><td class="n">5879</td><td class="n">1964</td><td>C4, rear to rear</td></tr>
+    <tr><td class="m">C1</td><td class="n">100</td><td class="n">2864</td><td>South, Aisle 2</td><td class="n">330</td><td class="n">1451</td><td class="n">2384</td><td>B1, rear to rear</td></tr>
+    <tr><td class="m">C2</td><td class="n">1576</td><td class="n">2864</td><td>South, Aisle 2</td><td class="n">1806</td><td class="n">2927</td><td class="n">2384</td><td>B2, rear to rear</td></tr>
+    <tr><td class="m">C3</td><td class="n">3052</td><td class="n">2864</td><td>South, Aisle 2</td><td class="n">3282</td><td class="n">4403</td><td class="n">2384</td><td>B3, rear to rear</td></tr>
+    <tr><td class="m">C4</td><td class="n">4528</td><td class="n">2864</td><td>South, Aisle 2</td><td class="n">4758</td><td class="n">5879</td><td class="n">2384</td><td>B4, rear to rear</td></tr>
+    <tr class="tot"><td>Service corner</td><td class="n">4528</td><td class="n">0</td><td colspan="5">1476 × 690 · TK-02 catch trough with the recovery skid on a frame above it, panel on the east wall</td></tr>
+   </tbody>
+  </table>
+ </div>
+</section>
+
+<section>
+ <div class="sn r1">03 · Water</div>
+ <h2>Down by gravity overhead, back up by pump in one corner</h2>
+ <p class="lede">Supply is overhead and dry; drainage is at floor level and inside the rack footprints. Neither crosses a walking surface.</p>
+ <h4>Supply — gravity, overhead at 2100 mm</h4>
+ <p>The DN32 down-main enters the room through the slab in the service corner, runs at 2100 mm above both aisles, and drops to each rack's supply riser at the rack's left end. Overhead because there is no pressure to lose — 2.66 m of static head against 0.33 m of loss — and because a pipe at 2100 mm is out of everyone's way. The master valve MV-01 on the terrace is the isolation point for the whole room; each rack keeps its own ball valve and union.</p>
+ <h4>Drainage — gravity, in the rack footprints</h4>
+ <div class="calc">
+ <b>Fall budget, worst case — rack C1 to TK-02</b><br>
+ along row C, 1451 → 6040   = 4.59 m<br>
+ north up the east strip, 2384 → 345 = 2.04 m<br>
+ total 6.63 m at 1:80       →  <b>83 mm fall</b><br>
+ tundish outlet 170 − 83    =  <span class="r">trough inlet at 87 mm AFFL</span><br>
+ trough working volume 1.400 × 0.650 × 0.087 = <span class="r">79 L against a 46 L rack batch — pass</span><br><br>
+ <b>Peak hydraulic load</b>  one rack draining, one tier at a time = 30.3 L/min<br>
+ DN63 at 1:80 half-full ≈ 132 L/min  →  <span class="r">utilisation 23% — pass</span>
+ </div>
+ <div class="note wa"><strong>The east-wall collector runs in a 112 mm strip, and that strip is not a walking route.</strong> Racks in rows B and C end at X 5984; the wall is at 6096. The north–south collector sits in that gap, crossing the ends of both aisles. It is a dead end past the last rack, but it must be covered with a removable GRP channel cover and marked — this is the one place in the room where a pipe is anywhere near a foot.</div>
+ <h3>Water balance — 44 beds, three cycles a day</h3>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Stream</th><th class="n">L / cycle</th><th class="n">L / day</th><th class="n">m³ / yr</th></tr></thead>
+   <tbody>
+    <tr><td>Gross flood delivered</td><td class="n">638</td><td class="n">1,914</td><td class="n">632</td></tr>
+    <tr><td>Consumed — ET, harvest, substrate</td><td class="n">29.6</td><td class="n">88.9</td><td class="n">29.3</td></tr>
+    <tr><td>Returned to trough</td><td class="n">608</td><td class="n">1,825</td><td class="n">602</td></tr>
+    <tr><td>Blowdown at 8%</td><td class="n">48.7</td><td class="n">146</td><td class="n">48.2</td></tr>
+    <tr class="tot"><td>Make-up required</td><td class="n">78.3</td><td class="n">235</td><td class="n">77.6</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <p>Recovery ratio <b>87.7%</b>; annual discharge 48.2 m³ against 632 m³ drain-to-waste — a saving of <b>554 m³</b>. Full architecture, equipment and the reuse gate are in RK-A-WRS Rev 3.</p>
+ <div class="note"><strong>The drain side sets the room's clock, not the fill side.</strong> Gravity can flood all four tiers of a rack at once — 2 minutes — but recovery is one rack per batch, because the reuse gate is decided on a settled 46 L batch in a 79 L trough. Drain 2.7 min, settle 0.5, test 3, transfer 2 ≈ <b>8 minutes per rack, 88 minutes for eleven, three times a day</b>. That is 4.4 hours a day of drain-and-recover, and it is the number to design the schedule around.</div>
+</section>
+
+<section>
+ <div class="sn a1">04 · Ventilation</div>
+ <h2>Standalone EC fans now, plenum in month two or three</h2>
+ <p class="lede">The plenum is a real piece of ducting design and it deserves its own iteration. Phase 1 runs the same EC fans on grid-mounted brackets; the plenum retrofits onto the same 50 mm hole grid without touching anything else.</p>
+ <div class="scroll">
+  <table>
+   <thead><tr><th></th><th>Phase 1 — standalone fans</th><th>Phase 2 — ducted plenum</th></tr></thead>
+   <tbody>
+    <tr><td>Hardware per tier</td><td>One 120 × 120 × 38 EC fan on a grid-mounted bracket at the rear-right of the bed</td><td>Folded 0.8 mm GI plenum, 1040 × 120 × 170, perforated face, same fan in the end cap</td></tr>
+    <tr><td>Air delivered</td><td class="m">178 m³/h</td><td class="m">178 m³/h — unchanged</td></tr>
+    <tr><td>Velocity uniformity</td><td>Point source. Expect a coefficient of variation near <b>33%</b> across the bed</td><td>Distributed along the full 1176 mm. CFD literature reports about <b>10%</b></td></tr>
+    <tr><td>Installed rack depth</td><td class="m">648 mm</td><td class="m">690 mm</td></tr>
+    <tr><td>Cost per rack</td><td class="n">₹2,880</td><td class="n">₹5,520 · retrofit delta ₹2,640</td></tr>
+    <tr><td>Retrofit path</td><td colspan="2">The plenum bolts to the same grid holes the fan bracket uses. No structural, electrical or plumbing change; the fan and its 24 V + PWM + tacho cable move across unaltered</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="calc">
+ deferred now, 11 racks × ₹2,640 = <b>₹29,040</b><br>
+ what it buys later: uniformity CV 33% → 10%, and tier-to-tier consistency you can actually control<br><br>
+ <b>Commission Phase 1 with the measurement that decides Phase 2:</b><br>
+ hot-wire anemometer, 5 points per tier, at canopy height, fans at design PWM<br>
+ &nbsp;CV ≤ 20%  →  the plenum is an optimisation<br>
+ &nbsp;CV &gt; 20%  →  <span class="r">the plenum is a fix, and the data tells you where to put the perforations</span>
+ </div>
+ <div class="note"><strong>This is the right sequencing, and the measurement is what makes it right.</strong> Designing a plenum before you have measured the bed it serves means guessing at the perforation pattern. Running Phase 1 with a bare fan and a five-point traverse per tier gives you a real velocity map to design against — so the month-two plenum is drawn from data rather than from a rule of thumb. Budget the anemometer (₹9,000–14,000 for a usable hot-wire unit); it is the cheapest instrument in this project and it closes two open items.</div>
+</section>
+
+<section>
+ <div class="sn p1">05 · Power</div>
+ <h2>Three phases, fourteen circuits</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Circuit</th><th>Load</th><th class="n">W</th><th>Phase</th><th>Protection</th><th>Cable</th></tr></thead>
+   <tbody>
+    <tr><td class="m">C1–C4</td><td>Racks A1–A3, B1</td><td class="n">1,264</td><td>L1</td><td>6 A Type C + 30 mA Type A RCBO each</td><td>3C × 2.5 mm² Cu</td></tr>
+    <tr><td class="m">C5–C8</td><td>Racks B2–B4, C1</td><td class="n">1,264</td><td>L2</td><td>6 A Type C + 30 mA Type A RCBO each</td><td>3C × 2.5 mm² Cu</td></tr>
+    <tr><td class="m">C9–C11</td><td>Racks C2–C4</td><td class="n">948</td><td>L3</td><td>6 A Type C + 30 mA Type A RCBO each</td><td>3C × 2.5 mm² Cu</td></tr>
+    <tr><td class="m">C12</td><td>HVAC, 2.0 TR inverter, <b>three-phase</b></td><td class="n">1,750</td><td>L1 L2 L3</td><td>16 A TP Type C + 30 mA Type A</td><td>4C × 2.5 mm² Cu</td></tr>
+    <tr><td class="m">C13</td><td>Dehumidifier, 50 L/day</td><td class="n">700</td><td>L1</td><td>10 A Type C + 30 mA Type A RCBO</td><td>3C × 1.5 mm² Cu</td></tr>
+    <tr><td class="m">C14</td><td>Water plant — P-02 A/B, UV-01, DOS-01, MV-01</td><td class="n">820</td><td>L3</td><td>16 A Type C + 30 mA Type A; 10 mA on UV-01</td><td>3C × 2.5 mm² Cu</td></tr>
+    <tr><td class="m">C15</td><td>Room lighting, sockets, controller on UPS</td><td class="n">200</td><td>L2</td><td>6 A Type B + 30 mA Type A RCBO</td><td>3C × 1.5 mm² Cu</td></tr>
+    <tr class="tot"><td>Connected</td><td></td><td class="n">6,946</td><td colspan="3">Maximum demand at 0.82 diversity ≈ <b>5.7 kW</b> · 415 V TPN, 32 A main</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="calc">
+ phase currents at 230 V, with a three-phase HVAC sharing 583 W per phase:<br>
+ &nbsp;L1 = (1264 + 700 + 583) / 230 = <b>11.1 A</b><br>
+ &nbsp;L2 = (1264 + 200 + 583) / 230 = <b>8.9 A</b><br>
+ &nbsp;L3 = (948 + 820 + 583) / 230  = <b>10.2 A</b><br>
+ imbalance = (11.1 − 8.9) / 11.1 = <span class="x">20% — above the 15% target</span><br>
+ eleven racks will not divide by three; the residue is trimmed at commissioning by moving<br>
+ the dehumidifier or the water plant between phases once running currents are measured
+ </div>
+ <div class="note po"><strong>Specify the HVAC as three-phase.</strong> With eleven racks the rack load already divides 4/4/3, so a single-phase 2 TR unit lands 1.75 kW on one leg and pushes the imbalance past 35%. A three-phase unit shares it and brings the room inside 20% without any other change. Three-phase 2 TR inverter units are readily available in India and the price difference is small against the cable and the trouble it saves.</div>
+ <ul>
+  <li><b>Type A RCBOs, not Type AC</b> — LED drivers and inverter compressors produce pulsating DC residual currents that a Type AC device can be blinded by. Not the default on most Indian consumer units; state it on the order.</li>
+  <li><b>Surge:</b> Type 2 SPD, 10 kA, at the main panel, 3 m maximum lead to the earth bar.</li>
+  <li><b>Earthing</b> per IS 3043 — dedicated earth pit, 6 mm² bonding to every rack frame, continuity ≤ 1 Ω measured and recorded per rack.</li>
+  <li><b>Emergency stop:</b> one latching mushroom head per aisle. Drops all fill solenoids, MV-01 on the terrace and all pumps; drain solenoids de-energise open so every bed empties.</li>
+  <li><b>Terrace circuit:</b> MV-01 and the TK-01 instrument block run on a spur from C14 with its own 10 mA RCBO, in UV-stable conduit. Everything on a roof is an outdoor installation.</li>
+ </ul>
+</section>
+
+<section>
+ <div class="sn a1">06 · Climate</div>
+ <h2>The latent load is the design driver</h2>
+ <div class="calc">
+ sensible = rack electrical 3,476 W + in-room pump average 300 W = <b>3.78 kW</b><br>
+ latent   = ET 43.5 L/day = 1.81 kg/h × 2450 kJ/kg = <b>1.23 kW</b><br>
+ total    = <b>5.01 kW</b>  →  1.42 TR<br>
+ sensible heat ratio = 3.78 / 5.01 = <span class="r">0.75</span><br><br>
+ specify <b>2.0 TR three-phase inverter</b> (1.5 TR would run at 95% duty with no reserve)<br>
+ plus a <b>50 L/day dehumidifier</b> for the dark period, when sensible load collapses<br>
+ but transpiration does not stop with it
+ </div>
+ <p>The racks mix the room themselves: 11 × 4 × 178 m³/h is <b>7,832 m³/h</b> in a 60.2 m³ room, about 130 air changes an hour. No destratification fan — it would fight the tier fans rather than help them.</p>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Parameter</th><th>Setpoint</th><th>Control</th><th>Sensor and position</th></tr></thead>
+   <tbody>
+    <tr><td>Air temperature</td><td>20–24 °C</td><td>HVAC</td><td>Room T/RH at 1.5 m, mid-aisle, clear of any fan discharge</td></tr>
+    <tr><td>Relative humidity</td><td>55–70%</td><td>Dehumidifier, 5% hysteresis</td><td>Same node</td></tr>
+    <tr><td>VPD</td><td>0.6–1.0 kPa</td><td>Computed from T and RH — never sensed</td><td>Controller</td></tr>
+    <tr><td>Canopy air velocity</td><td>0.2–0.5 m/s</td><td>Fan PWM per tier</td><td>Hot-wire anemometer, 5 points per tier, commissioning and quarterly</td></tr>
+    <tr><td>CO₂ enrichment</td><td>1000–1500 µmol/mol</td><td>Solenoid, PID on room sensor</td><td>NDIR at 1.5 m, mid-aisle</td></tr>
+    <tr><td>CO₂ safety</td><td>Alarm at 5000 ppm</td><td>Independent monitor, fail-closed solenoid</td><td>Second NDIR at 300 mm above floor</td></tr>
+    <tr><td>Solution temperature</td><td>≤ 26 °C, inhibit at 28</td><td>MV-01 interlock; chiller if Coimbatore data demands it</td><td>TE-01 in TK-01, on the terrace</td></tr>
+    <tr><td>Fresh air</td><td>0.3–0.5 ACH</td><td>Filtered make-up, G4 + F7</td><td>Interlocked to CO₂ demand</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="note ok"><strong>The terrace solves the CO₂ siting problem for free.</strong> A 22 kg cylinder released into 60.2 m³ produces roughly 12 m³ of gas — about 20% of the room volume, and lethal well before anyone notices. With the plant already on the roof, <b>the cylinder goes there too</b>, with only the regulated line entering the room. The low-level safety monitor and its fail-closed solenoid are still required — they cover a failure in the line, which is the remaining case.</div>
+</section>
+
+<section>
+ <div class="sn">07 · Sensing and control</div>
+ <h2>Fifty-four sensors, allocated by level</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Level</th><th>Sensors</th><th class="n">Count</th><th>Node</th></tr></thead>
+   <tbody>
+    <tr><td><span class="tag t-n">Rack</span></td><td>Air T/RH at tier 3 canopy · leak puck at the drain-header base · header high-level switch LSH-04</td><td class="n">33</td><td>11 rack controllers</td></tr>
+    <tr><td><span class="tag t-w">Terrace</span></td><td>TK-01 EC · pH · temperature · level LT-02 · down-main flow totaliser</td><td class="n">5</td><td>Terrace I/O node</td></tr>
+    <tr><td><span class="tag t-r">Recovery</span></td><td>Trough EC · pH · temperature · floats ×3 · filter ΔP · UV intensity · flow switch</td><td class="n">9</td><td>Water skid node</td></tr>
+    <tr><td><span class="tag t-a">Room</span></td><td>CO₂ enrichment · CO₂ safety at low level · T/RH supply · T/RH return · smoke · floor flood</td><td class="n">6</td><td>Room I/O node</td></tr>
+    <tr><td><span class="tag t-n">Portable</span></td><td>PAR quantum sensor · hot-wire anemometer</td><td class="n">2</td><td>Manual</td></tr>
+    <tr class="tot"><td>Total fixed</td><td>Across 14 bus nodes</td><td class="n">53</td><td>RS485 multi-drop, 120 Ω both ends</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <p>Three control layers, each surviving the loss of the one above it: <b>rack controllers</b> own the tier fill/dwell/drain sequence, fan PWM and the leak and header interlocks, and hold a last-known-good schedule; the <b>room controller</b> owns the drain token, the eight-condition reuse gate, dosing, HVAC and CO₂ setpoints, alarms and the local log; the <b>cloud</b> owns remote view and history and nothing the room depends on.</p>
+ <div class="note"><strong>The terrace node is a real addition, and the bus has to reach it.</strong> RS485 to the roof means a cable through the slab in the service corner, in UV-stable conduit, with the terrace node as one physical end of the chain and its 120 Ω terminator there. Do not spur it off the middle of the run — that is the classic way to make a bus that works on the bench and fails in the rain.</div>
+</section>
+
+<section>
+ <div class="sn">08 · Building</div>
+ <h2>What the room itself has to provide</h2>
+ <p class="lede">This section was carried from Rev 2 and its loads are restated against the corrected rack mass of 112.7 kg dry.</p>
+ <div class="calc">
+ <b>Distributed floor load</b><br>
+ rack worst case = 112.7 dry + 4 tiers × 38.0 kg blocked-drain water = <b>265 kg</b><br>
+ 11 racks                       2,915 kg<br>
+ catch trough, filled             160 kg<br>
+ skid frame and filters           120 kg<br>
+ total 3,195 kg over 22.3 m²  =  <span class="r">143 kg/m² · 1.40 kN/m²</span> — within a normal ground slab<br><br>
+ <b>Point load under each foot</b><br>
+ 265 kg on four 50 × 50 mm feet = 260 kPa  →  <span class="x">enough to mark or crack a tiled floor</span><br>
+ with 100 × 100 × 6 mm HDPE spreader pads = <span class="r">65 kPa</span>
+ </div>
+ <div class="g2">
+  <div><h4>Ceiling height</h4><p>2400 mm minimum: rack 1960, plus 200 to lift a tray clear of the top tier, plus the overhead supply main which needs <b>2100 mm clear</b> across both aisles.</p></div>
+  <div><h4>Slab</h4><p>1.40 kN/m² distributed is within a normal ground slab. Verify with a structural engineer if the room is above ground floor — and note this is a <em>separate</em> check from the terrace slab, which carries 670 kg of filled tanks and is the blocking item D-5.</p></div>
+  <div><h4>Floor finish</h4><p>Sealed and coved to the walls. Falls are not required — drainage is piped, not surface — but a wash-down point and a floor waste in the service corner are. Epoxy or trowelled PU.</p></div>
+  <div><h4>Wall fixings</h4><p>Row A takes two M10 anchors per rack into solid masonry or a steel channel. Plasterboard alone will not hold the 139 N tip-over case. Rows B and C bolt to each other and need no wall.</p></div>
+  <div><h4>Door and egress</h4><p>900 mm leaf opening outward into Aisle 2. At 794 mm the aisles sit below the 900 mm normally wanted for egress — acceptable for a two-person R&amp;D room, recorded as decision R-6.</p></div>
+  <div><h4>Slab penetrations</h4><p>Three through the service-corner ceiling: DN32 gravity down-main, DN20 rising main, and the RS485 conduit to the terrace node. Sleeve and fire-stop each one; the two water penetrations must be above any possible flood level in the corner.</p></div>
+ </div>
+</section>
+
+<section>
+ <div class="sn p1">09 · Capex</div>
+ <h2>What the room costs</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Element</th><th class="n">₹</th><th>Note</th></tr></thead>
+   <tbody>
+    <tr><td>Racks, integrated build, plenum deferred</td><td class="n">542,256</td><td>11 × ₹49,296 per RK-A-MFG Rev 2 — includes the tray bulkheads and strainers now scheduled</td></tr>
+    <tr><td>LED fixtures</td><td class="n">—</td><td>Priced separately as a product line; 44 bars</td></tr>
+    <tr><td>Water recovery, terrace plant, build level R1</td><td class="n">145,250</td><td>Per RK-A-WRS Rev 3 — includes platform, shade, insulation, master valve</td></tr>
+    <tr><td>Room mains — DN32 overhead supply, DN63 gravity drainage</td><td class="n">38,000</td><td>Includes the east-wall channel cover</td></tr>
+    <tr><td>Electrical — 3-phase panel, RCBOs, SPD, earth pit, cabling</td><td class="n">98,000</td><td>Type A RCBOs throughout; terrace spur in UV-stable conduit</td></tr>
+    <tr><td>HVAC 2.0 TR three-phase inverter + 50 L/day dehumidifier</td><td class="n">168,000</td><td>Reverse cycle — Ooty has a heating season</td></tr>
+    <tr><td>CO₂ — cylinder on the terrace, regulated line, enrichment and safety sensors</td><td class="n">38,000</td><td>Two devices, two alarm points</td></tr>
+    <tr><td>Room controller, room I/O, terrace I/O, local dashboard</td><td class="n">82,000</td><td>Hardware only; firmware effort excluded</td></tr>
+    <tr><td>Envelope — panels, sealed floor, coving, door</td><td class="n">210,000</td><td>PIR sandwich panel per the Phase A concept</td></tr>
+    <tr class="tot"><td>Room total, excluding LED fixtures</td><td class="n">1,321,506</td><td>≈ ₹13.2 lakh, ±25% at this stage</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <p>Racks are 41% of the room. The rest is envelope, HVAC, water and electrical infrastructure that exists whether eleven racks sit in it or one — which remains the strongest argument for selling rooms rather than racks wherever the customer will let you. Deferred and re-enterable later: <b>₹29,040</b> of plenum retrofit.</p>
+</section>
+
+<section>
+ <div class="sn x1">10 · Open</div>
+ <h2>What the room still needs</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Ref</th><th>Item</th><th>Type</th><th>Closes on</th></tr></thead>
+   <tbody>
+    <tr><td class="m">R-2</td><td>Room internal dimensions confirmed — sides and diagonals</td><td>Survey</td><td>Measured survey. The setting-out holds 112 mm of slack in X</td></tr>
+    <tr><td class="m">R-3</td><td>Ceiling height and slab construction</td><td>Survey</td><td>2400 mm minimum, and the overhead main needs 2100 mm clear</td></tr>
+    <tr><td class="m">R-4</td><td>Wall construction behind Row A</td><td>Survey</td><td>Two M10 anchors per rack; plasterboard needs a steel channel</td></tr>
+    <tr><td class="m">R-6</td><td>Aisle width accepted at 794 mm</td><td>Decision</td><td>Below the 900 mm normally wanted for egress. Fine for two people; record it with a review trigger</td></tr>
+    <tr><td class="m">D-5</td><td>Terrace slab capacity at the tank position</td><td><span class="tag t-x">Blocking</span></td><td>Structural engineer, against the building drawings, before the platform is fabricated</td></tr>
+    <tr><td class="m">D-6</td><td>Terrace height, room FFL to slab</td><td>Survey</td><td>3.75 m assumed. The entire gravity case rests on it</td></tr>
+    <tr><td class="m">V-1</td><td>Canopy velocity map, Phase 1 fans</td><td>Test</td><td>Hot-wire traverse at commissioning — it is also the design input for the Phase 2 plenum</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="note wa"><strong>R-5 is closed.</strong> The CO₂ cylinder goes on the terrace with the rest of the plant. R-1 is closed too — Layout 2 with the plant outside was the decision, and this plan is its 11-rack form with the service corner retained for the trough and skid.</div>
+</section>
+
+<footer class="w">
+ <p>RK-A-ROOM Rev 4 · 09 September 2026 · Set out from CEA_RACK_INTEGRATED_v2 Rev 4 at 1456 × 690 × 1960 mm, interference-clean. Water plant per RK-A-WRS Rev 3. Ventilation staged: standalone EC fans Phase 1, ducted plenum Phase 2. Validation recorded as Stage 2 in RK-A-QC Rev 3. Build documents: RK-A-MFG Rev 2, RK-A-DWG Rev 2.</p>
+</footer>
+</main>
