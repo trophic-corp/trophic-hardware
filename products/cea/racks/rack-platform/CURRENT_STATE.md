@@ -2,7 +2,7 @@
 
 **As of:** 2026-09-09
 **Design stage:** validated, pre-prototype
-**Release stage:** blocked (see §4)
+**Release stage:** **`RK-A R1` issued** (see §4)
 
 ---
 
@@ -19,8 +19,8 @@ manufacturing pack, validation record) has been cross-referenced and swept for
 stale figures. The rack has been set out into an 11-rack room layout and the
 room-level water balance closes.
 
-What is *not* done is the release: the CAD exchange artifacts referenced by the
-manufacturing pack were never actually written to disk.
+The release **`RK-A R1`** is issued and verified: 45 of 45 part STEP files plus
+assembly STEP and F3D, hashed and reconciled against the live model.
 
 ---
 
@@ -56,22 +56,26 @@ Full evidence, assumptions and limitations are in
 
 ---
 
-## 4. Release blocker
+## 4. Release — `RK-A R1`, ISSUED
 
-**RB-01 — CAD release artifacts do not exist.**
+| | |
+|---|---|
+| Source | Fusion `CEA_RACK_INTEGRATED_v2` **v8** (Rev 5) |
+| Exported | 2026-09-05 10:21 · **verified 2026-09-09** |
+| Store | `E:\My Drive\03_Projects\Trophic Industries\CEA_RACK_v1\INTEGRATED_v2_Rev5\` |
+| Manifest | `release/RK-A-R1_MANIFEST.md` — per-file SHA-256 |
 
-`RK-A-MFG` §15 and `RK-A-DWG` both reference a release set at
-`C:\Users\karex\Desktop\CEA_RACK_v1`. The folder does not exist. No CEA-named
-`.step`, `.stp`, `.f3d` or `.dxf` file exists anywhere in the user profile, in
-either `Desktop` or `OneDrive\Desktop`. A probe write to the Desktop succeeded,
-so the location is writable and the failure is not a permissions problem.
+**RB-01 closed.** The export was never missing — it was written to Google Drive, not
+to the Desktop path `RK-A-MFG` §15 and `RK-A-DWG` cite. Those two references are
+errata; no engineering value is affected.
 
-Root cause: the export script incremented its success counter when no exception
-was raised, instead of checking the return value of
-`ExportManager.execute()`. Silent failure was therefore reported as success.
+The release content independently confirms two of the corrections in §3:
+`04_DECK_PANEL` at 1.981 kg each (EDR-004), and the presence of `09_TRAY_OUTLET`,
+`09_TRAY_STRAINER` and `09_OVF_BULKHEAD` with `09_OVF_V` at nearly double its
+pre-correction size (ICR-001).
 
-Until this is fixed, two documents contain a reference to an artifact that does
-not exist, and no fabrication package can be issued.
+**Constraints on use:** do not issue part drawings with R1 (ND-01 open); regenerate
+the DXF flat patterns from v8 before cutting any sheet-metal part.
 
 ---
 
@@ -79,7 +83,7 @@ not exist, and no fabrication package can be issued.
 
 | ID | Item | Why it is open |
 |---|---|---|
-| NT-01 | Fusion parameter master (~55 parameters) | Only `Shelf_Pitch`, `Bed_Width`, `Grid_Pitch`, `Top_Bed_Height`, `Flood_Depth` and `Number_of_Tiers` are persisted, partially, in `RK-A-BRIEF` Rev G. The full current set exists only inside the Fusion design. Reading it requires opening the design. **Not invented here** |
+| ~~NT-01~~ | Fusion parameter master | **CLOSED 2026-09-09.** All 55 user parameters read from `CEA_RACK_INTEGRATED_v2` v8 and persisted as `design/RK-A-PARAM_Rev1_parameter-master.md`. The read also resolved the apparent `Rack_Height` 1950 vs envelope 1960 conflict — the feet sit 10 mm below the floor datum |
 | NT-02 | Structural validation metadata | The validation record states conclusions but does not consistently record, per case: design revision tested, CAD version, assumed loads, boundary conditions, acceptance criterion and limitation. Marked NEEDS TRACEABILITY rather than reconstructed |
 
 Neither item invalidates the engineering. Both mean the evidence cannot
@@ -97,7 +101,7 @@ currently be audited to the standard the rest of the set meets.
 | ND-04 | **Installed depth allowance.** Installed depth is 690 mm with the plenum and 648 mm without. Room set-out currently assumes the installed figure. Confirm that Phase-1 racks are spaced at the plenum-ready pitch so the plenum can be retrofitted without moving racks |
 | ND-05 | **Canopy velocity CV action threshold.** Two thresholds appear in our own source set: RK-A-SYS §01 gives 15 % → fit side/rear enclosure panels; RK-A-ROOM §04 gives 20 % → below it the plenum is an optimisation, above it a required fix. These read naturally as a two-step escalation ladder, but no document says so and inferring it would be a silent reconciliation. Confirm the ladder or pick one |
 | ND-06 | **Room electrical phase imbalance.** The as-designed 11-rack layout lands at ~20 % imbalance on single-phase HVAC against a 15 % target. RK-A-ROOM §05 records it as resolved by specifying 3-phase HVAC, but explicitly as an open engineering finding rather than a clean pass. Confirm the 3-phase specification is committed |
-| ND-07 | **Terrace slab loading.** RK-A-WRS §04 Risk 3: 5.5 kN/m² concentrated worst case, 2.2 kN/m² spread over beam lines, against a typical accessible-terrace rating of 1.5–2.0 kN/m². The source calls this the one item that cannot be resolved by choosing better equipment. **A structural engineer must sign off against the building's actual drawings before the terrace tank is ordered** |
+| ND-07 | **Terrace slab loading — LOW PRIORITY, kept as UNKNOWN.** RK-A-WRS §04 Risk 3 gives 5.5 kN/m² concentrated against a typical 1.5–2.0 kN/m² terrace rating. **Owner decision 2026-09-09: this is not a blocker** — the tank will sit on a purpose-built steel structure spanning to suitable bearing points, not directly on the slab. It stays open as an unknown because that steel structure is not yet designed and its bearing reactions are unquantified. Re-raise when the structure is specified |
 
 ---
 
@@ -113,9 +117,10 @@ currently be audited to the standard the rest of the set meets.
 
 ## 8. Next engineering action
 
-1. Re-run the Fusion export for `CEA_RACK_INTEGRATED_v2` v8, checking
-   `ExportManager.execute()` return values and confirming file size on disk.
-   Record as release **RK-A R1** in `docs/system/RELEASE_INDEX.md`. Closes RB-01.
-2. In the same session, dump the full parameter table from the open design and
-   persist it to `design/RK-A-PARAM_Rev1_parameter-master.md`. Closes NT-01.
-3. Put ND-01 to the user before any part-drawing reissue.
+1. **Build the prototype and run T16** — 300 N horizontal at the top bed,
+   front-back and side, residual deflection ≤ 5 mm. This is the only way to close
+   NT-02, and everything else is now ready for it.
+2. **Regenerate the DXF flat patterns from v8** before cutting sheet metal. The
+   existing set came from the platform design and covers 5 parts.
+3. **Put ND-01 to a decision** before any part-drawing reissue.
+4. Fix the export script to check `ExportManager.execute()` before the next export.

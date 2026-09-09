@@ -254,6 +254,7 @@ VR-07 restated. NT-02 rewritten.
 | S3 | Add gates G6, G7, G8 and record which gates are per-batch vs continuous |
 | S4 | Re-check any conclusion drawn from RK-A-ROOM **Rev 3** against **Rev 4**'s Building section |
 | S5 | Keep `safety-rules.json` for crop and process thresholds; source hardware facts from the contract |
+| S6 | The CAD release **`RK-A R1`** now exists and is verified. Where the suite references rack geometry, it can cite a released, hashed artifact rather than an OCR'd drawing |
 
 **No change was made to the CEA suite in this session.** Nothing was written to
 `C:\dev\project\trophic`.

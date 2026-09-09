@@ -44,6 +44,7 @@ not get records.
 | [EDR-010](records/EDR-010-rear-brace-true-length.md) | Rear brace `RK-A-104` is 1797 mm, not 1345 mm | ACCEPTED | RK-A |
 | [EDR-011](records/EDR-011-cad-relocation-method.md) | Relocate Fusion components by delete-and-recreate at absolute coordinates | ACCEPTED | Method |
 | [EDR-012](records/EDR-012-room-density-eleven-racks.md) | Ooty room carries 11 racks with the water plant external | ACCEPTED | RK-A-ROOM |
+| [EDR-013](records/EDR-013-terrace-tank-on-steel-structure.md) | Terrace tank on a steel structure, not bearing on the slab | ACCEPTED | RK-A-WRS, RK-A-ROOM |
 
 ## Interface change records
 

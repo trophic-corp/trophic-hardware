@@ -25,6 +25,8 @@ the repository copy lives and where the published artifact lives.
 | `RK-A-DWG` | Rack A Structural Drawings | 2 | AUTHORITATIVE | `.../drawings/RK-A-DWG_Rev2_structural-drawings.html` | `.../d66da629-a6ca-406d-bb9d-f914d187d7ee` |
 | `RK-A-MFG` | Rack A Manufacturing Pack | 2 | AUTHORITATIVE | `.../manufacturing/RK-A-MFG_Rev2_manufacturing-pack.html` | `.../9f5e09e5-c02a-4d5b-965e-43731a32c19c` |
 | `RK-A-QC` | Engineering Validation Record | 3 | SUPPORTING EVIDENCE | `.../verification/RK-A-QC_Rev3_engineering-validation-record.html` | `.../62520307-f088-4d7d-8a69-242f1bff45c9` (v4) |
+| `RK-A-PARAM` | Fusion Parameter Master | 1 | AUTHORITATIVE | `.../design/RK-A-PARAM_Rev1_parameter-master.md` | — read from CAD, not published |
+| `RK-A-R1` | Engineering Release Manifest | — | AUTHORITATIVE | `.../release/RK-A-R1_MANIFEST.md` | — |
 
 ## 2. Shared CEA infrastructure
 
@@ -53,16 +55,35 @@ content** (loads, set-out, water balance) is nonetheless validated and current.
 
 ---
 
-## 5. Documents that do not exist yet
+## 5. Errata against issued documents
 
-| Would-be ID | Subject | Why it is needed |
+| Document | Erratum | Effect |
 |---|---|---|
-| `RK-A-PARAM` | Fusion parameter master | NT-01. The ~55-parameter set is unpersisted |
-| `RK-A-REL` | Engineering release manifest | RB-01. No release has been issued |
+| `RK-A-MFG` Rev 2 §15 | Cites the CAD release location as `C:\Users\karex\Desktop\CEA_RACK_v1`. The actual store is `E:\My Drive\03_Projects\Trophic Industries\CEA_RACK_v1\` | Location reference only. No engineering value affected. Correct at next revision |
+| `RK-A-DWG` Rev 2 | Same incorrect path | As above |
+| `RK-A-MFG` Rev 2 | Cites `RK-A-QC` **Rev 2** for the T1–T18 acceptance set; current QC revision is Rev 3 | Reference lag, not a content conflict |
+| `RK-A-SYS` Rev 2 §10 | Names the depth-plane sway test **P3**; superseded by **T16** in the RK-A-QC T1–T18 set | Naming lag. `RK-A-MFG` states the supersession explicitly. **T16 is the ID to use** |
+
+## 6. BOM line-item mapping, drawing ↔ CAD
+
+One case where the two disagree in form but not in substance, recorded so nobody
+"fixes" it:
+
+| | Drawing (`RK-A-DWG` / `parts.py`) | CAD (`RK-A R1` manifest) |
+|---|---|---|
+| Identity | `RK-A-104` Rear X-brace | `05_REAR_BRACE` |
+| Quantity | **2** | **1** |
+| Mass each | 1.06 kg | 2.071 kg |
+| Total | 2.116 kg | 2.071 kg |
+
+The drawing counts two individual braces; the CAD models the crossing pair as one
+component. Totals agree to 2 %, consistent with shared material at the crossing.
+1797 × 25 × 3 mm of steel at 7850 kg/m³ = 1.058 kg, so the drawing's per-piece figure
+is arithmetically correct. **Not a discrepancy — a representation difference.**
 
 ---
 
-## 6. Rules
+## 7. Rules
 
 1. The repository copy and the published artifact are the **same content at the
    recorded revision**. Content hashes for the repository copies are recorded in

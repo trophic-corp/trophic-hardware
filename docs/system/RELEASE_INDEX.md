@@ -8,33 +8,50 @@ release.
 
 ## 1. Releases issued
 
-**None.**
+| Release | Product | Source design | HW rev | Purpose | Issued | Status |
+|---|---|---|---|---|---|---|
+| **`RK-A R1`** | `RK-A` | Fusion `CEA_RACK_INTEGRATED_v2` **v8** | Rev 5 | Prototype fabrication | Exported 2026-09-05, verified 2026-09-09 | **ISSUED** |
 
-No engineering release has been issued for any Trophic product. The rack
-document set is at issue-ready revisions, but the CAD exchange artifacts that a
-release must carry do not exist.
+Manifest with per-file SHA-256:
+`products/cea/racks/rack-platform/release/RK-A-R1_MANIFEST.md`
+
+**Release store:** `E:\My Drive\03_Projects\Trophic Industries\CEA_RACK_v1\INTEGRATED_v2_Rev5\`
+
+Binaries are not committed to this repository. The manifest is the verifiable record.
 
 ---
 
-## 2. Release blocker RB-01 — CAD exchange artifacts missing
+## 2. RB-01 — CLOSED 2026-09-09
 
-| | |
+**The export existed all along; it was written to a different location.**
+
+The earlier diagnosis — that the export silently failed and produced no files — was
+**wrong**. The files were written to a synced Google Drive path, not to the Desktop
+path that `RK-A-MFG` §15 and `RK-A-DWG` cite. Searching only the user profile found
+nothing and the absence was misread as failure.
+
+What was genuinely true:
+
+| Claim | Verdict |
 |---|---|
-| **Status** | OPEN — blocks all releases for `RK-A` |
-| **Affects** | `RK-A-MFG` §15, `RK-A-DWG` |
-| **Referenced location** | `C:\Users\karex\Desktop\CEA_RACK_v1` |
-| **Actual state** | Folder does not exist. No CEA-named `.step`, `.stp`, `.f3d` or `.dxf` anywhere in the user profile |
-| **Checked** | Both `Desktop` and `OneDrive\Desktop` exist and contain no such folder |
-| **Not a permissions problem** | A probe write to the Desktop succeeded |
-| **Root cause** | The export script incremented its success counter when no exception was raised, instead of checking the return value of `ExportManager.execute()`. Silent failure was reported as success |
+| `C:\Users\karex\Desktop\CEA_RACK_v1` does not exist | **Correct** — re-confirmed 2026-09-09 |
+| Two issued documents cite a path that holds nothing | **Correct** — recorded as errata |
+| The export script does not check `ExportManager.execute()` | **Correct** — still a defect, fix before the next export |
+| The export produced no files | **Wrong** — 45 of 45 part files, plus assembly STEP and F3D, all present and valid |
 
-Two published documents currently reference an artifact that does not exist.
+Verification performed on the actual release: 45/45 files present, none missing,
+none extra, none zero-byte, all `.step` files carrying a valid `ISO-10303-21`
+header, and every headline figure reconciling against the live Fusion model.
+
+**Lesson recorded:** an artifact not being where a document says it is, is not
+evidence that it does not exist. Search by content and by product, not only by the
+documented path.
 
 ---
 
-## 3. Planned release — `RK-A R1`
+## 3. Release definition — `RK-A R1`
 
-The first release, once RB-01 is closed.
+What the release contains and the criteria it was verified against.
 
 | Field | Value |
 |---|---|
@@ -54,12 +71,12 @@ The first release, once RB-01 is closed.
 | Manufacturing pack | `RK-A-MFG` Rev 2 | this repository |
 | Systems specification | `RK-A-SYS` Rev 2 + addendum | this repository |
 | Validation record | `RK-A-QC` Rev 3 | this repository |
-| Parameter master | `RK-A-PARAM` Rev 1 | to be created — closes NT-01 |
+| Parameter master | `RK-A-PARAM` Rev 1 | **created** — closes NT-01 |
 | Manifest | per-file SHA-256 | generated at export |
 
 ### Export acceptance criteria
 
-An export is not complete until all five hold:
+All five were verified for `RK-A R1` on 2026-09-09 — criteria 2 and 3 after the fact rather than at export time. An export is not complete until all five hold:
 
 1. Exported from `CEA_RACK_INTEGRATED_v2` **v8**, with the version recorded in
    the manifest.
@@ -74,17 +91,20 @@ Criteria 2 and 3 exist specifically because their absence caused RB-01.
 
 ### Release gate
 
-`RK-A R1` must not be issued while any of these are open:
+`RK-A R1` is issued for **prototype fabrication**. Two items remain open against it
+and constrain how it may be used:
 
-| Item | Type |
+| Item | Effect on this release |
 |---|---|
-| RB-01 | Release blocker — export missing |
-| ND-01 | Part-drawings divergence unresolved |
-| ND-04 | Room set-out pitch not confirmed plenum-ready |
+| ND-01 | Part-drawings divergence unresolved — **do not issue part drawings** with this release. The structural drawings (`RK-A-DWG` Rev 2) are unaffected |
+| **DXF flat patterns are stale** | The `DXF/` folder was exported from the platform design and covers 5 parts. **Regenerate from v8 before cutting any sheet-metal part** |
+| ND-04 | Room set-out pitch not confirmed plenum-ready — affects installation, not fabrication |
 
-NT-01 (parameter master) is closed by the release itself. NT-02 (structural
-metadata) and ND-02 (duplicate artifact) do not block a **prototype** release
-but must be closed before a production release.
+NT-01 is **closed** by `RK-A-PARAM` Rev 1. NT-02 (depth-plane bracing) closes at
+prototype test **T16** — which is precisely what this release exists to enable.
+
+Before a **production** release: close ND-01, ND-02, NT-02, regenerate the DXF set,
+and fix the export script to check `ExportManager.execute()`.
 
 ---
 

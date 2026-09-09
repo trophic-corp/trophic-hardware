@@ -64,6 +64,10 @@ Full lineage with per-version release notes is in
 
 ### 1.4 Filesystem probe — target machine
 
+> **Corrected 2026-09-09.** The conclusion drawn from this probe was wrong. See
+> §"Correction" at the end of this report.
+
+
 Searched the entire user profile for CEA-named `.step`, `.stp`, `.f3d` and
 `.dxf`. **Zero results.** `C:\Users\karex\Desktop\CEA_RACK_v1` does not exist.
 Both `Desktop` and `OneDrive\Desktop` exist and contain no such folder. A probe
@@ -418,3 +422,35 @@ part-drawing reissue; it does not block the release above.
 - The existing CEA software repository was **not** read, modified or ingested.
 - No decision record was manufactured for a routine CAD operation.
 - No missing metadata was invented to make a record look complete.
+
+
+---
+
+## Correction — 2026-09-09
+
+**Deliverable 17 recorded RB-01 as "the export never produced files". That was wrong.**
+
+The Phase 1 probe searched the Windows user profile, found no CEA-named `.step`,
+`.stp`, `.f3d` or `.dxf`, and concluded the export had silently failed. The export
+had in fact written to a synced Google Drive path outside the user profile:
+
+```
+E:\My Drive\03_Projects\Trophic Industries\CEA_RACK_v1\
+```
+
+It contains a complete, valid release — 45 of 45 part STEP files, assembly STEP and
+F3D, and a manifest — verified on 2026-09-09 and issued as **`RK-A R1`**.
+
+What the probe got right: the Desktop path really does not exist, and two issued
+documents really do cite it. Those are now recorded as errata rather than as a
+release blocker.
+
+**Method lesson.** An artifact not being where a document says it is, is not evidence
+that it does not exist. The probe searched one location family and generalised from
+its emptiness. Searching by product name across accessible drives — or simply asking
+— would have found it. The absence of evidence was reported with more confidence
+than it deserved.
+
+The same caution applies to the remaining open items: NT-02, ND-01 and ND-02 are
+recorded as unresolved because the information genuinely conflicts or is genuinely
+absent from the documents, not because a single search came back empty.

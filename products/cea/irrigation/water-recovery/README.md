@@ -55,7 +55,7 @@ water to the source reservoir or discards it, on water quality. `FV-01` fails
 
 | On | Constraint |
 |---|---|
-| Facility (C) | Terrace outlet elevation of +4250 mm is a hard requirement. Terrace structural capacity for filled tanks must be confirmed |
+| Facility (C) | Terrace outlet elevation of +4250 mm is a hard requirement. Tank loading is 5.5 kN/m² concentrated against a typical 1.5–2.0 kN/m² terrace rating — resolved by mounting the tank on a steel structure rather than the slab (EDR-013). The structure itself is not yet designed; ND-07 stays open as unknown |
 | Rack (A) | The 100 mm air gap must never be plumbed closed — neither owner may close it |
 | Operations | Monthly dissolved iron verification once UV-C is in the loop; Fe-DTPA or Fe-EDDHA only, never Fe-EDTA (EDR-009) |
 
