@@ -52,6 +52,7 @@ That set is small and is enough for most rack work.
 | `products/cea/facility-reference/ooty-room-20x12/**` | Room layout, multi-rack ecosystem, facility services |
 | `docs/engineering/CAD_INDEX.md` | Touching Fusion 360 or a release export |
 | `docs/references/REFERENCE_INDEX.md` | Looking for supplier research, standards, historical studies |
+| `docs/system/CEA_SUITE_AUDIT.md` | Any question about what the CEA software suite believes about the hardware, or why a contract says what it says |
 | `archive/**` | Provenance questions only. Never as a source of current values |
 
 ### Never load by default
@@ -110,8 +111,15 @@ out of scope here.
   `docs/system/CONTRACT_EXTRACTION.md` for what is a candidate and why.
 
 `trophic-contracts` carries only stable, machine-consumable interface facts
-(channel maps, sensor identities, actuator polarity, safety interlocks, units).
+(instrument tags, actuator polarity, safety interlocks, hydraulic limits, units).
 It never carries geometry, drawings, BOMs or costs.
+
+**Audited 2026-09-09.** The CEA suite had been extracting hardware facts directly
+from OCR'd copies of our documents — the coupling ADR-004 exists to prevent. The
+audit found one wrong value in the suite (the G1 EC multiplier) and one dangerous
+omission in our own contract (sequential draining). Both are fixed in
+`trophic-contracts` v0.2.0. Read `docs/system/CEA_SUITE_AUDIT.md` before changing
+anything that crosses the boundary.
 
 ---
 

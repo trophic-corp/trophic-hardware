@@ -48,8 +48,8 @@ hardware/software boundary. Then `CURRENT_STATE.md`.
 
 | Repository | Relationship |
 |---|---|
-| `trophic-contracts` | Hardware→software interface contracts. Published *from* here, consumed by the software project |
-| Trophic CEA software | **Independent.** Not part of this repository, not modified from here, and must not ingest it |
+| `trophic-contracts` | Hardware→software interface contracts, **v0.2.0**. Published *from* here, consumed by the software project |
+| `trophic-corp/cea-orchestrator` | The CEA software suite. **Independent.** Not part of this repository, not modified from here, and must not ingest it. Audited 2026-09-09 — see `docs/system/CEA_SUITE_AUDIT.md` |
 
 Native CAD lives in Autodesk Fusion 360 and is authoritative there. See
 `docs/engineering/CAD_INDEX.md`.

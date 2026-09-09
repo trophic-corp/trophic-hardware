@@ -53,26 +53,60 @@ contaminating the source.
 
 ---
 
-## 4. NEEDS SPECIFICATION
+## 4. Specified — corrected 2026-09-09
 
-The physical sensor and actuator inventory is modelled in Fusion and described
-in `RK-A-SYS` Rev 2, but the **control interface** — the machine-readable map —
-has not been extracted. It is **not invented here**.
+The CEA suite audit (`docs/system/CEA_SUITE_AUDIT.md`) showed that much of what this
+section previously called unspecified is in fact in RK-A-SYS Rev 2 and RK-A-WRS Rev 3.
+Published to contracts as `sensors/instrument-tags.md`, `safety/interlocks.md` and
+`capabilities/absent-by-design.md`.
+
+### Instrument tags
+
+`TK-01` source reservoir · `LT-02` its level · `TE-01` its temperature · `TE-02` trough
+temperature · `AT-03` trough **EC** · `AT-04` trough **pH** · `LSH-04` header high level ·
+`LS-01` trough low level · `LD-01…11` leak pucks, one per rack · `F-01`/`F-02` filters ·
+`PDI-01` filter ΔP · `UV-01` UV unit · `UIT-01` UV intensity · `FS-01` transfer flow proof ·
+`P-02` recovery pump (duty/standby A/B) · `DOS-01` dosing · `MV-01` master valve ·
+`FV-01` diverter.
+
+### Per-rack actuators
+
+4 fill solenoids (NC) + 4 drain solenoids (NO) on an 8-channel relay; one EC fan per tier
+with **mandatory** tacho alarm; one 0–10 V dimming pair per tier.
+
+### Controller topology and bus
+
+11 × rack controller (ESP32 + 8-ch relay + RS485), one room controller (bus master, local
+historian, local UI, UPS), plus terrace, water-skid and room I/O nodes — **14 bus nodes**.
+In-room bus is **Modbus RTU over RS485**, multi-drop, 120 Ω both ends. Wired-first: a room
+of galvanised racks is a poor 2.4 GHz environment.
+
+Control allocation: rack controllers own the tier fill/dwell/drain sequence, fan PWM and
+the leak/header interlocks, and hold a last-known-good schedule. The room controller owns
+the drain token, the eight-condition reuse gate, dosing, HVAC and CO₂ setpoints, alarms and
+the local log. **The cloud owns nothing the room depends on.**
+
+### Interlocks
+
+Hard-wired and bus-independent — leak puck, `LSH-04`, E-stop, `MV-01` flood sensor.
+Software reads their state but **is not in their safety path**. Full table in
+`trophic-contracts` `safety/interlocks.md`. Commissioning hold point: fill solenoids proven
+to close within **60 s** with a deliberately blocked drain.
+
+### Absent by design
+
+No per-tray level sensor (the standpipe sets level mechanically). No per-rack or per-tier
+CO₂ sensing. No tier-level climate control — room scope. No fixed PAR sensor — portable
+quantum sensor at commissioning and quarterly. No per-rack kWh meter.
+
+---
+
+## 5. Still open — genuine hardware deliverables
 
 | Item | Status |
 |---|---|
-| Sensor inventory: identity, type, measurand, units, range, accuracy | NEEDS SPECIFICATION |
-| Sensor physical mounting location per tier, in bed-datum coordinates | Modelled in CAD; not tabulated |
-| Actuator inventory: identity, type, per-tier mapping | NEEDS SPECIFICATION |
-| Channel numbering and addressing scheme | NEEDS SPECIFICATION |
-| Bus / protocol between the rack enclosure and the room controller | NEEDS SPECIFICATION |
-| Interlocks: which conditions inhibit which actuator, in hardware | NEEDS SPECIFICATION |
-| Telemetry rates and units | NEEDS SPECIFICATION |
-| Alarm set: identity, threshold, latching behaviour | NEEDS SPECIFICATION |
-
-Until this table is filled, `trophic-contracts` can publish only §2 and §3 —
-which is genuinely useful (fail-safe polarity and physical limits are the facts
-software most needs and most often gets wrong) but is not a complete contract.
-
-**Filling this table is the main prerequisite for the software integration**,
-and it is a hardware deliverable, not a software one.
+| Per-tier sensor mounting coordinates in bed-datum terms | Modelled in CAD; never tabulated |
+| Sensor ranges, accuracy classes, calibration intervals per tag | Partially in the Phase D BOM; not consolidated |
+| Modbus register map per node | Not published — the single largest remaining gap |
+| MQTT payload schema version | Owned by the software side (ADR-0004); hardware must review, not author |
+| LED driver model | Not chosen — blocks the photoperiod actuation mechanism |

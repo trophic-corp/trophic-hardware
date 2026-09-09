@@ -41,23 +41,62 @@ board as well as to the rack, and appears in both `RK-A-SYS` and `RK-A-ROOM`.
 
 ---
 
-## 3. NEEDS SPECIFICATION
+## 3. Specified — corrected 2026-09-09
 
-The following are **not established** in the current document set and have not
-been invented here. They must be specified before the electrical design can be
-called complete:
+The CEA suite audit (`docs/system/CEA_SUITE_AUDIT.md` §4.5) showed these were specified in
+RK-A-SYS §07 and RK-A-MFG §01/§05 all along. This section previously listed them as
+unspecified; that was an under-read of our own document set.
+
+### The ELV boundary
+
+**All conductors at or below bed/canopy level are 24 V or 48 V DC only.** Mains (230 V) is
+confined to an **IP65 enclosure mounted above canopy height**.
+
+| Parameter | Value |
+|---|---|
+| Minimum electrical/water vertical separation | **236 mm** |
+| Cable crossing a wet zone | Not permitted without a drip loop |
+
+It is the ELV boundary — **not the ingress rating** — that makes the electrical and water
+systems genuinely independent.
+
+### Circuit ratings and protection
+
+| Item | Specification |
+|---|---|
+| Per rack | 16 A Type A RCBO, 30 mA |
+| Per group of 8 racks | 63 A MCCB, Type 2 SPD |
+| Terrace circuit | **10 mA** RCBO — tighter, outdoor/wet installation |
+| Surge protection | Type 1+2 SPD at the main board; Type 2 SPD per group panel, 10 kA, max 3 m lead to earth bar |
+| Earthing | TN-S per IS 3043; every frame bonded, **< 0.1 Ω**, tested and recorded per rack |
+| Room HVAC | 2.0 TR 3-phase inverter + 50 L/day dehumidifier; circuits C12/C13 allocated |
+
+### Loads
+
+| Item | Value |
+|---|---|
+| LED supply | 48 V DC, one 0–10 V dimming pair per tier, IP65 keyed connector. Two bars share one pair |
+| LED drivers | Remote, in the end enclosure |
+| EC fan | One per tier, 178 m³/h, PWM or 0–10 V, tacho feedback |
+| Drain solenoid holding power | ~8 W each, energised through the dwell |
+
+### Emergency stop and isolation
+
+**Room-level E-stop only** — one latching mushroom head per aisle/door. It drops the group
+contactor, all fill solenoids, `MV-01` and all pumps; drains de-energize open.
+
+There is deliberately **no per-rack E-stop**: sixteen rack-level E-stops are sixteen
+devices nobody can reach in an emergency. The **per-rack isolator is for lock-out/tag-out
+maintenance**, which is a different function and must not be presented as an E-stop.
+
+---
+
+## 4. Still open
 
 | Item | Status |
 |---|---|
-| Rack connected load and diversity | Not recorded |
-| Supply voltage, phases and connector type at the rack inlet | Not recorded |
-| Circuit schedule internal to the rack (ways, ratings, segregation) | Not recorded |
+| Rack connected load and diversity | Not consolidated; derivable from the LED, fan and solenoid figures above but not stated as a total |
+| Supply connector type at the rack inlet | Not recorded |
 | Cable sizes and derating basis | Not recorded |
-| Emergency stop architecture and its scope (rack vs room) | Not recorded |
-| Protective earthing continuity test points | Not recorded |
-| Isolation for maintenance — where, and lockable or not | Not recorded |
-
-Detailed electrical content exists in `RK-A-SYS` Rev 2; where a value above is
-in fact present there, move it into this table rather than leaving the
-interface unstated. This index records what could be established without
-opening the full specification, and deliberately does not guess the rest.
+| Room electrical phase imbalance | **ND-06** — as-designed 11-rack layout lands at ~20 % against a 15 % target on single-phase HVAC; resolved on paper by specifying 3-phase, recorded as an open finding rather than a clean pass |
+| LED driver model | **Not chosen.** Determines whether photoperiod-off is dim-to-off or a relay. Blocks the software's photoperiod actuation design |

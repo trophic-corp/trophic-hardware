@@ -81,13 +81,17 @@ prototype build package. See `docs/system/RELEASE_INDEX.md`.
 | ID | Type | Item |
 |---|---|---|
 | NT-01 | NEEDS TRACEABILITY | The full Fusion parameter master (~55 parameters) exists only in the Fusion design and in conversation history. Only a partial set is persisted, in `RK-A-BRIEF` Rev G |
-| NT-02 | NEEDS TRACEABILITY | Structural validation records lack recorded load cases, acceptance criteria and the CAD version tested |
+| NT-02 | NEEDS TRACEABILITY | **Depth-plane bracing was never checked by frame analysis** (RK-A-MFG Rev 2, stated plainly). The tip-over figures assume it holds. Closes at prototype acceptance test T16, not by analysis |
 | ND-01 | NEEDS DECISION | `archive/superseded/RK-A-DWG_local-build_DIVERGED-from-published-Rev1.html` holds Rev 2 content while the published artifact of the same ID holds Rev 1. Which is the intended part-drawing release must be decided before drawings are reissued |
 | ND-02 | NEEDS DECISION | Two published "Rack A Manufacturing Pack" artifacts exist. `9f5e09e5` is Rev 2 and current; `817abd35` is an orphan and should be retired or deliberately kept |
 | ND-03 | NEEDS DECISION | Ventilation plenum is deferred to a Phase-2 entity. Phase 1 ships standalone EC fans. The plenum's interface to the rack is not yet frozen |
+| ND-05 | NEEDS DECISION | Canopy velocity CV action threshold — RK-A-SYS §01 says 15 %, RK-A-ROOM §04 says 20 %. Plausibly a two-step escalation ladder; not reconciled |
+| ND-06 | NEEDS DECISION | Room electrical phase imbalance ~20 % against a 15 % target; resolved on paper by specifying 3-phase HVAC, recorded as an open finding |
+| ND-07 | NEEDS DECISION | **Terrace slab loading 5.5 kN/m² concentrated against a typical 1.5–2.0 kN/m² rating.** Structural engineer sign-off required before the terrace tank is ordered |
 
-Full detail is in `products/cea/racks/rack-platform/CURRENT_STATE.md` and
-`docs/system/MIGRATION_REPORT.md`.
+ND-05 to ND-07 were raised by the CEA suite audit. Full detail is in
+`products/cea/racks/rack-platform/CURRENT_STATE.md`,
+`docs/system/MIGRATION_REPORT.md` and `docs/system/CEA_SUITE_AUDIT.md`.
 
 ---
 

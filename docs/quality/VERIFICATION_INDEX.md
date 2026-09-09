@@ -24,7 +24,7 @@ Full narrative evidence is in
 | VR-04 | Gravity supply head | Rev 4 | n/a (hydraulic calculation) | Available static head ≥ total loss at design flow | 2.66 m vs 0.33 m at 7.2 L/min — **pass, ~8× margin**. Four tiers concurrent (28.8 L/min) 0.67 m — pass | Complete |
 | VR-05 | Suction-lift feasibility | Rev 4 | n/a | Pump suction lift within practical self-priming limit at site altitude | **Fail as originally proposed** → architecture changed (EDR-005) | Complete |
 | VR-06 | Tier reach ergonomics | Rev 5 | n/a | NIOSH revised lifting equation RWL > 0 at the top bed | 1500 mm **pass**; 1900 mm **fail** (RWL = 0 above 1750 mm) | Complete |
-| VR-07 | Structural adequacy, frame | Rev 2 | not recorded | not recorded | Reported adequate | **NEEDS TRACEABILITY — NT-02** |
+| VR-07 | Depth-plane bracing / frame stability | Rev 2 | n/a | Residual deflection ≤ 5 mm under 300 N horizontal at the top bed, front-back and side | **NOT PERFORMED.** RK-A-MFG Rev 2: "It has not been checked by frame analysis." Closes at prototype acceptance test **T16** | **NT-02 — restated** |
 | VR-08 | Room floor and point loading | Rev 4 | n/a | Slab capacity ≥ imposed rack point loads | Recomputed and passed at 112.66 kg dry | Complete |
 | VR-09 | Room water balance | Rev 4 | n/a | Make-up and blowdown close against consumption | 1,914 L/day circulated, 88.9 consumed, 146 blowdown, 235 make-up; **87.7 % recovery** | Complete |
 | VR-10 | Drawing dimensional review | Rev 2 | v8 | Every dimension reconcilable to model geometry | **2 real errors found and corrected** — EDR-004, EDR-010 | Complete |
@@ -33,28 +33,34 @@ Full narrative evidence is in
 
 ## 2. NEEDS TRACEABILITY
 
-### NT-02 — Structural validation metadata
+### NT-02 — Depth-plane bracing is unverified (restated 2026-09-09)
 
-`VR-07` states a conclusion but the record does not consistently carry, per
-load case:
+Originally recorded as missing metadata on a completed analysis. The CEA suite audit
+showed that understates it. RK-A-MFG Rev 2 states plainly:
 
-- the design revision actually analysed
-- the CAD version the mesh was taken from
-- assumed loads (bed water mass at flood depth, media, crop, service loading)
-- boundary conditions and anchor assumptions
-- the acceptance criterion applied (stress, deflection limit, factor of safety)
-- stated limitations
+> Removing the per-tier cross beams and relying on the decks as horizontal diaphragms plus
+> the base frame is sound in principle and the tip-over numbers above assume it holds.
+> **It has not been checked by frame analysis.**
 
-The conclusion is not disputed and the mass basis has since improved
-(112.66 kg dry is lighter than the 147.67 kg figure that preceded it, so a
-structural result obtained at the heavier mass is conservative). But the record
-cannot be audited to the standard the rest of the set meets.
+So the analysis was never performed, and the tip-over figures (139 N empty, 307 N loaded
+horizontal pull; height:depth 3.48:1) **depend on an unverified assumption**. Wall anchors
+are specified as mandatory rather than optional partly for this reason.
 
-**This has not been fixed by inventing the missing metadata.** Closing NT-02
-requires either recovering the original analysis inputs or re-running the
-analysis with them recorded.
+**Closure is a physical test, not an analysis:**
 
----
+| Test | Criterion |
+|---|---|
+| **T16** — depth-plane sway | 300 N horizontal at the top bed, front-back and side. Residual deflection **≤ 5 mm** |
+| Fallback if it fails | Restore the per-tier cross beams, ₹562 |
+
+T16 supersedes the older staged-build test **P3**. RK-A-SYS §10 still uses the P3
+numbering; RK-A-MFG Rev 2 states the supersession explicitly, so this is a naming lag
+rather than a conflict. **T16 is the ID to use.**
+
+Related: **T10**, the canopy velocity traverse, closes the airflow uniformity item and
+doubles as the design input for the Phase 2 plenum. The acceptance set is T1–T18 in
+RK-A-QC. (RK-A-MFG Rev 2 cites RK-A-QC **Rev 2** for that set; the current QC revision is
+Rev 3 — a reference lag, not a content conflict.)
 
 ## 3. Verification not yet performed
 
