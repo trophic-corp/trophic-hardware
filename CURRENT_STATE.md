@@ -20,8 +20,13 @@ correctly owned elsewhere:
 - **Ooty 20 × 12 ft room** — a reference implementation of a facility built
   from racks, not a product.
 
-The Aquarium / Aquascaping family has no engineering yet. The tree names the
-family and nothing more.
+Eleven further products now have **Phase 0 documents** — four CEA and seven
+aquarium. None has engineering. Each document separates what is inherited and
+decided from what is open, and does not fill the gaps; the CEA ones carry real
+inherited interface facts because the rack fixed them, and the aquarium ones are
+mostly open questions, which is correct.
+
+Shared standards extracted from the rack's decisions now live in `platform/`.
 
 ---
 
@@ -32,8 +37,14 @@ family and nothing more.
 | CEA Rack Platform (Rack A) | `RK-A` | A — Rack product | `products/cea/racks/rack-platform/` | Design validated |
 | Closed-loop water recovery | `RK-A-WRS` | B — Shared CEA infra | `products/cea/irrigation/water-recovery/` | Design validated |
 | Ooty 20 × 12 ft CEA room | `RK-A-ROOM` | C — Facility reference | `products/cea/facility-reference/ooty-room-20x12/` | Layout validated |
+| LED grow bar | `LT-A` | A | `products/cea/lighting/led-grow-bar/` | **Phase 0** |
+| Ducted ventilation plenum | `EV-A` | A | `products/cea/environmental-control/ventilation-plenum/` | **Phase 0** |
+| Rack controller | `CT-A` | A | `products/cea/sensors-controllers/rack-controller/` | **Phase 0** |
+| Room controller | `CT-B` | B | `products/cea/sensors-controllers/room-controller/` | **Phase 0** |
+| Aquarium range, 7 products | `AQ-*` | A | `products/aquarium/` | **Phase 0** |
 
 Owner classes are defined in `products/cea/racks/rack-platform/PRODUCT.md` §2.
+Full map with cross-product open decisions: `products/PRODUCT_INDEX.md`.
 
 ---
 

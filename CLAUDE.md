@@ -18,9 +18,13 @@ Trophic designs and manufactures hardware in two product families:
 Manufacturing base: **Coimbatore, India** (411 m ASL).
 R&D facility: **Ooty, India** (2,240 m ASL) — the reference CEA room.
 
-Today only one product line has completed engineering: the **CEA Rack Platform
-(Rack A)**. Everything else in the tree exists because it was needed to hold
-that work, not as speculative scaffolding.
+Today one product line has completed engineering: the **CEA Rack Platform
+(Rack A)**, released as `RK-A R1`. Eleven other products exist as **Phase 0**
+scope documents — real folders with real documents, no engineering.
+
+`products/PRODUCT_INDEX.md` is the map. A Phase 0 document holds what is decided,
+what is inherited, and what is open, and refuses to fill the gaps. **Thin sections
+in those documents are accurate, not incomplete.**
 
 ---
 
@@ -38,6 +42,9 @@ tree. Load in this order and stop as soon as you have what you need.
 5. `docs/decisions/DECISION_REGISTER.md` — the decision index (not the individual records)
 6. The specific `products/cea/racks/rack-platform/interfaces/**` spec relevant to the task
 
+For work on any **other** product, load `products/PRODUCT_INDEX.md` and that
+product's `PRODUCT.md` instead of items 3–4.
+
 That set is small and is enough for most rack work.
 
 ### Load only when the task requires it
@@ -53,6 +60,8 @@ That set is small and is enough for most rack work.
 | `docs/engineering/CAD_INDEX.md` | Touching Fusion 360 or a release export |
 | `docs/references/REFERENCE_INDEX.md` | Looking for supplier research, standards, historical studies |
 | `docs/system/CEA_SUITE_AUDIT.md` | Any question about what the CEA software suite believes about the hardware, or why a contract says what it says |
+| `docs/system/CAD_SEED_GUIDE.md` | **Before generating any 3D model from a Phase 0 document.** Defines model classes and what a generation prompt may not use |
+| `platform/**` | Starting a new product, or deviating from a shared standard |
 | `archive/**` | Provenance questions only. Never as a source of current values |
 
 ### Never load by default
@@ -77,6 +86,11 @@ That set is small and is enough for most rack work.
 4. Never silently reconcile a conflicting engineering value. Record it as
    **NEEDS DECISION** in the rack `CURRENT_STATE.md` and stop.
 5. Never overwrite an artifact classified AUTHORITATIVE. Issue a new revision.
+6. **A Phase 0 document's §4 "Industry reference points" are NOT Trophic decisions.**
+   They may inform a conversation. They may never appear on a drawing, in a model
+   that claims to be a design, or in a contract.
+7. A generated CAD model is class ENVELOPE or CONCEPT until the product's open
+   decisions are answered. It never becomes DESIGN by being edited.
 
 ---
 

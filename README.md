@@ -18,12 +18,20 @@ docs/
   quality/         Verification index and QA practice
   references/      Reference index — research, vendor sources, historical material
 platform/
-  mechanical-standards/   Shared mechanical conventions across products
+  IDENTIFIER_STANDARD.md  Product IDs, part numbers, document series, instrument tags
+  PRODUCT_TEMPLATE.md     The Phase 0 document every new product starts from
+  mechanical-standards/   Materials, grid, fasteners, ergonomics, wet/dry separation
+  electrical-standards/   ELV boundary, protection, earthing, connectors
 products/
+  PRODUCT_INDEX.md        Every product, its stage, and what exists for it
   cea/
-    racks/rack-platform/  Rack A — the CEA growing rack product
-    irrigation/water-recovery/   Shared CEA infrastructure (not part of the rack)
+    racks/rack-platform/         RK-A — released
+    irrigation/water-recovery/   WR-A — shared infrastructure, not the rack
+    lighting/led-grow-bar/       LT-A — Phase 0
+    environmental-control/ventilation-plenum/   EV-A — Phase 0, deferred
+    sensors-controllers/         CT-A rack, CT-B room — Phase 0
     facility-reference/ooty-room-20x12/   Reference implementation, not a product
+  aquarium/               7 products, all Phase 0, no engineering
 archive/
   superseded/      Retained for provenance. Never a source of current values
   render-captures/ Working screenshots
@@ -37,12 +45,19 @@ archive/
 | CEA Rack Platform (Rack A) | `RK-A` | Design validated, pre-prototype | Release blocked — see rack `CURRENT_STATE.md` |
 | Closed-loop water recovery | `RK-A-WRS` | Design validated | Shared CEA infrastructure |
 | Ooty 20 × 12 ft room | `RK-A-ROOM` | Layout validated | Reference implementation |
-| Aquarium / aquascaping line | — | Not started | Family reserved in the tree only |
+| LED grow bar | `LT-A` | Phase 0 | Interface fixed by the rack; internals open |
+| Ducted ventilation plenum | `EV-A` | Phase 0 | Deferred by ADR-005; interface not frozen |
+| Rack / room controller | `CT-A`, `CT-B` | Phase 0 | Architecture owned by the software side |
+| Aquarium / aquascaping line | `AQ-*` | Phase 0 | 7 products, scope documents only |
 
 ## Where to start
 
 Read `CLAUDE.md` first — it defines the context policy, authority rules and the
-hardware/software boundary. Then `CURRENT_STATE.md`.
+hardware/software boundary. Then `CURRENT_STATE.md`, then
+`products/PRODUCT_INDEX.md`.
+
+Before generating any 3D model from a Phase 0 document, read
+`docs/system/CAD_SEED_GUIDE.md`.
 
 ## Related repositories
 
