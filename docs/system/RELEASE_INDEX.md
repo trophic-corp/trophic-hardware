@@ -10,7 +10,8 @@ release.
 
 | Release | Product | Source design | HW rev | Purpose | Issued | Status |
 |---|---|---|---|---|---|---|
-| **`RK-A R1`** | `RK-A` | Fusion `CEA_RACK_INTEGRATED_v2` **v8** | Rev 5 | Prototype fabrication | Exported 2026-09-05, verified 2026-09-09 | **ISSUED** |
+| **`RK-A R1`** | `RK-A` | Fusion `CEA_RACK_INTEGRATED_v2` **v8** | Rev 5 | Prototype fabrication | Exported 2026-09-05, verified 2026-09-09 | **ISSUED — CONSTRAINED** (2026-09-10): not for gusset plates, brace, anchor, drainage or tray tooling; tray STEP not-for-tooling |
+| `RK-A R2` | `RK-A` | Fusion `CEA_RACK_INTEGRATED_v3` **v1** | Rev 6 | Prototype fabrication after ECP-01 | pending | **TO BE EXPORTED** |
 
 Manifest with per-file SHA-256:
 `products/cea/racks/rack-platform/release/RK-A-R1_MANIFEST.md`
@@ -88,6 +89,15 @@ All five were verified for `RK-A R1` on 2026-09-09 — criteria 2 and 3 after th
 5. The manifest is recorded in this index with export date and manifest hash.
 
 Criteria 2 and 3 exist specifically because their absence caused RB-01.
+
+### `RK-A R2` definition (pending)
+
+| Field | Value |
+|---|---|
+| Source design | `CEA_RACK_INTEGRATED_v3` **v1** (Rev 6), lineage `xCLydKPCQ9u2qm-nE7FGag` |
+| Contents | 70 part STEP files, assembly STEP + F3D, DXF flat patterns for `RK-A-107B` (4 variants), `RK-A-302`, strut plates, `RK-A-203` mesh panel; RK-A-DWG Rev 3 (sheets regenerated), RK-A-MFG Rev 3, RK-A-SYS Rev 2 + addenda, RK-A-QC Rev 4, RK-A-PARAM Rev 2 |
+| Acceptance | the five criteria below, with the manifest recording `_v3` v1 |
+| Notes | valves per EDR-016 are bought-out items specified in RK-A-MFG Rev 3 §05; ND-10 decided before the tray STEP is sent to a thermoformer |
 
 ### Release gate
 

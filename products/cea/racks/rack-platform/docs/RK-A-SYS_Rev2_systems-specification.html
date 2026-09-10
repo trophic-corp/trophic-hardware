@@ -1,0 +1,912 @@
+<title>Rack A Systems Specification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+ --paper:#F3F6F8; --sheet:#FFFFFF; --card:#FAFCFD; --band:#E9EEF2; --band2:#DDE5EA;
+ --ink:#0F161C; --ink2:#43535E; --ink3:#75858F;
+ --rule:#CFD9E0; --rule2:#AAB8C2;
+ --water:#15628F; --water-s:#DCEAF3;
+ --air:#256B4E; --air-s:#DCECE4;
+ --power:#8E5A0E; --power-s:#F4E9D6;
+ --warn:#963224; --warn-s:#F6E1DD;
+ --ok:#256B4E; --ok-s:#DCECE4;
+ --mono:"JetBrains Mono",ui-monospace,monospace; --sans:"Instrument Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --paper:#0B0F12; --sheet:#121A1F; --card:#111820; --band:#18222A; --band2:#1F2B34;
+ --ink:#E8EFF3; --ink2:#A2B1BB; --ink3:#74838D;
+ --rule:#23303A; --rule2:#35454F;
+ --water:#6FB4DC; --water-s:#10242F; --air:#6FBF98; --air-s:#0F2620;
+ --power:#D4A055; --power-s:#2A2013; --warn:#DD8878; --warn-s:#2C1815;
+ --ok:#6FBF98; --ok-s:#0F2620;
+}}
+:root[data-theme="dark"]{
+ --paper:#0B0F12; --sheet:#121A1F; --card:#111820; --band:#18222A; --band2:#1F2B34;
+ --ink:#E8EFF3; --ink2:#A2B1BB; --ink3:#74838D; --rule:#23303A; --rule2:#35454F;
+ --water:#6FB4DC; --water-s:#10242F; --air:#6FBF98; --air-s:#0F2620;
+ --power:#D4A055; --power-s:#2A2013; --warn:#DD8878; --warn-s:#2C1815;
+ --ok:#6FBF98; --ok-s:#0F2620;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.62}
+.w{max-width:1200px;margin:0 auto;padding:0 26px}
+h1,h2,h3,h4{margin:0;text-wrap:balance;font-family:var(--sans)}
+a{color:var(--water)}
+:focus-visible{outline:2px solid var(--water);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.top{background:var(--sheet);border-bottom:1px solid var(--rule2)}
+.top-in{max-width:1200px;margin:0 auto;padding:40px 26px 0}
+.eb{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--water)}
+h1{font-size:clamp(32px,5.4vw,58px);font-weight:700;letter-spacing:-.025em;line-height:1.02;margin:14px 0 12px}
+.dek{font-size:17.5px;color:var(--ink2);max-width:66ch;margin:0 0 26px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(146px,1fr));border-top:1px solid var(--rule)}
+.kv div{padding:11px 15px 13px;border-right:1px solid var(--rule)}
+.kv div:last-child{border-right:0}
+.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.kv dd{margin:4px 0 0;font-size:19px;font-weight:600}
+
+section{padding:46px 0;border-bottom:1px solid var(--rule)}
+.sn{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;margin-bottom:7px}
+.sn.w1{color:var(--water)} .sn.a1{color:var(--air)} .sn.p1{color:var(--power)}
+h2{font-size:clamp(23px,3.1vw,33px);font-weight:700;letter-spacing:-.018em;margin-bottom:9px}
+h3{font-size:19px;font-weight:600;margin:30px 0 8px;letter-spacing:-.01em}
+h4{font-size:15.5px;font-weight:600;margin:18px 0 5px}
+p{margin:0 0 12px} ul,ol{margin:0 0 12px;padding-left:1.2em} li{margin-bottom:5px}
+.lede{font-size:17px;color:var(--ink2);max-width:70ch;margin-bottom:8px}
+
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet);margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:13.2px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+   padding:9px 12px;background:var(--band);border-bottom:1px solid var(--rule2);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:500}
+.m{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.n{font-family:var(--mono);font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+
+.tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;font-weight:600;white-space:nowrap}
+.t-w{background:var(--water-s);color:var(--water)}
+.t-a{background:var(--air-s);color:var(--air)}
+.t-p{background:var(--power-s);color:var(--power)}
+.t-x{background:var(--warn-s);color:var(--warn)}
+.t-o{background:var(--ok-s);color:var(--ok)}
+.t-n{background:var(--band2);color:var(--ink2)}
+
+.note{background:var(--band);border-left:3px solid var(--water);padding:14px 18px;margin:16px 0;font-size:14.6px;color:var(--ink2)}
+.note strong{color:var(--ink)}
+.note.wa{background:var(--warn-s);border-left-color:var(--warn)}
+.note.ai{background:var(--air-s);border-left-color:var(--air)}
+.note.po{background:var(--power-s);border-left-color:var(--power)}
+
+.dwg{background:var(--sheet);border:1px solid var(--rule2);padding:14px;margin:20px 0;overflow-x:auto}
+.dwg svg{display:block;width:100%;height:auto;min-width:700px}
+.cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+     margin-top:10px;padding-top:8px;border-top:1px solid var(--rule)}
+
+.g2{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:18px 0;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g2>div{background:var(--sheet);padding:15px 17px}
+.g2 h4{margin:0 0 5px} .g2 p{font-size:14px;color:var(--ink2);margin:0}
+ol.st{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+ol.st>li{counter-increment:s;position:relative;padding:11px 0 11px 46px;border-bottom:1px solid var(--rule);color:var(--ink2);font-size:14.6px}
+ol.st>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:11px;font-family:var(--mono);
+  font-size:11px;font-weight:600;color:var(--water);background:var(--water-s);padding:2px 7px;border-radius:2px}
+ol.st>li:last-child{border-bottom:0}
+ol.st b{color:var(--ink)}
+footer{padding:38px 0 60px;color:var(--ink3);font-size:13px}
+</style>
+
+<header class="top">
+ <div class="top-in">
+  <div class="eb">RK-A-SYS · Rev 2 · 04 Sep 2026 · Phase 1 baseline · drainage superseded by RK-A-WRS Rev 3</div>
+  <h1>Rack A<br>Systems Specification</h1>
+  <p class="dek">The engineering baseline for one fully specified rack: water, air, light, sensing and power, with the interfaces defined so a room of these scales without redesign. This document is the QC reference against which the built prototype is validated.</p>
+  <dl class="kv">
+   <div><dt>Water</dt><dd>14.5 L / tier</dd></div>
+   <div><dt>Air</dt><dd>178 m³/h / tier</dd></div>
+   <div><dt>Power</dt><dd>316 W / rack</dd></div>
+   <div><dt>Rack sensors</dt><dd>2</dd></div>
+   <div><dt>Build cost</dt><dd>₹49,296</dd></div>
+   <div><dt>Open items</dt><dd>see RK-A-QC</dd></div>
+  </dl>
+ </div>
+</header>
+
+<main class="w">
+<div style="background:var(--warn-s);border-left:3px solid var(--warn);padding:16px 20px;margin:26px 0 0;font-size:14.6px;color:var(--ink2)"><strong style="color:var(--ink)">Partly superseded.</strong> The drain-to-waste strategy in this document has been replaced by a closed-loop water recovery system — see <em>Closed-Loop Water Recovery</em> (RK-A-WRS Rev 3). The rack-side drainage hardware is unchanged; what changed is its destination, the fail-safe polarity of the diverter, and four control behaviours. Nineteen corrections from the integrated-model validation are recorded in the <em>Engineering Validation Record</em> (RK-A-QC Rev 3); the integrated rack envelope is now <strong style="color:var(--ink)">1456 × 690 × 1960 mm at 112.7 kg dry</strong>. Build documents are RK-A-MFG Rev 2 and RK-A-DWG Rev 2.</div>
+
+<!-- ============ 0 STATUS ============ -->
+<section>
+  <div class="sn w1">00 · Status</div>
+  <h2>What this document changes</h2>
+  <p class="lede">Specifying the subsystems properly rather than estimating them moved the cost a long way. That is the headline and it comes first.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Line</th><th>Placeholder</th><th>Engineered</th><th>Why</th></tr></thead><tbody>
+    <tr><td>Irrigation + drainage</td><td class="n">₹3,500</td><td class="n">₹8,950</td><td>Per-tier fill and drain valving, bulkheads, overflow standpipes, strainers, isolation</td></tr>
+    <tr><td>Electrical + control</td><td class="n">₹3,200</td><td class="n">₹9,580</td><td>IP65 enclosure, isolator, RCBO, 24 V PSU, rack controller, segregated cabling</td></tr>
+    <tr><td>Ventilation</td><td class="n">—</td><td class="n">₹5,520</td><td>Was never costed. Four EC fans and four perforated plenums</td></tr>
+    <tr><td>LED mounting</td><td class="n">₹2,634</td><td class="n">₹5,460</td><td>Hangers, saddles, IP65 connectors — rails alone were costed before</td></tr>
+    <tr><td>Rack sensors</td><td class="n">—</td><td class="n">₹1,650</td><td>Was never costed</td></tr>
+    <tr><td>Reflective panels</td><td class="n">₹1,905</td><td class="n">removed</td><td>Per your instruction. See the caveat below</td></tr>
+    <tr><td><strong>Grow total</strong></td><td class="n"><strong>₹32,965</strong></td><td class="n"><strong>₹51,256</strong></td><td><strong>+55%</strong> — see §11 for the Rev 2 deltas</td></tr>
+    </tbody></table></div>
+  <div class="note wa"><strong>Correction — I double-counted, and you were right to push back.</strong> Rev 1 carried two separate parts doing one job: a folded GI plenum with a perforated face inside the ₹5,520 ventilation line, <em>and</em> a ₹600 PP "plenum face". The GI plenum already <em>is</em> the perforated duct that distributes air along the full 1176 mm. The PP panel was the old reflective rear panel repurposed, and it is genuinely redundant to the airflow function.<br><br><strong>So the PP rear panel is now optional, as you asked, and the airflow system is unaffected by removing it.</strong> ₹600 comes out of the base rack. What the optional panel buys is tier <em>enclosure</em> — stopping air escaping sideways — plus the light recovery if specified in matte white.</div>
+  <div class="note"><strong>What the optional panels still buy.</strong> Distribution along the tier is handled by the GI plenum and is not at risk. What is at risk without side and rear enclosure panels is <em>containment</em>: some supply air escapes sideways instead of crossing the canopy, so velocity uniformity will be worse than the ~10% coefficient of variation the CFD literature reports for a fully ducted tier. Measurable, not fatal — check canopy velocity at five points per tier at commissioning, and if the coefficient of variation exceeds 15%, fit the panels. The grid holes are already there.</div>
+</section>
+
+<!-- ============ 1 DESIGN RULES ============ -->
+<section>
+  <div class="sn w1">01 · Design rules</div>
+  <h2>Five rules everything else follows from</h2>
+  <div class="g2">
+    <div><h4>Water never shares a route with power</h4><p>All water is in the rear service zone and below bed level. All electrical is above canopy or in the top-rear enclosure. Minimum 236 mm vertical separation, and no cable crosses a wet zone without a drip loop.</p></div>
+    <div><h4>Every fill point has a physical air gap</h4><p>Trays are filled from a nozzle above the rim, not through a bottom port. Back-siphonage from a tray into the supply is then impossible by geometry rather than by a valve that can fail.</p></div>
+    <div><h4>Flood depth is set mechanically</h4><p>An overflow standpipe in each tray sets the level. A stuck-open fill valve overflows to drain rather than over the rim. The timer sets duration; the standpipe sets depth.</p></div>
+    <div><h4>Any rack can be isolated alone</h4><p>One ball valve and one union on water, one isolator and one RCBO on power, one addressable node on the bus. A rack comes out of service without stopping the room.</p></div>
+    <div><h4>The grid is the only mounting interface</h4><p>Every bracket, clip, sensor, plenum and rail bolts to the 50 mm hole grid. Nothing is drilled, welded or bonded to the frame in the field.</p></div>
+  </div>
+</section>
+
+<!-- ============ 2 IRRIGATION ============ -->
+<section>
+  <div class="sn w1">02 · Irrigation</div>
+  <h2>Water into the rack</h2>
+
+  <div class="dwg">
+  <svg viewBox="0 0 1560 900" role="img" aria-label="Rack plumbing schematic showing supply, per-tier fill and drain, overflow standpipes and drain header">
+   <defs>
+    <marker id="fa" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5 Z" fill="var(--water)"/></marker>
+    <marker id="fd" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5 Z" fill="var(--ink3)"/></marker>
+   </defs>
+   <g font-family="JetBrains Mono, monospace" font-size="17">
+    <text x="30" y="34" font-size="21" font-weight="600" fill="var(--water)">RACK PLUMBING SCHEMATIC</text>
+    <text x="30" y="58" font-size="15" fill="var(--ink3)">one rack · 4 tiers · fill from above with air gap · gravity drain</text>
+
+    <!-- room side -->
+    <rect x="30" y="96" width="228" height="150" rx="4" fill="var(--card)" stroke="var(--rule2)" stroke-width="1.6"/>
+    <text x="44" y="122" font-size="15" fill="var(--ink3)">ROOM · SHARED</text>
+    <rect x="46" y="136" width="90" height="44" rx="3" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.6"/>
+    <text x="91" y="163" font-size="14" fill="var(--water)" text-anchor="middle">RESERVOIR</text>
+    <circle cx="180" cy="158" r="21" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.8"/>
+    <text x="180" y="164" font-size="15" fill="var(--water)" text-anchor="middle">P</text>
+    <text x="180" y="200" font-size="13" fill="var(--ink3)" text-anchor="middle">PUMP</text>
+    <text x="46" y="222" font-size="13" fill="var(--ink3)">pH · EC · TEMP · LEVEL</text>
+    <text x="46" y="238" font-size="13" fill="var(--ink3)">dosing · filtration</text>
+
+    <!-- main -->
+    <line x1="258" y1="158" x2="360" y2="158" stroke="var(--water)" stroke-width="4" marker-end="url(#fa)"/>
+    <text x="270" y="148" font-size="13" fill="var(--water)">DN25-32 MAIN</text>
+
+    <!-- rack boundary -->
+    <rect x="372" y="88" width="1140" height="720" rx="5" fill="none" stroke="var(--rule2)" stroke-width="1.6" stroke-dasharray="9 7"/>
+    <text x="386" y="112" font-size="14" fill="var(--ink3)">RACK BOUNDARY — everything inside ships with the rack</text>
+
+    <!-- isolation + strainer -->
+    <g>
+     <path d="M400 146 L400 170 L424 146 L424 170 Z" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.8"/>
+     <text x="412" y="192" font-size="12.5" fill="var(--water)" text-anchor="middle">BV</text>
+     <text x="412" y="132" font-size="12" fill="var(--ink3)" text-anchor="middle">ISOLATION</text>
+     <rect x="444" y="146" width="34" height="24" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.6"/>
+     <text x="461" y="192" font-size="12.5" fill="var(--water)" text-anchor="middle">STR</text>
+     <rect x="498" y="146" width="30" height="24" rx="12" fill="none" stroke="var(--water)" stroke-width="1.6"/>
+     <text x="513" y="192" font-size="12.5" fill="var(--water)" text-anchor="middle">UN</text>
+    </g>
+    <line x1="424" y1="158" x2="444" y2="158" stroke="var(--water)" stroke-width="3"/>
+    <line x1="478" y1="158" x2="498" y2="158" stroke="var(--water)" stroke-width="3"/>
+    <line x1="528" y1="158" x2="600" y2="158" stroke="var(--water)" stroke-width="3"/>
+    <!-- riser -->
+    <line x1="600" y1="158" x2="600" y2="720" stroke="var(--water)" stroke-width="3.5"/>
+    <text x="612" y="176" font-size="13" fill="var(--water)">DN20 RISER</text>
+
+    <!-- drain header -->
+    <line x1="1400" y1="150" x2="1400" y2="742" stroke="var(--ink3)" stroke-width="4"/>
+    <text x="1330" y="140" font-size="13" fill="var(--ink3)">DN40 DRAIN HEADER</text>
+
+    <!-- tiers -->
+    <g>
+     <!-- tier template repeated -->
+     <!-- T4 -->
+     <rect x="700" y="176" width="560" height="58" rx="3" fill="var(--water-s)" stroke="var(--water)" stroke-width="2"/>
+     <text x="716" y="212" font-size="15" fill="var(--water)">TIER 4  FLOOD TRAY  14.5 L</text>
+     <line x1="600" y1="200" x2="660" y2="200" stroke="var(--water)" stroke-width="3"/>
+     <circle cx="678" cy="200" r="13" fill="var(--sheet)" stroke="var(--water)" stroke-width="2"/>
+     <text x="678" y="205" font-size="12" fill="var(--water)" text-anchor="middle">S</text>
+     <path d="M691 200 L700 200 M700 194 L700 176" stroke="var(--water)" stroke-width="2.4" fill="none"/>
+     <text x="704" y="168" font-size="11.5" fill="var(--ink3)">AIR GAP</text>
+     <line x1="1260" y1="206" x2="1330" y2="206" stroke="var(--ink3)" stroke-width="2.6"/>
+     <circle cx="1348" cy="206" r="13" fill="var(--sheet)" stroke="var(--ink3)" stroke-width="2"/>
+     <text x="1348" y="211" font-size="12" fill="var(--ink3)" text-anchor="middle">D</text>
+     <line x1="1361" y1="206" x2="1400" y2="206" stroke="var(--ink3)" stroke-width="2.6"/>
+     <rect x="1180" y="160" width="12" height="30" fill="var(--band2)" stroke="var(--ink3)" stroke-width="1.5"/>
+     <text x="1196" y="170" font-size="11.5" fill="var(--ink3)">OVERFLOW</text>
+     <line x1="1186" y1="190" x2="1186" y2="234" stroke="var(--ink3)" stroke-width="2"/>
+     <line x1="1186" y1="234" x2="1330" y2="234" stroke="var(--ink3)" stroke-width="2"/>
+     <line x1="1330" y1="234" x2="1400" y2="234" stroke="var(--ink3)" stroke-width="2"/>
+
+     <!-- T3 -->
+     <rect x="700" y="326" width="560" height="58" rx="3" fill="var(--water-s)" stroke="var(--water)" stroke-width="2"/>
+     <text x="716" y="362" font-size="15" fill="var(--water)">TIER 3</text>
+     <line x1="600" y1="350" x2="660" y2="350" stroke="var(--water)" stroke-width="3"/>
+     <circle cx="678" cy="350" r="13" fill="var(--sheet)" stroke="var(--water)" stroke-width="2"/>
+     <text x="678" y="355" font-size="12" fill="var(--water)" text-anchor="middle">S</text>
+     <path d="M691 350 L700 350 M700 344 L700 326" stroke="var(--water)" stroke-width="2.4" fill="none"/>
+     <line x1="1260" y1="356" x2="1330" y2="356" stroke="var(--ink3)" stroke-width="2.6"/>
+     <circle cx="1348" cy="356" r="13" fill="var(--sheet)" stroke="var(--ink3)" stroke-width="2"/>
+     <text x="1348" y="361" font-size="12" fill="var(--ink3)" text-anchor="middle">D</text>
+     <line x1="1361" y1="356" x2="1400" y2="356" stroke="var(--ink3)" stroke-width="2.6"/>
+     <rect x="1180" y="310" width="12" height="30" fill="var(--band2)" stroke="var(--ink3)" stroke-width="1.5"/>
+     <line x1="1186" y1="340" x2="1186" y2="384" stroke="var(--ink3)" stroke-width="2"/>
+     <line x1="1186" y1="384" x2="1400" y2="384" stroke="var(--ink3)" stroke-width="2"/>
+
+     <!-- T2 -->
+     <rect x="700" y="476" width="560" height="58" rx="3" fill="var(--water-s)" stroke="var(--water)" stroke-width="2"/>
+     <text x="716" y="512" font-size="15" fill="var(--water)">TIER 2</text>
+     <line x1="600" y1="500" x2="660" y2="500" stroke="var(--water)" stroke-width="3"/>
+     <circle cx="678" cy="500" r="13" fill="var(--sheet)" stroke="var(--water)" stroke-width="2"/>
+     <text x="678" y="505" font-size="12" fill="var(--water)" text-anchor="middle">S</text>
+     <path d="M691 500 L700 500 M700 494 L700 476" stroke="var(--water)" stroke-width="2.4" fill="none"/>
+     <line x1="1260" y1="506" x2="1330" y2="506" stroke="var(--ink3)" stroke-width="2.6"/>
+     <circle cx="1348" cy="506" r="13" fill="var(--sheet)" stroke="var(--ink3)" stroke-width="2"/>
+     <text x="1348" y="511" font-size="12" fill="var(--ink3)" text-anchor="middle">D</text>
+     <line x1="1361" y1="506" x2="1400" y2="506" stroke="var(--ink3)" stroke-width="2.6"/>
+     <rect x="1180" y="460" width="12" height="30" fill="var(--band2)" stroke="var(--ink3)" stroke-width="1.5"/>
+     <line x1="1186" y1="490" x2="1186" y2="534" stroke="var(--ink3)" stroke-width="2"/>
+     <line x1="1186" y1="534" x2="1400" y2="534" stroke="var(--ink3)" stroke-width="2"/>
+
+     <!-- T1 -->
+     <rect x="700" y="626" width="560" height="58" rx="3" fill="var(--water-s)" stroke="var(--water)" stroke-width="2"/>
+     <text x="716" y="662" font-size="15" fill="var(--water)">TIER 1</text>
+     <line x1="600" y1="650" x2="660" y2="650" stroke="var(--water)" stroke-width="3"/>
+     <circle cx="678" cy="650" r="13" fill="var(--sheet)" stroke="var(--water)" stroke-width="2"/>
+     <text x="678" y="655" font-size="12" fill="var(--water)" text-anchor="middle">S</text>
+     <path d="M691 650 L700 650 M700 644 L700 626" stroke="var(--water)" stroke-width="2.4" fill="none"/>
+     <line x1="1260" y1="656" x2="1330" y2="656" stroke="var(--ink3)" stroke-width="2.6"/>
+     <circle cx="1348" cy="656" r="13" fill="var(--sheet)" stroke="var(--ink3)" stroke-width="2"/>
+     <text x="1348" y="661" font-size="12" fill="var(--ink3)" text-anchor="middle">D</text>
+     <line x1="1361" y1="656" x2="1400" y2="656" stroke="var(--ink3)" stroke-width="2.6"/>
+     <rect x="1180" y="610" width="12" height="30" fill="var(--band2)" stroke="var(--ink3)" stroke-width="1.5"/>
+     <line x1="1186" y1="640" x2="1186" y2="684" stroke="var(--ink3)" stroke-width="2"/>
+     <line x1="1186" y1="684" x2="1400" y2="684" stroke="var(--ink3)" stroke-width="2"/>
+    </g>
+
+    <!-- leak sensor + air gap discharge -->
+    <line x1="1400" y1="742" x2="1400" y2="770" stroke="var(--ink3)" stroke-width="4"/>
+    <line x1="1352" y1="782" x2="1448" y2="782" stroke="var(--warn)" stroke-width="3"/>
+    <text x="1456" y="778" font-size="13" fill="var(--warn)">AIR GAP</text>
+    <rect x="1330" y="794" width="140" height="34" rx="3" fill="var(--band)" stroke="var(--rule2)" stroke-width="1.5"/>
+    <text x="1400" y="816" font-size="13.5" fill="var(--ink2)" text-anchor="middle">ROOM DRAIN DN63</text>
+    <circle cx="1300" cy="782" r="12" fill="var(--warn-s)" stroke="var(--warn)" stroke-width="2"/>
+    <text x="1300" y="787" font-size="11" fill="var(--warn)" text-anchor="middle">LK</text>
+    <text x="1290" y="812" font-size="12.5" fill="var(--warn)" text-anchor="end">LEAK SENSOR</text>
+
+    <!-- legend -->
+    <g transform="translate(30,290)">
+     <rect x="0" y="0" width="228" height="200" rx="4" fill="var(--card)" stroke="var(--rule)" stroke-width="1.4"/>
+     <text x="14" y="26" font-size="14" fill="var(--ink3)">LEGEND</text>
+     <circle cx="26" cy="52" r="11" fill="var(--sheet)" stroke="var(--water)" stroke-width="2"/><text x="26" y="57" font-size="11" fill="var(--water)" text-anchor="middle">S</text>
+     <text x="46" y="57" font-size="13" fill="var(--ink2)">fill solenoid, 12 V</text>
+     <circle cx="26" cy="84" r="11" fill="var(--sheet)" stroke="var(--ink3)" stroke-width="2"/><text x="26" y="89" font-size="11" fill="var(--ink3)" text-anchor="middle">D</text>
+     <text x="46" y="89" font-size="13" fill="var(--ink2)">drain solenoid, DN40</text>
+     <rect x="20" y="106" width="12" height="24" fill="var(--band2)" stroke="var(--ink3)" stroke-width="1.4"/>
+     <text x="46" y="122" font-size="13" fill="var(--ink2)">overflow standpipe</text>
+     <path d="M16 146 L16 166 L36 146 L36 166 Z" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.6"/>
+     <text x="46" y="161" font-size="13" fill="var(--ink2)">ball valve / union</text>
+     <line x1="16" y1="184" x2="36" y2="184" stroke="var(--water)" stroke-width="3"/>
+     <text x="46" y="189" font-size="13" fill="var(--ink2)">supply / drain line</text>
+    </g>
+   </g>
+  </svg>
+  <div class="cap">RK-A-P01 · rack plumbing schematic · supply DN20, drops DN16, drain header DN40, room drain DN63</div>
+  </div>
+
+  <h3>Connection to the rack, and where</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Point</th><th>Location on rack</th><th>Size</th><th>Fitting</th></tr></thead><tbody>
+    <tr><td>Supply inlet</td><td>Left rear upright, 250 mm above floor, rear service zone</td><td class="m">DN20</td><td>PP ball valve + union, EPDM seat — the rack disconnects at the union</td></tr>
+    <tr><td>Inline strainer</td><td>Immediately after the inlet valve, serviceable from the aisle</td><td class="m">DN20, 120 mesh</td><td>PP body, clear bowl, EPDM O-ring</td></tr>
+    <tr><td>Riser</td><td>Left rear upright, clipped to the 50 mm grid</td><td class="m">DN20 PE</td><td>Push-fit, P-clips at 400 mm</td></tr>
+    <tr><td>Tier drop</td><td>Rear of each tier, terminating above the tray rim</td><td class="m">DN16 PE</td><td>Push-fit elbow, nozzle clipped over the rim</td></tr>
+    <tr><td>Tray drain</td><td>Right end of tray floor, low point</td><td class="m">DN40</td><td>PP tank connector, EPDM washer on the wet face, removable mesh strainer</td></tr>
+    <tr><td>Tray overflow</td><td>Adjacent bulkhead, standpipe crest at 30 mm</td><td class="m">DN40 boss, DN32 pipe</td><td>PP tank connector + loose standpipe, tethered</td></tr>
+    <tr><td>Drain header</td><td>Right rear upright, vertical</td><td class="m">DN40 uPVC</td><td>Clamp couplings so the stack lifts out without dismantling the rack</td></tr>
+    <tr><td>Discharge</td><td>Base of the right rear upright, 150 mm above floor</td><td class="m">DN40</td><td><strong>Air gap</strong> over the room drain — never a direct connection</td></tr>
+    </tbody></table></div>
+
+  <h3>How water actually reaches a tray</h3>
+  <p class="prose">The tier drop terminates in a nozzle clipped over the tray rim, discharging downward into open air. There is no bottom fill port, no seal below the water line on the supply side, and <strong>a physical air gap at every one of the sixteen fill points</strong>. Back-siphonage of nutrient solution into the supply main is prevented by geometry rather than by a check valve that can stick. It also deletes four seals per rack that would otherwise be candidates for leaking.</p>
+
+  <h3>Why the flood depth is mechanical</h3>
+  <p class="prose">Each tray carries an overflow standpipe with its crest at 30 mm — above the 22 mm working flood, below the 47 mm rim. The fill solenoid runs on a timer, but if it sticks open the tray simply overflows down the standpipe into the drain header. The timer sets duration; the standpipe sets depth. This is the single most important safety feature in the water system and it has no moving parts.</p>
+  <div class="note wa"><strong>Standpipe sizing caught a near miss.</strong> A DN25 standpipe passes 7.2 L/min at 8 mm of head over the crest — exactly the fill rate, so it would run at the point of flooding with no margin. <strong>DN32 minimum</strong>, which passes 11.9 L/min, a 1.65× margin. Specify DN32 and do not let a supplier substitute DN25 because it fits the same boss.</div>
+
+  <h3>Sequential filling, and why it matters at room scale</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Strategy</th><th>Pump duty</th><th>Supply size</th><th>Cycle</th><th>Verdict</th></tr></thead><tbody>
+    <tr><td><strong>Sequential — one tier at a time</strong></td><td class="n">7.2 L/min</td><td class="m">DN20 branch</td><td class="n">24 min</td><td>Adopted</td></tr>
+    <tr><td>Simultaneous — all four tiers</td><td class="n">29.0 L/min</td><td class="m">DN25–32 branch</td><td class="n">13.5 min</td><td>Rejected</td></tr>
+    </tbody></table></div>
+  <p class="prose">Sequential filling costs eleven minutes of cycle time — irrelevant at one to three cycles a day — and buys a quarter of the pump duty and a smaller pipe. The real payoff appears at room scale: because the room controller fires one tier at a time <em>across all racks</em>, <strong>the pump and the main never grow with rack count.</strong> Twenty racks need the same 7.2 L/min pump as one. That is the property that makes this scale cleanly.</p>
+
+  <h3>Seals and wetted materials</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Application</th><th>Material</th><th>Reasoning</th></tr></thead><tbody>
+    <tr><td>All gaskets, O-rings, valve diaphragms</td><td class="m">EPDM, food grade (WRAS/FDA)</td><td>Excellent with water at pH 5.6–6.2, and — the deciding factor — compatible with both hypochlorite and peracetic acid, so the sanitiser decision cannot strand it</td></tr>
+    <tr><td>Not to be used</td><td class="m">NBR / Buna-N</td><td>Poor ozone and UV resistance; degrades in a lit, humid room</td></tr>
+    <tr><td>Not required</td><td class="m">Viton / FKM</td><td>Chemically excellent, several times the cost, no benefit at these chemistries</td></tr>
+    <tr><td>Valve and fitting bodies</td><td class="m">PP or PVC-U, food grade</td><td>No metal in the wetted path — avoids both corrosion and metal ion pickup into the nutrient</td></tr>
+    <tr><td>Supply pipe</td><td class="m">PE (LDPE) DN20/DN16</td><td>Standard Indian drip-irrigation ecosystem, push-fit, cheap, food safe, tolerant of movement</td></tr>
+    <tr><td>Drain pipe</td><td class="m">uPVC DN40 to IS 4985</td><td>Rigid, solvent-welded, stocked everywhere</td></tr>
+    <tr><td>Tank connectors</td><td class="m">PP body, EPDM washer on the wet face</td><td>Gasket on the wet side is standard practice — the water pressure seats the seal rather than trying to lift it</td></tr>
+    <tr><td>Fasteners in the wet zone</td><td class="m">SS304 with nylon isolating washer</td><td>See the galvanic note in §10 — this is a real finding, not boilerplate</td></tr>
+    </tbody></table></div>
+
+  <h3>Routing so it does not get in the way</h3>
+  <ul class="prose">
+    <li><strong>All water lives in the rear 90 mm service zone.</strong> The riser and header run on the rear faces of the left and right uprights, clipped to the grid, outside the tray envelope.</li>
+    <li>Tier drops cross the rear plenum face through grommeted holes at a fixed position, then terminate over the tray rim. They do not cross the canopy, the LED plane, or the front access opening.</li>
+    <li>The drain header is on the opposite upright from the supply riser, so a leak at either is unambiguous.</li>
+    <li>Nothing water-carrying passes above bed level except the tier drop, which is above the rim and downstream of the air gap.</li>
+    <li>Trays lift out upward with no plumbing attached to them except the two bulkheads, which disconnect at the clamp coupling on the header.</li>
+  </ul>
+
+  <h3>Multi-rack: how it scales</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody>
+    <tr><td>Common irrigation system?</td><td>Yes. One reservoir, one pump, one dosing set per room. DN32 supply main run along the rear wall, DN63 drain main below it at 1:100 fall.</td></tr>
+    <tr><td>Independent valve per rack?</td><td><strong>Yes — mandatory.</strong> A manual ball valve plus a union at every rack inlet. This is what allows a rack to be worked on while the room runs.</td></tr>
+    <tr><td>Independent flow control per rack?</td><td><strong>Not needed, and worth avoiding.</strong> Flow is set per tier by the solenoid open time, which the controller already owns. A balancing valve per rack is one more thing to be set wrong and drift. Add a per-rack flow meter on the Pro build for diagnostics, not control.</td></tr>
+    <tr><td>Isolating one rack for maintenance</td><td>Close the branch ball valve, break the union, lift the drain header clamp, open the rack isolator, pull the RS485 drop. Four actions, no room shutdown.</td></tr>
+    <tr><td>What grows with rack count</td><td>Only the length of the two mains and the number of branches. Pump, reservoir and dosing are sized by <em>concurrent</em> demand, which sequencing holds at one tier.</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ============ 3 DRAINAGE ============ -->
+<section>
+  <div class="sn w1">03 · Drainage</div>
+  <h2>Water out of the rack</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Parameter</th><th>Value</th><th>Basis</th></tr></thead><tbody>
+    <tr><td>Method</td><td class="m">Gravity throughout the rack</td><td>No pump above floor level. The only pump in the system is on the supply side.</td></tr>
+    <tr><td>Drain rate, DN40 at 22 mm head</td><td class="m">30.7 L/min</td><td>4.2× the fill rate</td></tr>
+    <tr><td>Drain rate at 30 mm (overflow)</td><td class="m">35.9 L/min</td><td>5.0× fill</td></tr>
+    <tr><td>Tray empty time</td><td class="m">≈ 55 s</td><td>Declining head</td></tr>
+    <tr><td>Automated?</td><td class="m">Yes — one DN40 drain solenoid per tier</td><td>Closed during fill and dwell, opened to drain</td></tr>
+    <tr><td>Tray fall to drain</td><td class="m">2–3 mm across the floor</td><td>Formed into the tray so no puddle is left behind</td></tr>
+    <tr><td>Strainer</td><td class="m">Removable mesh over the drain boss</td><td>Keeps media and roots out of the header</td></tr>
+    <tr><td>Discharge</td><td class="m">Air gap at 150 mm above floor</td><td>Never a direct connection to the room drain</td></tr>
+    </tbody></table></div>
+  <div class="note"><strong>Why the overflow is a separate bulkhead rather than a concentric standpipe.</strong> The classic ebb-and-flow tray uses one boss with an inner overflow tube inside an outer drain screen. That fails here in the one case that matters: if the boss blocks with media, both the drain <em>and</em> the overflow are lost at the same instant. Two independent penetrations mean a blocked drain boss still has a working overflow path. A blockage in the shared header defeats both, and that residual case is covered by the leak sensor and the solenoid interlock, not by geometry — it is listed in the FMEA.</div>
+</section>
+
+<!-- ============ 4 SENSORS ============ -->
+<section>
+  <div class="sn w1">04 · Sensors</div>
+  <h2>What is measured, and where</h2>
+  <p class="lede">The governing principle is that a sensor belongs at the level where the quantity actually varies. Putting a CO₂ sensor on every rack measures the same room sixteen times and costs sixteen times as much.</p>
+
+  <div class="scroll"><table>
+    <thead><tr><th>Sensor</th><th>Level</th><th>Qty</th><th>Exact location</th><th>Height</th></tr></thead><tbody>
+    <tr><td>Air temperature + RH</td><td><span class="tag t-n">Rack</span></td><td class="n">1</td><td>Front-right upright, on the grid, in a vented radiation shield, mid-depth of tier 3</td><td class="m">1239 mm — tier 3 canopy</td></tr>
+    <tr><td>Leak detection</td><td><span class="tag t-n">Rack</span></td><td class="n">1</td><td>Floor spot sensor at the base of the drain header, right rear</td><td class="m">5 mm above floor</td></tr>
+    <tr><td>Air temp + RH, per tier</td><td><span class="tag t-n">Tier</span></td><td class="n">4</td><td><em>Pro / R&amp;D build only.</em> Same mounting rule, one per tier</td><td class="m">canopy of each tier</td></tr>
+    <tr><td>PPFD / PAR</td><td><span class="tag t-n">Portable</span></td><td class="n">1 per site</td><td>Quantum sensor on a grid-mount jig. Five points per tier at commissioning and after any fixture height change</td><td class="m">canopy level</td></tr>
+    <tr><td>Leaf temperature (true VPD)</td><td><span class="tag t-n">Tier</span></td><td class="n">opt.</td><td><em>Pro only.</em> IR thermometer on the grid, aimed at canopy centre at 45°</td><td class="m">300 mm above canopy</td></tr>
+    <tr><td>pH</td><td><span class="tag t-w">Water</span></td><td class="n">1</td><td>Reservoir or inline on the pump return, accessible for calibration without tools</td><td class="m">reservoir</td></tr>
+    <tr><td>EC / TDS</td><td><span class="tag t-w">Water</span></td><td class="n">1</td><td>Alongside pH, same manifold</td><td class="m">reservoir</td></tr>
+    <tr><td>Water temperature</td><td><span class="tag t-w">Water</span></td><td class="n">1</td><td>In the reservoir, mid-depth</td><td class="m">reservoir</td></tr>
+    <tr><td>Reservoir level</td><td><span class="tag t-w">Water</span></td><td class="n">1</td><td>Ultrasonic above the surface, or a float switch pair for low and low-low</td><td class="m">reservoir</td></tr>
+    <tr><td>Flow rate</td><td><span class="tag t-w">Water</span></td><td class="n">1</td><td>Inline on the supply main after the pump. Per-rack flow is a Pro option for diagnostics</td><td class="m">plant room</td></tr>
+    <tr><td>Supply pressure</td><td><span class="tag t-w">Water</span></td><td class="n">1</td><td>After the pump, for dry-run and blockage protection</td><td class="m">plant room</td></tr>
+    <tr><td>CO₂ (NDIR)</td><td><span class="tag t-a">Room</span></td><td class="n">1–2</td><td>Mid-room at canopy height, away from doors and the HVAC discharge</td><td class="m">1200 mm</td></tr>
+    <tr><td>Room air temp + RH</td><td><span class="tag t-a">Room</span></td><td class="n">2</td><td>One at HVAC supply, one at return — the pair gives you the room's actual duty</td><td class="m">supply / return</td></tr>
+    <tr><td>Smoke / heat</td><td><span class="tag t-a">Room</span></td><td class="n">1</td><td>Ceiling, per the room's fire design</td><td class="m">ceiling</td></tr>
+    <tr><td>Room flood</td><td><span class="tag t-a">Room</span></td><td class="n">1</td><td>Floor low point, near the drain</td><td class="m">floor</td></tr>
+    </tbody></table></div>
+
+  <div class="note"><strong>Two sensors that people buy and should not.</strong> There is no such thing as a VPD sensor — VPD is <em>computed</em> from air temperature, relative humidity and leaf temperature. In the standard build it is calculated from the rack T/RH node with leaf assumed equal to air, which is adequate for control; true VPD needs the IR leaf sensor and belongs only on the R&amp;D rack. And there is no per-tray water level sensor in this design at all: <strong>the overflow standpipe sets level mechanically</strong>, which deletes sixteen sensors per rack and replaces them with a piece of pipe that cannot drift, fail or need calibration.</div>
+
+  <h4>Mounting rules — how sensors avoid interference</h4>
+  <ul class="prose">
+    <li><strong>Minimum 150 mm from any LED fixture.</strong> Closer and the sensor reads fixture radiant heat, not air, and will report a temperature that no plant experiences.</li>
+    <li><strong>Never in the direct plenum jet.</strong> Mount at mid-depth of the tier, not against the perforated face — a sensor in the jet reads supply air, not canopy air.</li>
+    <li><strong>Always in a vented radiation shield.</strong> A bare sensor under horticultural lighting over-reads by a degree or more.</li>
+    <li><strong>Above the tray rim, always.</strong> No sensor may sit where a flood or an overflow can reach it.</li>
+    <li><strong>Out of the tray path.</strong> Nothing mounted where a tray is slid in and out — sensors go on the <em>front-right upright face</em>, clear of the 1176 mm tray opening.</li>
+    <li><strong>Sensor cable in its own channel</strong>, never bundled with mains or LED DC. Crossings at 90°.</li>
+    <li><strong>Water chemistry sensors are never on the rack.</strong> pH and EC probes need routine calibration and periodic replacement; putting them at the reservoir means one calibration for the whole room instead of one per rack.</li>
+  </ul>
+</section>
+
+<!-- ============ 5 VENTILATION ============ -->
+<section>
+  <div class="sn a1">05 · Ventilation</div>
+  <h2>Air through the rack</h2>
+
+  <div class="dwg">
+  <svg viewBox="0 0 1520 720" role="img" aria-label="Airflow schematic: rack section showing plenum supply through canopy, and multi-rack room circulation">
+   <defs><marker id="aa" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto"><path d="M0,1.5 L11,5.5 L0,9.5 Z" fill="var(--air)"/></marker>
+   <marker id="ab" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto"><path d="M0,1.5 L11,5.5 L0,9.5 Z" fill="var(--ink3)"/></marker></defs>
+   <g font-family="JetBrains Mono, monospace" font-size="16">
+    <text x="26" y="32" font-size="20" font-weight="600" fill="var(--air)">AIRFLOW — RACK SECTION</text>
+    <text x="26" y="54" font-size="14" fill="var(--ink3)">rear plenum · full-length perforated face · 178 m³/h per tier · 0.2–0.5 m/s at canopy</text>
+
+    <!-- rack section -->
+    <rect x="60" y="90" width="640" height="560" fill="none" stroke="var(--rule2)" stroke-width="1.6"/>
+    <rect x="640" y="90" width="60" height="560" fill="var(--air-s)" stroke="var(--air)" stroke-width="1.8"/>
+    <text x="670" y="380" font-size="14" fill="var(--air)" transform="rotate(-90 670 380)" text-anchor="middle">PLENUM · PERFORATED FACE</text>
+
+    <g>
+     <!-- 4 tiers -->
+     <g>
+      <rect x="90" y="130" width="530" height="26" fill="var(--band2)" stroke="var(--rule2)" stroke-width="1.4"/>
+      <text x="100" y="148" font-size="12.5" fill="var(--ink3)">TIER 4 BED</text>
+      <circle cx="668" cy="112" r="16" fill="var(--sheet)" stroke="var(--air)" stroke-width="2"/>
+      <text x="668" y="117" font-size="12" fill="var(--air)" text-anchor="middle">F</text>
+      <line x1="636" y1="118" x2="120" y2="118" stroke="var(--air)" stroke-width="2.6" marker-end="url(#aa)"/>
+      <line x1="636" y1="104" x2="200" y2="104" stroke="var(--air)" stroke-width="2" marker-end="url(#aa)" opacity=".55"/>
+     </g>
+     <g>
+      <rect x="90" y="280" width="530" height="26" fill="var(--band2)" stroke="var(--rule2)" stroke-width="1.4"/>
+      <text x="100" y="298" font-size="12.5" fill="var(--ink3)">TIER 3 BED</text>
+      <circle cx="668" cy="262" r="16" fill="var(--sheet)" stroke="var(--air)" stroke-width="2"/>
+      <text x="668" y="267" font-size="12" fill="var(--air)" text-anchor="middle">F</text>
+      <line x1="636" y1="268" x2="120" y2="268" stroke="var(--air)" stroke-width="2.6" marker-end="url(#aa)"/>
+      <line x1="636" y1="254" x2="200" y2="254" stroke="var(--air)" stroke-width="2" marker-end="url(#aa)" opacity=".55"/>
+     </g>
+     <g>
+      <rect x="90" y="430" width="530" height="26" fill="var(--band2)" stroke="var(--rule2)" stroke-width="1.4"/>
+      <text x="100" y="448" font-size="12.5" fill="var(--ink3)">TIER 2 BED</text>
+      <circle cx="668" cy="412" r="16" fill="var(--sheet)" stroke="var(--air)" stroke-width="2"/>
+      <text x="668" y="417" font-size="12" fill="var(--air)" text-anchor="middle">F</text>
+      <line x1="636" y1="418" x2="120" y2="418" stroke="var(--air)" stroke-width="2.6" marker-end="url(#aa)"/>
+      <line x1="636" y1="404" x2="200" y2="404" stroke="var(--air)" stroke-width="2" marker-end="url(#aa)" opacity=".55"/>
+     </g>
+     <g>
+      <rect x="90" y="580" width="530" height="26" fill="var(--band2)" stroke="var(--rule2)" stroke-width="1.4"/>
+      <text x="100" y="598" font-size="12.5" fill="var(--ink3)">TIER 1 BED</text>
+      <circle cx="668" cy="562" r="16" fill="var(--sheet)" stroke="var(--air)" stroke-width="2"/>
+      <text x="668" y="567" font-size="12" fill="var(--air)" text-anchor="middle">F</text>
+      <line x1="636" y1="568" x2="120" y2="568" stroke="var(--air)" stroke-width="2.6" marker-end="url(#aa)"/>
+      <line x1="636" y1="554" x2="200" y2="554" stroke="var(--air)" stroke-width="2" marker-end="url(#aa)" opacity=".55"/>
+     </g>
+    </g>
+    <text x="80" y="676" font-size="13.5" fill="var(--ink3)">OPEN FRONT — air exits to the aisle and returns to room HVAC</text>
+    <line x1="60" y1="90" x2="60" y2="650" stroke="var(--air)" stroke-width="2.5" stroke-dasharray="12 8"/>
+
+    <!-- multi rack -->
+    <text x="780" y="32" font-size="20" font-weight="600" fill="var(--air)">MULTI-RACK ROOM CIRCULATION</text>
+    <text x="780" y="54" font-size="14" fill="var(--ink3)">rears face rears · fronts face aisles · no supply–return short circuit</text>
+    <rect x="780" y="90" width="700" height="430" fill="none" stroke="var(--rule2)" stroke-width="1.6"/>
+    <text x="794" y="112" font-size="13" fill="var(--ink3)">ROOM PLAN</text>
+    <g>
+     <rect x="810" y="140" width="120" height="60" fill="var(--band)" stroke="var(--rule2)" stroke-width="1.5"/>
+     <rect x="810" y="200" width="120" height="14" fill="var(--air-s)" stroke="var(--air)" stroke-width="1.4"/>
+     <rect x="950" y="140" width="120" height="60" fill="var(--band)" stroke="var(--rule2)" stroke-width="1.5"/>
+     <rect x="950" y="200" width="120" height="14" fill="var(--air-s)" stroke="var(--air)" stroke-width="1.4"/>
+     <text x="870" y="176" font-size="12.5" fill="var(--ink3)" text-anchor="middle">RACK</text>
+     <text x="1010" y="176" font-size="12.5" fill="var(--ink3)" text-anchor="middle">RACK</text>
+     <rect x="810" y="300" width="120" height="14" fill="var(--air-s)" stroke="var(--air)" stroke-width="1.4"/>
+     <rect x="810" y="314" width="120" height="60" fill="var(--band)" stroke="var(--rule2)" stroke-width="1.5"/>
+     <rect x="950" y="300" width="120" height="14" fill="var(--air-s)" stroke="var(--air)" stroke-width="1.4"/>
+     <rect x="950" y="314" width="120" height="60" fill="var(--band)" stroke="var(--rule2)" stroke-width="1.5"/>
+     <text x="870" y="350" font-size="12.5" fill="var(--ink3)" text-anchor="middle">RACK</text>
+     <text x="1010" y="350" font-size="12.5" fill="var(--ink3)" text-anchor="middle">RACK</text>
+     <text x="940" y="262" font-size="13.5" fill="var(--air)" text-anchor="middle">REAR-TO-REAR SERVICE CORRIDOR</text>
+     <line x1="820" y1="240" x2="1060" y2="240" stroke="var(--air)" stroke-width="2" stroke-dasharray="8 6"/>
+     <line x1="790" y1="130" x2="790" y2="215" stroke="var(--ink3)" stroke-width="2.4" marker-end="url(#ab)"/>
+     <line x1="790" y1="385" x2="790" y2="300" stroke="var(--ink3)" stroke-width="2.4" marker-end="url(#ab)"/>
+     <text x="770" y="270" font-size="12.5" fill="var(--ink3)" text-anchor="end">AISLE</text>
+     <rect x="1120" y="140" width="120" height="234" rx="4" fill="var(--air-s)" stroke="var(--air)" stroke-width="1.8"/>
+     <text x="1180" y="250" font-size="14" fill="var(--air)" transform="rotate(-90 1180 250)" text-anchor="middle">HVAC + DEHUMIDIFIER</text>
+     <line x1="1110" y1="180" x2="1080" y2="180" stroke="var(--air)" stroke-width="2.6" marker-end="url(#aa)"/>
+     <line x1="1080" y1="340" x2="1110" y2="340" stroke="var(--ink3)" stroke-width="2.6" marker-end="url(#ab)"/>
+     <text x="1300" y="186" font-size="13" fill="var(--air)">SUPPLY — cooled, dried</text>
+     <text x="1300" y="346" font-size="13" fill="var(--ink3)">RETURN — warm, moist</text>
+     <text x="794" y="470" font-size="13.5" fill="var(--ink2)">Room HVAC owns temperature, humidity and CO₂.</text>
+     <text x="794" y="494" font-size="13.5" fill="var(--ink2)">Rack fans own canopy air movement. Different jobs.</text>
+    </g>
+   </g>
+  </svg>
+  <div class="cap">RK-A-A01 · airflow schematic · rack section and room circulation</div>
+  </div>
+
+  <h3>Rack fans or room HVAC — the answer is both, doing different jobs</h3>
+  <p class="prose">These are not alternatives. <strong>Room HVAC owns bulk temperature, humidity and CO₂. Rack fans own air movement at the canopy.</strong> Room HVAC physically cannot deliver 0.2–0.5 m/s to sixteen canopies inside four enclosed tiers without ducting every tier of every rack and a fan far larger than the sum of the small ones — moving air 600 mm across a canopy takes about 5 W, whereas pushing conditioned room air through the same path takes an order of magnitude more.</p>
+  <p class="prose"><strong>For the initial Ooty stage, rack-level EC fans are both the efficient and the feasible choice</strong>: 20 W per rack, a bolt-on part with no room interface, and it lets you commission the racks before the room's HVAC is finalised. The room side then only has to hold air temperature and RH, which a conventional split unit plus dehumidifier does.</p>
+
+  <div class="scroll"><table>
+    <thead><tr><th>Parameter</th><th>Specification</th><th>Basis</th></tr></thead><tbody>
+    <tr><td>Fan type</td><td class="m">EC / DC axial, 120 × 38 mm</td><td>EC for speed control and low power; 38 mm depth for static pressure</td></tr>
+    <tr><td>Duty required</td><td class="m">178 m³/h at ≈ 19 Pa</td><td>0.35 m/s over the 0.141 m² canopy cross-section</td></tr>
+    <tr><td>Free-air rating to specify</td><td class="m">≥ 254 m³/h</td><td>A fan on a perforated plenum delivers ~70% of free air</td></tr>
+    <tr><td>Bearings</td><td class="m">Ball, not sleeve</td><td>Sleeve bearings fail early in high humidity and cannot run horizontally for long</td></tr>
+    <tr><td>Ingress</td><td class="m">IP54 minimum</td><td>Condensing environment</td></tr>
+    <tr><td>Voltage / power</td><td class="m">24 V DC, ≈ 5 W each</td><td>Same 24 V rail as solenoids and sensors</td></tr>
+    <tr><td>Mounting</td><td class="m">Plenum end cap, right-hand end of each tier, anti-vibration grommets</td><td>Off the structure, so fan vibration does not enter the frame</td></tr>
+    <tr><td>Perforation</td><td class="m">≈ 1590 × Ø4 mm at 16 mm pitch, 200 cm² open</td><td>Face velocity 2.5 m/s, perforation loss 9 Pa</td></tr>
+    <tr><td>Direction</td><td class="m">Rear plenum → forward across the canopy → open front → aisle → room return</td><td>Horizontal, entering along the full 1176 mm</td></tr>
+    <tr><td>Control</td><td class="m">PWM or 0–10 V from the rack controller, with tacho feedback</td><td>Tacho is how a failed fan raises an alarm before the crop notices</td></tr>
+    </tbody></table></div>
+
+  <h3>Preventing stagnation and microclimates</h3>
+  <ul class="prose">
+    <li><strong>Distributed inlet, not a point source.</strong> This is the whole reason for the plenum: supplying along the full shelf length rather than from one end takes the velocity coefficient of variation from roughly 33% to about 10% in the published CFD work. A clip-on fan at one end of a shelf is the arrangement that evidence specifically rejects.</li>
+    <li><strong>Fans run continuously</strong>, including through the dark period. Stagnation at night is when condensation forms on leaves and disease starts.</li>
+    <li><strong>Every tier has its own fan.</strong> Tier-to-tier microclimates are prevented by giving each tier its own supply rather than hoping air finds its way.</li>
+    <li><strong>The alarm case matters more than the design case.</strong> A tier whose fan has failed looks identical to a working one until the crop shows it. Tacho feedback and a controller alarm are not optional extras here.</li>
+    <li>With side panels deleted, verify uniformity by measurement at commissioning — see §00.</li>
+  </ul>
+
+  <div class="note ai"><strong>Interaction with room HVAC and dehumidification.</strong> Every watt of LED energy that does not leave as photons leaves as heat, and all of the irrigation water that does not leave in the crop leaves as vapour. The rack fans do not remove either — they only move air across the canopy so the leaf boundary layer stays thin. The room HVAC and dehumidifier carry the whole thermal and moisture load. Sizing that is Phase 2 work; what the rack must do, and does, is present a predictable return air condition to the room rather than a set of stagnant pockets.</div>
+</section>
+
+<!-- ============ 6 LED ============ -->
+<section>
+  <div class="sn p1">06 · LED mounting</div>
+  <h2>A mount, not an integration</h2>
+  <p class="lede">The objective is that a fixture is a consumable and the rack is not. Everything below follows from that.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Element</th><th>Specification</th></tr></thead><tbody>
+    <tr><td>Rail</td><td>RK-A-301, aluminium 20 × 20 × 1.5, 1176 mm, two per tier at 30% and 70% of bed depth</td></tr>
+    <tr><td>Rail attachment</td><td>GI saddle bracket bolted to the 50 mm grid on the underside of the tier above, M8 SS304, <strong>nylon isolating washer between aluminium and galvanised steel</strong></td></tr>
+    <tr><td>Height adjustment</td><td><strong>Adjustable, continuously</strong> — M8 × 150 threaded-rod hangers through the rail with a nut above and a wingnut below, giving 0–100 mm of trim under a rail that sits on the discrete grid</td></tr>
+    <tr><td>Why threaded rod, not wire</td><td>Wire-rope hangers are faster but let fixtures swing, which makes PPFD uniformity unrepeatable and lets a fixture drift after someone brushes it while harvesting</td></tr>
+    <tr><td>Fixture interface</td><td>Two M8 clearance holes at 900 mm centres on the fixture top face. Product 1.2 conforms to this; any third-party bar that conforms will mount</td></tr>
+    <tr><td>Fixture envelope</td><td>1000–1200 mm long, ≤ 80 mm wide, ≤ 4 kg</td></tr>
+    <tr><td>Electrical connection</td><td>Fixture pigtail to an IP65 keyed connector at a fixed position per tier. <strong>A fixture change is never a rewiring job</strong></td></tr>
+    <tr><td>Driver location</td><td><strong>Remote</strong>, in the rack enclosure — not on the fixture. Keeps mass and heat out of the canopy, lets one driver serve a tier, and makes a driver failure a two-minute swap</td></tr>
+    <tr><td>Supply to fixture</td><td>Constant-voltage 48 V DC, or constant-current with output ≤ 60 V. <strong>The tier stays extra-low-voltage</strong> — no mains-voltage conductor enters the wet zone</td></tr>
+    <tr><td>Strain relief</td><td>P-clips to the rail at 300 mm centres, plus a 150 mm service loop at the fixture end so a fixture can be lowered for inspection without unplugging</td></tr>
+    <tr><td>Removal</td><td>Undo two wingnuts, unplug one connector, lift out. No tools beyond a spanner, no dismantling of frame, deck or plumbing</td></tr>
+    <tr><td>Future upgrade path</td><td>The interface is three things: the rail, the 900 mm bolt centres, and the connector. Any future fixture meeting those bolts on — including a higher-output bar for leafy greens, which the 80–200 mm clearance band already accommodates</td></tr>
+    </tbody></table></div>
+  <div class="note po"><strong>The ELV decision is the one that matters for safety.</strong> Putting the driver in the rack enclosure and running 48 V DC to the fixture means the only mains conductors on the rack are inside an IP65 box mounted above canopy height. Everything at or below bed level — where the water is — is 24 V or 48 V. That, rather than any ingress rating, is what makes the electrical and water systems genuinely independent.</div>
+</section>
+
+<!-- ============ 7 ELECTRICAL ============ -->
+<section>
+  <div class="sn p1">07 · Electrical and control</div>
+  <h2>Three levels</h2>
+
+  <div class="dwg">
+  <svg viewBox="0 0 1540 640" role="img" aria-label="Electrical and control architecture from rack to room controller and cloud">
+   <defs><marker id="pa" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5 Z" fill="var(--power)"/></marker>
+   <marker id="pb" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,1.5 L10,5 L0,8.5 Z" fill="var(--water)"/></marker></defs>
+   <g font-family="JetBrains Mono, monospace" font-size="15">
+    <text x="26" y="30" font-size="20" font-weight="600" fill="var(--power)">POWER — radial tree</text>
+    <text x="26" y="52" font-size="13.5" fill="var(--ink3)">amber · MDB → group panel → rack</text>
+    <rect x="26" y="70" width="150" height="66" rx="4" fill="var(--power-s)" stroke="var(--power)" stroke-width="1.8"/>
+    <text x="101" y="98" font-size="14" fill="var(--power)" text-anchor="middle">MAIN DB</text>
+    <text x="101" y="118" font-size="12" fill="var(--ink3)" text-anchor="middle">SPD Type 1+2</text>
+    <line x1="176" y1="103" x2="236" y2="103" stroke="var(--power)" stroke-width="2.6" marker-end="url(#pa)"/>
+    <rect x="240" y="70" width="170" height="66" rx="4" fill="var(--power-s)" stroke="var(--power)" stroke-width="1.8"/>
+    <text x="325" y="94" font-size="14" fill="var(--power)" text-anchor="middle">GROUP PANEL</text>
+    <text x="325" y="112" font-size="11.5" fill="var(--ink3)" text-anchor="middle">63 A MCCB · SPD T2</text>
+    <text x="325" y="128" font-size="11.5" fill="var(--ink3)" text-anchor="middle">per 8 racks</text>
+    <line x1="410" y1="103" x2="470" y2="103" stroke="var(--power)" stroke-width="2.6" marker-end="url(#pa)"/>
+    <g>
+     <rect x="474" y="70" width="150" height="66" rx="4" fill="var(--sheet)" stroke="var(--power)" stroke-width="1.6"/>
+     <text x="549" y="94" font-size="13.5" fill="var(--power)" text-anchor="middle">RCBO 16 A</text>
+     <text x="549" y="112" font-size="11.5" fill="var(--ink3)" text-anchor="middle">Type A · 30 mA</text>
+     <text x="549" y="128" font-size="11.5" fill="var(--ink3)" text-anchor="middle">one per rack</text>
+    </g>
+    <line x1="624" y1="103" x2="684" y2="103" stroke="var(--power)" stroke-width="2.6" marker-end="url(#pa)"/>
+
+    <!-- rack box -->
+    <rect x="688" y="46" width="440" height="330" rx="5" fill="var(--card)" stroke="var(--rule2)" stroke-width="1.8"/>
+    <text x="704" y="70" font-size="14" fill="var(--ink3)">RACK · IP65 ENCLOSURE, TOP REAR, DRY ZONE</text>
+    <rect x="706" y="86" width="130" height="46" rx="3" fill="var(--power-s)" stroke="var(--power)" stroke-width="1.5"/>
+    <text x="771" y="106" font-size="12.5" fill="var(--power)" text-anchor="middle">ISOLATOR</text>
+    <text x="771" y="122" font-size="11" fill="var(--ink3)" text-anchor="middle">lockable, LOTO</text>
+    <rect x="856" y="86" width="120" height="46" rx="3" fill="var(--power-s)" stroke="var(--power)" stroke-width="1.5"/>
+    <text x="916" y="112" font-size="12.5" fill="var(--power)" text-anchor="middle">24 V PSU</text>
+    <rect x="996" y="86" width="118" height="46" rx="3" fill="var(--power-s)" stroke="var(--power)" stroke-width="1.5"/>
+    <text x="1055" y="106" font-size="12.5" fill="var(--power)" text-anchor="middle">LED DRIVER</text>
+    <text x="1055" y="122" font-size="11" fill="var(--ink3)" text-anchor="middle">48 V out</text>
+    <rect x="700" y="152" width="420" height="54" rx="3" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.6"/>
+    <text x="910" y="174" font-size="13.5" fill="var(--water)" text-anchor="middle">RACK CONTROLLER · ESP32 + 8 CH RELAY + RS485</text>
+    <text x="910" y="194" font-size="11" fill="var(--ink3)" text-anchor="middle">valve sequencing · fan PWM + tacho · leak interlock · local fail-safe</text>
+    <g font-size="11.5">
+     <rect x="706" y="224" width="94" height="40" rx="3" fill="var(--sheet)" stroke="var(--rule2)" stroke-width="1.4"/><text x="753" y="249" fill="var(--ink2)" text-anchor="middle">4 × FAN</text>
+     <rect x="810" y="224" width="94" height="40" rx="3" fill="var(--sheet)" stroke="var(--rule2)" stroke-width="1.4"/><text x="857" y="240" fill="var(--ink2)" text-anchor="middle">8 × VALVE</text>
+     <text x="857" y="256" font-size="10" fill="var(--ink3)" text-anchor="middle">4 fill · 4 drain</text>
+     <rect x="914" y="224" width="94" height="40" rx="3" fill="var(--sheet)" stroke="var(--rule2)" stroke-width="1.4"/><text x="961" y="249" fill="var(--ink2)" text-anchor="middle">T/RH + LEAK</text>
+     <rect x="1018" y="224" width="96" height="40" rx="3" fill="var(--sheet)" stroke="var(--rule2)" stroke-width="1.4"/><text x="1066" y="243" fill="var(--ink2)" text-anchor="middle">4 × LED</text>
+     <text x="1066" y="257" fill="var(--ink3)" text-anchor="middle">48 V + 0–10 V</text>
+    </g>
+    <text x="706" y="296" font-size="12.5" fill="var(--ink3)">4 SEGREGATED CHANNELS:</text>
+    <text x="706" y="316" font-size="12" fill="var(--power)">— 230 V mains</text>
+    <text x="880" y="316" font-size="12" fill="var(--power)">— 48 V LED DC</text>
+    <text x="706" y="336" font-size="12" fill="var(--water)">— 0–10 V dim</text>
+    <text x="880" y="336" font-size="12" fill="var(--water)">— RS485 + sensors</text>
+    <text x="706" y="360" font-size="11.5" fill="var(--ink3)">frame bonded 4 mm² · continuity &lt; 0.1 Ω · glands downward · drip loops</text>
+
+    <!-- control bus -->
+    <text x="26" y="430" font-size="20" font-weight="600" fill="var(--water)">CONTROL — daisy-chained bus</text>
+    <text x="26" y="452" font-size="13.5" fill="var(--ink3)">blue · RS485 multi-drop, never a star</text>
+    <rect x="26" y="474" width="176" height="66" rx="4" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.8"/>
+    <text x="114" y="500" font-size="14" fill="var(--water)" text-anchor="middle">ROOM CONTROLLER</text>
+    <text x="114" y="520" font-size="11.5" fill="var(--ink3)" text-anchor="middle">local DB · local UI</text>
+    <line x1="202" y1="507" x2="1128" y2="507" stroke="var(--water)" stroke-width="3"/>
+    <g>
+     <rect x="270" y="486" width="86" height="42" rx="3" fill="var(--sheet)" stroke="var(--water)" stroke-width="1.5"/><text x="313" y="512" font-size="12" fill="var(--water)" text-anchor="middle">RACK 01</text>
+     <rect x="400" y="486" width="86" height="42" rx="3" fill="var(--sheet)" stroke="var(--water)" stroke-width="1.5"/><text x="443" y="512" font-size="12" fill="var(--water)" text-anchor="middle">RACK 02</text>
+     <rect x="530" y="486" width="86" height="42" rx="3" fill="var(--sheet)" stroke="var(--water)" stroke-width="1.5"/><text x="573" y="512" font-size="12" fill="var(--water)" text-anchor="middle">RACK 03</text>
+     <text x="688" y="514" font-size="20" fill="var(--ink3)" letter-spacing="3">···</text>
+     <rect x="760" y="486" width="100" height="42" rx="3" fill="var(--sheet)" stroke="var(--water)" stroke-width="1.5"/><text x="810" y="512" font-size="12" fill="var(--water)" text-anchor="middle">RACK n≤32</text>
+     <rect x="900" y="486" width="112" height="42" rx="3" fill="var(--band)" stroke="var(--rule2)" stroke-width="1.5"/><text x="956" y="506" font-size="11.5" fill="var(--ink2)" text-anchor="middle">WATER SKID</text>
+     <text x="956" y="521" font-size="10.5" fill="var(--ink3)" text-anchor="middle">pH EC lvl flow</text>
+     <rect x="1044" y="486" width="84" height="42" rx="3" fill="var(--band)" stroke="var(--rule2)" stroke-width="1.5"/><text x="1086" y="512" font-size="11.5" fill="var(--ink2)" text-anchor="middle">ROOM I/O</text>
+    </g>
+    <text x="222" y="556" font-size="11.5" fill="var(--ink3)">120 Ω</text>
+    <text x="1108" y="556" font-size="11.5" fill="var(--ink3)">120 Ω</text>
+    <line x1="1128" y1="507" x2="1200" y2="507" stroke="var(--water)" stroke-width="3"/>
+    <rect x="1210" y="440" width="180" height="140" rx="5" fill="var(--card)" stroke="var(--rule2)" stroke-width="1.6"/>
+    <text x="1300" y="468" font-size="13.5" fill="var(--ink2)" text-anchor="middle">MQTT over TLS</text>
+    <text x="1300" y="492" font-size="13.5" fill="var(--ink2)" text-anchor="middle">↓</text>
+    <text x="1300" y="516" font-size="13.5" fill="var(--ink2)" text-anchor="middle">CLOUD, INDIA REGION</text>
+    <text x="1300" y="540" font-size="13.5" fill="var(--ink2)" text-anchor="middle">↓</text>
+    <text x="1300" y="564" font-size="13.5" fill="var(--ink2)" text-anchor="middle">DASHBOARD / APP</text>
+    <text x="1210" y="606" font-size="12" fill="var(--ink3)">cloud is optional — the room runs without it</text>
+   </g>
+  </svg>
+  <div class="cap">RK-A-E01 · electrical and control architecture · power radial, control multi-drop</div>
+  </div>
+
+  <h3>Your proposed topology, with one correction</h3>
+  <p class="prose">You proposed <span class="m">Rack → Rack Controller → Group Control Panel → Main Distribution Board</span>. That is right for <strong>power</strong>, and I would keep it exactly as stated. It is wrong for <strong>control</strong>, and the distinction is worth making because getting it backwards is a common and expensive mistake.</p>
+  <div class="g2">
+    <div><h4>Power is a radial tree</h4><p>MDB → group panel (one per eight racks, 63 A) → per-rack 16 A RCBO → rack. Branches never rejoin. This is your architecture and it is correct.</p></div>
+    <div><h4>Control is a multi-drop bus</h4><p>RS485 is a <em>bus</em>. Wiring it as a star through a group panel creates stub reflections and an unreliable link. The rack controllers daisy-chain along one cable, terminated 120 Ω at each physical end, with the room controller at one end.</p></div>
+  </div>
+  <p class="prose">So the group panel is a power object, not a control object. Control skips it entirely and runs as one chain from the room controller through every rack.</p>
+
+  <h3>Level 1 — the individual rack</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Item</th><th>Specification</th></tr></thead><tbody>
+    <tr><td>Power input</td><td>230 V single phase, 1.37 A, via gland into the rack enclosure. Total connected load 316 W</td></tr>
+    <tr><td>Enclosure</td><td>IP65 polycarbonate 300 × 200 × 150, mounted top-rear on the services rail — above canopy, in the dry zone, glands facing downward</td></tr>
+    <tr><td>Local isolation</td><td>Lockable 16 A DP rotary isolator on the enclosure door, for lock-out/tag-out</td></tr>
+    <tr><td>Protection</td><td>16 A Type A RCBO, 30 mA, at the group panel — one per rack</td></tr>
+    <tr><td>Distribution</td><td>230 V → LED driver (48 V out) and 24 V DC PSU. 24 V → fans, solenoids, controller, sensors</td></tr>
+    <tr><td>LED connections</td><td>48 V DC + 0–10 V dimming pair per tier, IP65 keyed connector at the tier</td></tr>
+    <tr><td>Fan connections</td><td>24 V + PWM + tacho, 3-core to each plenum end cap</td></tr>
+    <tr><td>Valve connections</td><td>24 V switched by relay, eight circuits. Valves are the only electrical items below bed level, and they are 24 V</td></tr>
+    <tr><td>Sensor connections</td><td>I²C to the T/RH node, dry contact from the leak sensor, in the dedicated channel</td></tr>
+    <tr><td>Controller</td><td>ESP32-class with 8-channel relay and RS485 transceiver. Runs the tier sequence locally and holds last-known-good setpoints, so the rack keeps irrigating if the bus or room controller drops</td></tr>
+    <tr><td>Emergency shut-off</td><td><strong>Room-level E-stop, not rack-level.</strong> Latching mushroom head at each door, dropping the group contactor. A separate E-stop on each of sixteen racks is sixteen devices nobody can reach in an emergency; the rack isolator is for maintenance, which is a different job</td></tr>
+    </tbody></table></div>
+
+  <h3>Level 3 — sensors and communication</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Question</th><th>Answer</th><th>Why</th></tr></thead><tbody>
+    <tr><td>Sensor to controller</td><td>I²C for digital T/RH (short run, inside the rack); dry contact for leak</td><td>No analogue runs longer than the rack</td></tr>
+    <tr><td>Wired or wireless</td><td><strong>Wired</strong></td><td>A room of galvanised racks is a poor 2.4 GHz environment, the cable route already exists for power, and Phase A calls for local-first reliability. Wireless stays available as a retrofit for a rack that cannot be cabled</td></tr>
+    <tr><td>Protocol</td><td><strong>Modbus RTU over RS485</strong>, shielded twisted pair, 120 Ω terminated both ends</td><td>Multi-drop to 32 nodes, 1200 m, immune to the electrical noise of LED drivers, and every PLC and gateway on the market speaks it</td></tr>
+    <tr><td>Controller to central</td><td>Daisy chain, one address per rack</td><td>Adding a rack is a spur and an address, not a new panel</td></tr>
+    <tr><td>Data collection</td><td>Room controller polls the bus, writes to a local time-series database</td><td>Local-first per Phase A §2.5 — the room keeps running and keeps logging with no internet</td></tr>
+    <tr><td>Cloud and app</td><td>MQTT over TLS to an India-region endpoint, dashboard and alerts on top</td><td>Optional layer. Nothing in the growing process depends on it</td></tr>
+    </tbody></table></div>
+
+  <h3>Level 4 — protection and safety</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Measure</th><th>Specification</th></tr></thead><tbody>
+    <tr><td>Per rack</td><td>16 A Type A RCBO, 30 mA. Type A rather than AC because LED drivers and PWM fans produce pulsating DC residual currents that an AC-type device can miss</td></tr>
+    <tr><td>Per group</td><td>63 A MCCB, Type 2 SPD, one group per eight racks</td></tr>
+    <tr><td>Main</td><td>Type 1+2 SPD at the MDB, main earth bar</td></tr>
+    <tr><td>Earthing</td><td>TN-S per IS 3043. Every rack frame bonded with 4 mm² green/yellow to the group earth bar. Continuity &lt; 0.1 Ω, tested and recorded per rack</td></tr>
+    <tr><td>Water ingress</td><td>IP65 at and below bed level, IP54 above canopy. All glands face downward. A drip loop on every cable entering an enclosure</td></tr>
+    <tr><td>Cable management</td><td>Four segregated channels. Minimum 50 mm between mains and data, crossings at 90°</td></tr>
+    <tr><td>Emergency isolation</td><td>Room E-stop at each door, latching, dropping the group contactor. Rack isolator for LOTO</td></tr>
+    <tr><td>Interlocks</td><td>Leak sensor closes the rack's fill solenoids directly through the controller, and raises an alarm. This runs locally and does not depend on the bus</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ============ 8 BOM ============ -->
+<section>
+  <div class="sn p1">08 · Bill of materials</div>
+  <h2>Costed, panels removed</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Subsystem</th><th>Key content</th><th>Cost</th></tr></thead><tbody>
+    <tr><td>Core rack</td><td>Frame, decks, feet, anchors — unchanged from RK-A-MFG</td><td class="n">₹12,391</td></tr>
+    <tr><td>Flood trays × 4</td><td>HDPE 3 mm food grade, white</td><td class="n">₹4,835</td></tr>
+    <tr><td>Irrigation</td><td>4 fill + 4 drain solenoids, 8 bulkheads, 4 standpipes, strainers, isolation valve, PE pipework</td><td class="n">₹7,650</td></tr>
+    <tr><td>Drainage</td><td>DN40 header, clamp couplings, air-gap discharge</td><td class="n">₹1,300</td></tr>
+    <tr><td>Ventilation</td><td>4 EC fans, 4 perforated plenums, grommets, brackets</td><td class="n">₹5,520</td></tr>
+    <tr><td>Plenum face <span class="tag t-n">optional</span></td><td>Plain perforated white PP × 4 — enclosure and reflector only; the GI plenum already distributes the air</td><td class="n">₹0 · +₹600</td></tr>
+    <tr><td>LED mounting</td><td>8 rails, 16 hangers, 16 saddles, 4 IP65 connector pairs — <em>fixtures not included</em></td><td class="n">₹5,460</td></tr>
+    <tr><td>Electrical &amp; control</td><td>IP65 enclosure, isolator, RCBO, 24 V PSU, rack controller, segregated cabling, bonding</td><td class="n">₹9,580</td></tr>
+    <tr><td>Rack sensors</td><td>T/RH node in radiation shield, leak sensor</td><td class="n">₹1,650</td></tr>
+    <tr><td>Powder coat</td><td>Optional on Grow</td><td class="n">₹2,700</td></tr>
+    <tr><td>Rev 2 changes</td><td>Header level switch, moulded overflow collar, grouped fill manifold</td><td class="n">+₹170</td></tr>
+    <tr><td><strong>GROW — full automation</strong></td><td></td><td class="n"><strong>₹51,256</strong></td></tr>
+    <tr><td><strong>GROW-S — de-scoped</strong></td><td>1 fill solenoid, single header drain valve, no rack controller, room T/RH only, mill GI</td><td class="n"><strong>₹43,286</strong></td></tr>
+    </tbody></table></div>
+  <div class="scroll"><table>
+    <thead><tr><th>Build</th><th>Cost</th><th>@ 40% GM</th><th>@ 45% GM</th><th>Use</th></tr></thead><tbody>
+    <tr><td>Grow-S</td><td class="n">₹43,286</td><td class="n">₹72,150</td><td class="n">₹78,700</td><td><strong>Build this at Ooty.</strong> The room controller drives two racks directly — a per-rack controller earns its place at eight racks, not two</td></tr>
+    <tr><td>Grow</td><td class="n">₹51,256</td><td class="n">₹85,400</td><td class="n">₹93,200</td><td>Commercial standard once rack count justifies distributed control</td></tr>
+    </tbody></table></div>
+  <div class="note wa"><strong>Read this honestly.</strong> A fully automated four-tier flood-and-drain rack with per-tier lighting, airflow and valving is a ₹43,000–51,000 object, and no amount of value engineering makes it a ₹10,000 one. The wire shelf it gets compared to is a shelf. This is a growing system with sixteen irrigation zones, four climate zones and a controller. <strong>The comparison that matters is against importing an equivalent automated system, not against a shelf</strong> — and that is the argument the product has to be sold on. If it must be sold against a shelf, the honest answer is to sell the Core rack at ₹20,650 and let the customer add subsystems as they grow, which is exactly what the modular architecture is for.</div>
+</section>
+
+<!-- ============ 9 ROUTING ============ -->
+<section>
+  <div class="sn w1">09 · Routing</div>
+  <h2>Where everything runs</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Zone</th><th>Contents</th><th>Rule</th></tr></thead><tbody>
+    <tr><td>Rear service zone, left upright</td><td class="m">DN20 supply riser, DN16 tier drops</td><td>Water only. Clipped to the grid at 400 mm</td></tr>
+    <tr><td>Rear service zone, right upright</td><td class="m">DN40 drain header, leak sensor cable</td><td>Water only, opposite side from supply so a leak is unambiguous</td></tr>
+    <tr><td>Rear plenum cavity</td><td class="m">Fan cable, 24 V + PWM + tacho</td><td>Low voltage only, grommeted through the plenum wall</td></tr>
+    <tr><td>Top rear, above canopy</td><td class="m">IP65 enclosure, mains, 48 V DC, RS485</td><td>Dry zone. Nothing at mains potential exists below this level</td></tr>
+    <tr><td>Front-right upright face</td><td class="m">T/RH node, sensor cable</td><td>Clear of the 1176 mm tray opening</td></tr>
+    <tr><td>Under each tier</td><td class="m">48 V + 0–10 V to the LED connector</td><td>In the LED rail P-clips, 150 mm service loop at the fixture</td></tr>
+    <tr><td>Front opening</td><td class="m">Nothing</td><td>The full 1176 × 343 opening stays clear for tray handling</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ============ 10 VALIDATION ============ -->
+<section>
+  <div class="sn w1">10 · Validation</div>
+  <h2>Failure modes and what they cost</h2>
+  <p class="lede">Ranked by what actually goes wrong in wet, automated growing equipment rather than by what is easy to analyse.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>Failure mode</th><th>Effect</th><th>Mitigation in the design</th><th>Status</th></tr></thead><tbody>
+    <tr><td class="m">F1</td><td>Tray drain bulkhead seal fails</td><td>Continuous leak onto the tier below, then the floor. Crop loss on two tiers</td><td>EPDM washer on the wet face, torque spec, 30-min flood test on 100% of trays, leak sensor and solenoid interlock</td><td><span class="tag t-o">Covered</span></td></tr>
+    <tr><td class="m">F2</td><td>Fill solenoid sticks open</td><td>Would overflow the tray rim</td><td><strong>Overflow standpipe at 30 mm</strong> — passive, no moving parts. Water goes to drain, not to the floor</td><td><span class="tag t-o">Covered</span></td></tr>
+    <tr><td class="m">F3</td><td>Drain boss blocks with media or roots</td><td>Tray cannot empty</td><td>Removable mesh strainer, plus the overflow on an <em>independent</em> bulkhead so a blocked drain still has a path</td><td><span class="tag t-o">Covered</span></td></tr>
+    <tr><td class="m">F4</td><td>Drain <em>header</em> blocks below both bosses</td><td>Both drain and overflow defeated. Tray fills to rim then spills</td><td><strong>Rev 2:</strong> header high-level switch at 200 mm closes all fills before any tray is affected. Rodding eye at the base. See R1</td><td><span class="tag t-o">Covered</span></td></tr>
+    <tr><td class="m">F5</td><td>Fan fails silently</td><td>Stagnant tier, condensation, tip-burn and disease. Looks identical to a working tier until the crop shows it</td><td>Tacho feedback per fan, controller alarm on loss of rotation</td><td><span class="tag t-o">Covered</span></td></tr>
+    <tr><td class="m">F6</td><td>Galvanic corrosion, SS304 fastener in galvanised steel</td><td>Zinc is anodic to stainless and sacrifices at the washer face. White rust, then red rust, at every bolted joint in the wet zone</td><td><strong>Nylon isolating washer under every SS fastener at or below bed level.</strong> Small stainless area against large zinc area keeps the rate low, but the washer face is where it shows</td><td><span class="tag t-o">Covered</span></td></tr>
+    <tr><td class="m">F7</td><td>Galvanic corrosion, aluminium LED rail against galvanised saddle</td><td>Aluminium is anodic to zinc-coated steel in condensate. Pitting at the bracket</td><td>Nylon isolating washer at every rail-to-saddle joint. <strong>This is a new finding from this pass</strong> — it was not in the earlier BOM and is now a line item</td><td><span class="tag t-o">Covered</span></td></tr>
+    <tr><td class="m">F8</td><td>Standpipe not refitted after cleaning</td><td>Tray will not hold a flood. Water runs straight through and the crop is not irrigated, silently</td><td><strong>Rev 2: eliminated.</strong> The overflow is now a 30 mm collar moulded into the tray floor. Nothing to remove, nothing to lose. See R2</td><td><span class="tag t-o">Eliminated</span></td></tr>
+    <tr><td class="m">F9</td><td>Bus or room controller lost</td><td>Racks stop irrigating</td><td>Rack controller holds last-known-good schedule and runs locally. Loss of bus is an alarm, not a stoppage</td><td><span class="tag t-o">Covered</span></td></tr>
+    <tr><td class="m">F10</td><td>Condensate drips from fixture into tray</td><td>None — it is water going where water already goes</td><td>No action needed. Noted so nobody designs a drip tray for it</td><td><span class="tag t-o">Accepted</span></td></tr>
+    <tr><td class="m">F11</td><td>Nutrient back-siphonage into supply main</td><td>Contamination of the whole room's water</td><td><strong>Physical air gap at all 16 fill points.</strong> Prevented by geometry, not by a check valve</td><td><span class="tag t-o">Covered</span></td></tr>
+    <tr><td class="m">F12</td><td>Residual current from LED drivers</td><td>An AC-type RCD may not trip on pulsating DC residual current</td><td>Type A RCBO specified, not Type AC</td><td><span class="tag t-o">Covered</span></td></tr>
+    </tbody></table></div>
+
+  <h3>Open items carried forward</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Item</th><th>Closes by</th></tr></thead><tbody>
+    <tr><td><strong>Depth-plane bracing</strong> — still open from the structural pass</td><td>Prototype sway test P3</td></tr>
+    <tr><td><strong>Canopy velocity uniformity without side panels</strong></td><td>Measure at commissioning, 5 points per tier</td></tr>
+    </tbody></table></div>
+
+  <h3>Manufacturing and maintenance review</h3>
+  <div class="g2">
+    <div><h4>Manufacturing</h4><p>Nothing added in this pass needs a process the shop does not already have. The plenum is a folded, perforated GI part — the same sheet operation as the deck. The bulkheads, valves and pipe are bought-out. The one new tolerance that matters is the tray drain and overflow boss positions, which must match the header spacing across all four trays.</p></div>
+    <div><h4>Maintenance</h4><p>Trays lift out upward after releasing one clamp coupling. The drain stack lifts out as one piece. Fixtures come off with two wingnuts and a connector. Fans are in the plenum end cap, reachable from the aisle. The one poor-access item is the <strong>fill solenoid at the top tier</strong>, at 1825 mm — reachable, but a two-hand job at head height. Consider grouping all four fill solenoids on a single serviceable manifold at 1200 mm instead of one at each tier.</p></div>
+    <div><h4>Water/electrical safety</h4><p>The strongest feature is that only 24 V exists at or below bed level. Mains is confined to one IP65 box above canopy. The weakest point is not electrical at all — it is F4, a blocked header, where the only defence is detection.</p></div>
+    <div><h4>Areas needing redesign</h4><p><strong>Both closed in Rev 2.</strong> The fill solenoid position is resolved by the grouped manifold (R3) and the overflow route by the header level switch plus the moulded collar (R1, R2). What remains are two <em>tests</em>, not two design questions.</p></div>
+  </div>
+</section>
+
+<!-- ============ 11 RESOLUTIONS ============ -->
+<section>
+  <div class="sn w1">11 · Resolutions</div>
+  <h2>Closing the open items</h2>
+  <p class="lede">Three of the four are now closed by design change rather than by procedure. The fourth needs a test. One of these resolutions removes a failure mode entirely rather than mitigating it, which is always the better outcome.</p>
+
+  <h3>R1 · F4 — blocked drain header</h3>
+  <p class="prose">The insight that resolves this is <strong>where the water goes when the header blocks.</strong> Trays drain into the header at their own tier heights, so a blockage below tier 1 causes the level to rise from the base and re-enter <em>tier 1's tray first</em>, through its own drain line. That makes the header itself the earliest and most certain place to detect the fault — well before any tray is at risk.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Measure</th><th>Specification</th></tr></thead><tbody>
+    <tr><td>Header high-level switch</td><td>Float or optical level switch in the DN40 header at <span class="m">200 mm</span>, just below tier 1's drain entry</td></tr>
+    <tr><td>Interlock action</td><td>Closes all four fill solenoids. <strong>Does not open the drains</strong> — draining into a blocked header makes the situation worse, not better. Raises an alarm</td></tr>
+    <tr><td>Wiring</td><td>Hard-wired to the rack controller as a local interlock, independent of the RS485 bus</td></tr>
+    <tr><td>Access</td><td>Rodding eye at the header base and a removable top cap, so the stack can be cleared without dismantling</td></tr>
+    <tr><td>Cost</td><td class="m">+₹630</td></tr>
+    </tbody></table></div>
+  <p class="prose">F4 moves from <span class="tag t-x">Residual</span> to <span class="tag t-o">Covered</span>. The detection is upstream of the consequence rather than after it.</p>
+
+  <h3>R2 · F8 — standpipe left out after cleaning</h3>
+  <p class="prose">Rev 1 mitigated this with a tether and a checklist, which I said at the time were weak controls. They are. The better answer is to <strong>delete the removable part</strong>.</p>
+  <div class="note ai"><strong>The overflow becomes a moulded collar, not a loose pipe.</strong> Thermoform a 30 mm raised collar around the overflow hole in the tray floor. The collar <em>is</em> the standpipe, formed into the tray, permanently. Water above 30 mm spills over the crest and down the bulkhead. It costs nothing in tooling — the form is already being made — and it cannot be lost, left out, or fitted upside down. For the fabricated prototype trays, the equivalent is a welded-in fixed tube.<br><br><strong>F8 is eliminated, not mitigated.</strong> Four loose standpipes come out of the BOM at −₹760.</div>
+  <p class="prose">Collar bore stays DN32 minimum. At 8 mm over the crest, DN25 passes exactly the 7.2 L/min fill rate with no margin; DN32 passes 11.9 L/min, a 1.65× margin.</p>
+
+  <h3>R3 · Fill solenoid access</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Was</th><th>Now</th><th>Why</th></tr></thead><tbody>
+    <tr><td>One fill solenoid at each tier, top one at 1825 mm</td><td><strong>All four grouped on one manifold at 1100 mm</strong> on the left rear upright, with four DN16 drops to the tiers</td><td>Every valve at working height, one place to look, and the manifold becomes a sub-assembly that is built and leak-tested on the bench before it reaches the rack</td></tr>
+    <tr><td>Drain solenoids at each tray outlet</td><td><strong>Unchanged</strong> — 206 to 1406 mm</td><td>A drain valve must sit between its tray and the header or closing one closes all. All four are within comfortable reach</td></tr>
+    </tbody></table></div>
+  <p class="prose">Cost: +₹300 in extra DN16 pipe. Worth it — service access beats pipe tidiness, and the bench-testable manifold is a manufacturing gain as much as a maintenance one.</p>
+
+  <h3>R4 · New decision — valve fail-safe polarity</h3>
+  <p class="prose">This one emerged from writing the fail-safe state matrix and was not in Rev 1 at all. It matters more than any of the above.</p>
+  <div class="note po"><strong>Fill solenoids normally closed. Drain solenoids normally <em>open</em>.</strong> On any loss of power, controller or 24 V rail, the fills shut and the drains fall open, so every tray empties itself. The obvious alternative — both valves normally closed — leaves roots standing in water for the duration of an outage, which is how you get anoxia and root rot from what should have been a harmless power cut. The cost is that drain valves are energised through the dwell, about 8 W each; at 1–3 cycles a day that is negligible.</div>
+
+  <h3>R5 · Sequential draining is mandatory, not preferred</h3>
+  <p class="prose">The validation found this: four tiers draining at once puts <strong>122.8 L/min</strong> into a DN40 vertical stack, whose practical capacity is 90–120 L/min. Sequential filling was already adopted for pump sizing; <strong>sequential draining is now a hard requirement of the pipework</strong>, not an efficiency choice. One tier drains at 30.7 L/min, comfortably inside the stack. The fault case — all four overflowing at once — is limited by the fill rate to 28.8 L/min and passes.</p>
+
+  <h3>Still open</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Item</th><th>Why it cannot be closed on paper</th><th>Closes at</th></tr></thead><tbody>
+    <tr><td>Depth-plane bracing</td><td>Frame stability with per-tier cross beams deleted needs measurement, not calculation</td><td>Prototype sway test P3</td></tr>
+    <tr><td>Canopy velocity uniformity</td><td>Depends on the real plenum, the real fan curve and whether enclosure panels are fitted</td><td>Commissioning, 5 points per tier</td></tr>
+    </tbody></table></div>
+
+  <h3>Net effect on cost</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Change</th><th>Delta</th></tr></thead><tbody>
+    <tr><td>Header high-level switch + rodding access</td><td class="n">+₹630</td></tr>
+    <tr><td>Loose standpipes deleted, collar moulded in</td><td class="n">−₹760</td></tr>
+    <tr><td>Grouped fill manifold, extra DN16</td><td class="n">+₹300</td></tr>
+    <tr><td>PP plenum face to optional</td><td class="n">−₹600</td></tr>
+    <tr><td><strong>Grow</strong></td><td class="n"><strong>₹51,256</strong></td></tr>
+    <tr><td><strong>Grow-S</strong></td><td class="n"><strong>₹43,286</strong></td></tr>
+    </tbody></table></div>
+  <p class="prose">Three failure modes closed and one eliminated, for a net <strong>−₹430</strong>. That is the usual shape of a good review: most of the value is in deleting things.</p>
+</section>
+
+<!-- ============ 12 VALIDATION ============ -->
+<section>
+  <div class="sn w1">12 · Systems validation</div>
+  <h2>Hydraulic, electrical and control checks</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>Check</th><th>Result</th><th>Verdict</th></tr></thead><tbody>
+    <tr><td class="m">H1</td><td>Drain header, one tier draining</td><td class="m">30.7 L/min into DN40 stack (cap 90–120)</td><td><span class="tag t-o">Pass</span></td></tr>
+    <tr><td class="m">H1b</td><td>Drain header, all four together</td><td class="m">122.8 L/min — exceeds the stack</td><td><span class="tag t-x">Sequence required</span></td></tr>
+    <tr><td class="m">H1c</td><td>Fault — all four overflowing</td><td class="m">28.8 L/min, limited by fill rate</td><td><span class="tag t-o">Pass</span></td></tr>
+    <tr><td class="m">H2</td><td>Pump duty and head</td><td class="m">7.2 L/min at 3.3 m → specify 15 L/min @ 5 m, 1.5× margin</td><td><span class="tag t-o">Pass</span></td></tr>
+    <tr><td class="m">H3</td><td>Overflow collar DN32 at 8 mm head</td><td class="m">11.9 L/min vs 7.2 fill, 1.65×</td><td><span class="tag t-o">Pass</span></td></tr>
+    <tr><td class="m">E1</td><td>Volt drop, 24 V solenoid at top tier</td><td class="m">0.14% on 1.0 mm²</td><td><span class="tag t-o">Pass</span></td></tr>
+    <tr><td class="m">E2</td><td>Volt drop, 48 V LED per tier</td><td class="m">0.18% on 1.5 mm²</td><td><span class="tag t-o">Pass</span></td></tr>
+    <tr><td class="m">E3</td><td>Volt drop, 230 V rack feed over 20 m</td><td class="m">0.17% on 2.5 mm²</td><td><span class="tag t-o">Pass</span></td></tr>
+    <tr><td class="m">C1</td><td>Fail-safe state matrix</td><td class="m">Every loss path ends with trays drained and fills shut</td><td><span class="tag t-o">Pass</span></td></tr>
+    </tbody></table></div>
+  <div class="scroll"><table>
+    <thead><tr><th>Event</th><th>Fill valves</th><th>Drain valves</th><th>Outcome</th></tr></thead><tbody>
+    <tr><td>Loss of 24 V rail</td><td>Close (NC)</td><td>Open (NO)</td><td>Trays drain, no fill — safe</td></tr>
+    <tr><td>Loss of rack controller</td><td>Close</td><td>Open</td><td>Trays drain — safe</td></tr>
+    <tr><td>Leak sensor trip</td><td>Close</td><td>Open</td><td>Tray emptied, alarm — safe</td></tr>
+    <tr><td>Header high-level trip</td><td>Close</td><td><strong>Stay closed</strong></td><td>Header blocked; draining into it would worsen it. Alarm</td></tr>
+    <tr><td>Loss of RS485 bus</td><td colspan="2">Last-known-good schedule continues locally</td><td>Rack keeps irrigating — safe</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ============ 13 ECOSYSTEM ============ -->
+<section style="border-bottom:0">
+  <div class="sn p1">13 · Toward the ecosystem</div>
+  <h2>What Phase 2 must not have to break</h2>
+  <p class="lede">The rack has been specified so the room is an addition, not a rework. Five properties carry the scaling.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Property</th><th>Why it scales</th></tr></thead><tbody>
+    <tr><td>Sequential tier filling</td><td>Concurrent water demand stays at one tier regardless of rack count. Pump, reservoir and mains are sized once</td></tr>
+    <tr><td>One addressable node per rack</td><td>Adding a rack is an RS485 spur and an address. No new panel, no new protocol</td></tr>
+    <tr><td>Local fail-safe control</td><td>The room controller can be added, replaced or upgraded without the racks stopping</td></tr>
+    <tr><td>Ball valve + union at every inlet</td><td>Any rack in or out of service without touching the room</td></tr>
+    <tr><td>Rack fans own canopy air, HVAC owns the room</td><td>The room's HVAC is sized for thermal and moisture load only. Rack count changes the load, not the architecture</td></tr>
+    </tbody></table></div>
+  <div class="note"><strong>Phase 2 is now in its own document, RK-R-01.</strong> The two items that had to be settled first because they change room plumbing — the F4 overflow route and the fill-solenoid grouping — are closed in §11. The room design carries one finding that changes the rack's water strategy at scale; it is the first thing in that document.</div>
+</section>
+<!-- ============ 14 ADDENDUM ============ -->
+<section style="border-top:1px solid var(--rule)">
+  <div class="sn w1">14 · Addendum · integration validation</div>
+  <h2>What changed after this document was written</h2>
+  <p class="lede">Sections 00 to 13 describe the rack as specified. The systems were then modelled together in one file and interrogated, which found nineteen things. Fourteen of them are geometric and could not have been found any other way.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Ref</th><th>What changed in this document's scope</th><th>Was</th><th>Now</th></tr></thead><tbody>
+    <tr><td class="m">S1-C05</td><td>Drain header size</td><td class="m">DN40</td><td class="m">DN50, sequential draining a firmware requirement</td></tr>
+    <tr><td class="m">S1-C06</td><td>Installed depth after integration</td><td class="m">860 mm</td><td class="m">690 mm &mdash; enclosure moved to the left end</td></tr>
+    <tr><td class="m">S1-C09</td><td>Plenum depth</td><td class="m">90 mm</td><td class="m">120 mm &mdash; the 120 mm fan did not fit</td></tr>
+    <tr><td class="m">S1-C11</td><td>Wet-services route</td><td>Rear face, crossing the bracing plane</td><td>One corridor at Y 435&ndash;525, forward of the brace, clear of both LED rows</td></tr>
+    <tr><td class="m">S1-C13</td><td>IP65 enclosure position</td><td>Top rear, Z 1450&ndash;1650</td><td>Left end face, X &minus;160 to &minus;10, Z 1700&ndash;1900</td></tr>
+    <tr><td class="m">S1-C16</td><td>Header high-level switch (R1)</td><td class="m">200 mm</td><td class="m">250 mm &mdash; clears the base beam</td></tr>
+    <tr><td class="m">S1-C18</td><td>Recovery diverter fail-safe</td><td>Undefined</td><td>Spring-return to waste</td></tr>
+    <tr><td class="m">WR-1</td><td>Drainage destination</td><td>Drain to waste</td><td>Air-gap tundish to a closed recovery loop, gravity-fed from a terrace reservoir &mdash; RK-A-WRS Rev 3</td></tr>
+    <tr><td class="m">S1-C23</td><td>Deck mesh mass</td><td class="m">5.37 kg per panel</td><td class="m">1.98 kg &mdash; density corrected to 1884 kg/m³ for &ge;70% open expanded mesh</td></tr>
+    <tr><td class="m">S1-C22</td><td>Rear brace RK-A-104</td><td class="m">1345 mm</td><td class="m">1797 mm &mdash; Rev 1 would have been 452 mm short</td></tr>
+    <tr><td class="m">V-1</td><td>Ventilation</td><td>Ducted plenum from the start</td><td>Standalone EC fans in Phase 1; plenum designed in month 2&ndash;3 from a measured velocity traverse</td></tr>
+    </tbody></table></div>
+  <p class="prose">Verified model state at Rev 5: <strong>1456 &times; 690 &times; 1960 mm, 112.66 kg dry, 45 parts, 177 occurrences, zero unresolved clashes.</strong> Two mass errors were found and corrected along the way &mdash; 1,246 kg from modelling system components as solid primitives, then 126.2 kg from a 35% open-area density applied to a deck specified at &ge;70% open. Both are recorded in RK-A-QC. The Phase 1 build cost is <strong>&#8377;49,296</strong> per RK-A-MFG Rev 2; the &#8377;51,256 figures in &sect;08 and &sect;11 below predate the plenum deferral and the tray fittings being scheduled.</p>
+  <div class="note wa"><strong>Open items are now five, not two.</strong> The two tests listed in &sect;11 still stand (depth-plane sway, canopy velocity uniformity). Three more were added by the integration pass: thermoformed tray tooling, iron-chelate selection under UV-C, and &mdash; the release blocker &mdash; <strong>reissue of the manufacturing pack and part drawings</strong>, which predate every change in this addendum. The full register is in the Engineering Validation Record, RK-A-QC Rev 3.</div>
+</section>
+</main>
+<footer><div class="w"><p>RK-A-SYS Rev 2 · 04 September 2026 · Phase 1 baseline · Companion to RK-A-MFG (manufacturing), RK-A-DWG (part drawings) and RACK-P0 (requirements). Hydraulic, fan and electrical figures are closed-form calculations against the released model. No CFD and no FEA have been run.</p></div></footer>

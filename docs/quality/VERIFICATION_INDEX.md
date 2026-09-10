@@ -24,53 +24,36 @@ Full narrative evidence is in
 | VR-04 | Gravity supply head | Rev 4 | n/a (hydraulic calculation) | Available static head ≥ total loss at design flow | 2.66 m vs 0.33 m at 7.2 L/min — **pass, ~8× margin**. Four tiers concurrent (28.8 L/min) 0.67 m — pass | Complete |
 | VR-05 | Suction-lift feasibility | Rev 4 | n/a | Pump suction lift within practical self-priming limit at site altitude | **Fail as originally proposed** → architecture changed (EDR-005) | Complete |
 | VR-06 | Tier reach ergonomics | Rev 5 | n/a | NIOSH revised lifting equation RWL > 0 at the top bed | 1500 mm **pass**; 1900 mm **fail** (RWL = 0 above 1750 mm) | Complete |
-| VR-07 | Depth-plane bracing / frame stability | Rev 2 | n/a | Residual deflection ≤ 5 mm under 300 N horizontal at the top bed, front-back and side | **NOT PERFORMED.** RK-A-MFG Rev 2: "It has not been checked by frame analysis." Closes at prototype acceptance test **T16** | **NT-02 — restated** |
-| VR-08 | Room floor and point loading | Rev 4 | n/a | Slab capacity ≥ imposed rack point loads | Recomputed and passed at 112.66 kg dry | Complete |
+| VR-07 | Depth-plane frame stability | **Rev 6** | `CEA_RACK_INTEGRATED_v3` v1 | Elastic sway ≤ 10 mm at 300 N at the top bed, loaded, with P-Δ | **PERFORMED 2026-09-10** — semi-rigid frame model, k = 8 kN·m/rad (calculated `RK-A-107B`): **5.4 mm**; passes down to k ≈ 3.5 kN·m/rad. Joint stiffness to be measured (T19); T16 confirmatory | Complete — NT-03 for the coupon |
+| VR-08 | Room floor and point loading | Rev 4 | n/a | Slab capacity ≥ imposed rack point loads | Passed at 112.66 kg dry; **to be restated at 136.4 kg (+21 %) in RK-A-ROOM Rev 5 — ND-08**; distributed load ≈ 1.6 kN/m², still within a normal ground slab | Complete, restatement pending |
 | VR-09 | Room water balance | Rev 4 | n/a | Make-up and blowdown close against consumption | 1,914 L/day circulated, 88.9 consumed, 146 blowdown, 235 make-up; **87.7 % recovery** | Complete |
-| VR-10 | Drawing dimensional review | Rev 2 | v8 | Every dimension reconcilable to model geometry | **2 real errors found and corrected** — EDR-004, EDR-010 | Complete |
+| VR-10 | Drawing dimensional review | Rev 2 | v8 | Every dimension reconcilable to model geometry | 2 errors found (EDR-004, EDR-010) — **EDR-010 itself later found wrong** (bounding-box diagonal); corrected by EDR-018 | Complete, superseded for RK-A-104 |
+| VR-11 | Seismic, IS 1893 Pt 1 cl. 7.13 | Rev 6 | v3 v1 | Overturning SF ≥ 1.5 unanchored | Z 0.16, flexible component: **SF 3.1** | Complete |
+| VR-12 | Independent engineering review | Rev 5 → 6 | v8 | Design sound, buildable, validated | 35 findings; Critical/High resolved by ECP-01 — `RK-A-REV` Rev A | Complete |
+| VR-13 | ECP-01 model verification | Rev 6 | v3 v1 | 0 structural clashes; mass, CG, envelope reconciled | 204 contacts, all in the recorded whitelist; 136.39 kg; CG 642/350/907; 1456 × 690 × 1960 | Complete |
+| VR-14 | Fill air gap | Rev 6 | v3 v1 | Nozzle outlet ≥ 2 × DN16 above the rim | 38 mm | Complete (physical check T20) |
 
 ---
 
 ## 2. NEEDS TRACEABILITY
 
-### NT-02 — Depth-plane bracing is unverified (restated 2026-09-09)
+### NT-02 — CLOSED 2026-09-10
 
-Originally recorded as missing metadata on a completed analysis. The CEA suite audit
-showed that understates it. RK-A-MFG Rev 2 states plainly:
+Closed by analysis (VR-07) after ECP-01 reinstated per-tier cross beams and defined the `RK-A-107B` joint. **T16 is now confirmatory**: 300 N at the top bed, loaded, elastic ≤ 10 mm, residual ≤ 2 mm (ICR-007).
 
-> Removing the per-tier cross beams and relying on the decks as horizontal diaphragms plus
-> the base frame is sound in principle and the tip-over numbers above assume it holds.
-> **It has not been checked by frame analysis.**
+### NT-03 — Joint stiffness is calculated, not measured
 
-So the analysis was never performed, and the tip-over figures (139 N empty, 307 N loaded
-horizontal pull; height:depth 3.48:1) **depend on an unverified assumption**. Wall anchors
-are specified as mandatory rather than optional partly for this reason.
-
-**Closure is a physical test, not an analysis:**
-
-| Test | Criterion |
-|---|---|
-| **T16** — depth-plane sway | 300 N horizontal at the top bed, front-back and side. Residual deflection **≤ 5 mm** |
-| Fallback if it fails | Restore the per-tier cross beams, ₹562 |
-
-T16 supersedes the older staged-build test **P3**. RK-A-SYS §10 still uses the P3
-numbering; RK-A-MFG Rev 2 states the supersession explicitly, so this is a naming lag
-rather than a conflict. **T16 is the ID to use.**
-
-Related: **T10**, the canopy velocity traverse, closes the airflow uniformity item and
-doubles as the design input for the Phase 2 plenum. The acceptance set is T1–T18 in
-RK-A-QC. (RK-A-MFG Rev 2 cites RK-A-QC **Rev 2** for that set; the current QC revision is
-Rev 3 — a reference lag, not a content conflict.)
+`RK-A-107B` k ≈ 8 kN·m/rad is a calculation. **T19** (moment–rotation coupon, ≥ 5 kN·m/rad secant to 50 N·m, no slip below 80 N·m) must be run on the first plate batch before T16 is interpreted.
 
 ## 3. Verification not yet performed
 
 | Item | Why it matters |
 |---|---|
-| Air gap physical verification at install | EDR-006 is safety-critical and cannot be verified from drawings |
-| Seismic check per IS 1893 | Referenced as applicable; no record of a completed check |
+| Air gap physical verification at install — tundish (EDR-006) **and every fill nozzle (ICR-005, T20)** | Safety-critical; cannot be verified from drawings |
+| T19 joint coupon | Qualifies the calculated joint stiffness behind VR-07 |
 | Earthing and RCD testing per IS 732 / IS 3043 | Commissioning activity, not yet scheduled |
 | Phase-1 airflow uniformity measurement | Baseline needed before the plenum (ADR-005) can be shown to improve on it |
-| Post-release CAD export integrity | RB-01 — the export itself has never succeeded |
+| `RK-A R2` export integrity | Export from `_v3` v1 with `ExportManager.execute()` checked |
 
 ---
 

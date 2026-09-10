@@ -31,7 +31,9 @@ be found.
 | Hole diameter | **Ø9 mm** |
 | Grid start height | 150 mm above floor datum |
 | Fastener | M8 |
-| **M8 torque** | **18 N·m** |
+| **M8 torque** | **18 N·m** into a rivet nut or with a crush tube; **4 N·m** for any M8 through a hollow section without one (EDR-015) |
+| Through-bolts in hollow sections | **Always with a crush tube or a rivet nut** — 1.5–1.6 mm walls collapse at ≈ 1 N·m otherwise |
+| Rivet nuts | M8 steel flat-head, Ø11.0 +0.1 hole, near wall only |
 
 ## 3. Structural rules
 
@@ -39,7 +41,8 @@ be found.
 |---|---|---|
 | Earth continuity, every frame | **< 0.1 Ω**, tested and recorded per unit | IS 3043 |
 | Seismic | Per **IS 1893** | |
-| Wall anchoring | **Mandatory**, not optional, on floor-standing racks | `RK-A-MFG` Rev 2 §11 |
+| Wall anchoring | **Mandatory**, not optional, on floor-standing racks; adjustable stand-off strut, never a fixed-length bracket | EDR-017 |
+| Depth-plane stability | Every tier level is a closed rectangle of post-to-post members; joints qualified by a moment–rotation coupon (T19) | EDR-014/015 |
 | Shelf flatness | 3 mm | `RK-A-PARAM` |
 
 Height:depth ratio 3.48:1 on `RK-A` is below the 4:1 threshold at which anchoring is
@@ -68,11 +71,20 @@ From `RK-A-DWG` Rev 2, on why the rear panel is not used as a diaphragm:
 Generalised: if a part can be removed for cleaning, service or access, it carries no
 structural duty.
 
-## 6. Wet/dry separation
+## 6. Gravity hydraulics
 
 | Rule | Value |
 |---|---|
-| Minimum electrical/water vertical separation | **236 mm** |
+| Valves on gravity circuits | Specified with **minimum operating differential = 0** (direct-acting/zero-ΔP solenoid or motorised valve); a servo-assisted solenoid is never acceptable on a drain (EDR-016) |
+| Fill-point air gap | Outlet ≥ 2 × nominal bore above the vessel's spill-over level, verified physically (ICR-005) |
+| Overflow capacity | Calculated as a **weir** over the crest, not as an orifice (RK-A-QC Rev 4 check 16) |
+| Pipes and bracing | No pipe intersects a brace bar; crossings only in recorded windows (ICR-006) |
+
+## 7. Wet/dry separation
+
+| Rule | Value |
+|---|---|
+| Electrical/water separation | By the ELV boundary (24/48 V at or below canopy) and IP65 enclosures above canopy — not by a distance figure (RK-A-QC Rev 4 check 14) |
 | Cable crossing a wet zone | Not permitted without a drip loop |
 | Overflow rule | Every vessel keeps a gravity overflow **one nominal size larger than its largest inlet**, terminating in a **visible air gap** |
 

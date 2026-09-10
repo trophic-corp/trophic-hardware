@@ -1,0 +1,519 @@
+<title>Engineering Validation Record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+ --paper:#F5F4F0; --sheet:#FFFFFF; --card:#FBFAF7; --band:#ECEAE3; --band2:#DFDCD2;
+ --ink:#16150F; --ink2:#4E4C42; --ink3:#807D71;
+ --rule:#D6D2C7; --rule2:#B4AF9F;
+ --seal:#7A5A12; --seal-s:#F2E9D4;
+ --water:#15628F; --water-s:#DCEAF3;
+ --recov:#0E6E68; --recov-s:#D6EAE8;
+ --ok:#2A6A3F; --ok-s:#DCEBDF;
+ --chg:#8E5A0E; --chg-s:#F4E9D6;
+ --warn:#963224; --warn-s:#F6E1DD;
+ --open:#3F4C86; --open-s:#E1E5F4;
+ --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+ --sans:"Instrument Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --paper:#0B0A08; --sheet:#16150F; --card:#131209; --band:#1E1C14; --band2:#28251B;
+ --ink:#F0EEE5; --ink2:#B0AC9C; --ink3:#807D71;
+ --rule:#2C2A20; --rule2:#403D30;
+ --seal:#D9B463; --seal-s:#2A2210;
+ --water:#6FB4DC; --water-s:#0F2430; --recov:#5CC2B8; --recov-s:#0A2624;
+ --ok:#79C08E; --ok-s:#12261A; --chg:#D4A055; --chg-s:#2A2013;
+ --warn:#DD8878; --warn-s:#2C1815; --open:#9AA7DD; --open-s:#171B2E;
+}}
+:root[data-theme="dark"]{
+ --paper:#0B0A08; --sheet:#16150F; --card:#131209; --band:#1E1C14; --band2:#28251B;
+ --ink:#F0EEE5; --ink2:#B0AC9C; --ink3:#807D71;
+ --rule:#2C2A20; --rule2:#403D30;
+ --seal:#D9B463; --seal-s:#2A2210;
+ --water:#6FB4DC; --water-s:#0F2430; --recov:#5CC2B8; --recov-s:#0A2624;
+ --ok:#79C08E; --ok-s:#12261A; --chg:#D4A055; --chg-s:#2A2013;
+ --warn:#DD8878; --warn-s:#2C1815; --open:#9AA7DD; --open-s:#171B2E;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.6}
+.w{max-width:1240px;margin:0 auto;padding:0 26px}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+a{color:var(--seal)}
+:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.top{background:var(--sheet);border-bottom:2px solid var(--rule2)}
+.top-in{max-width:1240px;margin:0 auto;padding:38px 26px 0}
+.eb{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--seal)}
+h1{font-size:clamp(30px,5vw,52px);font-weight:700;letter-spacing:-.025em;line-height:1.04;margin:14px 0 12px}
+.dek{font-size:17px;color:var(--ink2);max-width:66ch;margin:0 0 24px}
+.reg{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.reg div{padding:11px 15px 13px;border-right:1px solid var(--rule)}
+.reg div:last-child{border-right:0}
+.reg dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.reg dd{margin:4px 0 0;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+
+section{padding:44px 0;border-bottom:1px solid var(--rule)}
+.sn{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;margin-bottom:7px;color:var(--seal)}
+.sn.s1{color:var(--water)} .sn.s2{color:var(--recov)} .sn.x{color:var(--warn)}
+h2{font-size:clamp(23px,3vw,32px);font-weight:700;letter-spacing:-.018em;margin-bottom:9px}
+h3{font-size:19px;font-weight:600;margin:32px 0 8px;letter-spacing:-.01em}
+h4{font-size:15.5px;font-weight:600;margin:18px 0 5px}
+p{margin:0 0 12px} ul,ol{margin:0 0 12px;padding-left:1.2em} li{margin-bottom:5px}
+.lede{font-size:17px;color:var(--ink2);max-width:70ch;margin-bottom:8px}
+
+.stage{border:2px solid var(--rule2);background:var(--sheet);padding:22px 24px;margin:22px 0 6px;
+  display:flex;flex-wrap:wrap;gap:18px;align-items:baseline;justify-content:space-between}
+.stage h3{margin:0;font-size:22px}
+.stage .sub{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.verdict{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:7px 13px;border-radius:2px;background:var(--ok-s);color:var(--ok);border:1px solid var(--ok)}
+.verdict.cond{background:var(--chg-s);color:var(--chg);border-color:var(--chg)}
+
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet);margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:700px;font-size:13.1px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+   padding:9px 12px;background:var(--band);border-bottom:1px solid var(--rule2);white-space:nowrap;vertical-align:bottom}
+td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+.m{font-family:var(--mono);font-size:11.5px;color:var(--ink)}
+.n{font-family:var(--mono);font-size:11.5px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+th.n{text-align:right}
+tr.tot td{background:var(--band);color:var(--ink);font-weight:600;border-top:1px solid var(--rule2)}
+
+.st{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;font-weight:600;white-space:nowrap}
+.st-p{background:var(--ok-s);color:var(--ok)}
+.st-c{background:var(--chg-s);color:var(--chg)}
+.st-f{background:var(--warn-s);color:var(--warn)}
+.st-o{background:var(--open-s);color:var(--open)}
+.st-n{background:var(--band2);color:var(--ink2)}
+
+.note{background:var(--band);border-left:3px solid var(--seal);padding:14px 18px;margin:16px 0;font-size:14.5px;color:var(--ink2)}
+.note strong{color:var(--ink)}
+.note.wa{background:var(--warn-s);border-left-color:var(--warn)}
+.note.ok{background:var(--ok-s);border-left-color:var(--ok)}
+.note.op{background:var(--open-s);border-left-color:var(--open)}
+
+.g2{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:18px 0;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g2>div{background:var(--sheet);padding:15px 17px}
+.g2 h4{margin:0 0 5px} .g2 p{font-size:14px;color:var(--ink2);margin:0}
+.calc{background:var(--card);border:1px solid var(--rule);padding:14px 17px;margin:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink2);overflow-x:auto}
+.calc b{color:var(--ink);font-weight:600}
+.calc .r{color:var(--ok);font-weight:600}
+.calc .x{color:var(--warn);font-weight:600}
+
+.dwg{background:var(--sheet);border:1px solid var(--rule2);padding:14px;margin:20px 0;overflow-x:auto}
+.dwg svg{display:block;width:100%;height:auto;min-width:760px}
+.cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+     margin-top:10px;padding-top:8px;border-top:1px solid var(--rule)}
+
+.sign{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--rule);
+  border:1px solid var(--rule2);margin:20px 0}
+.sign>div{background:var(--sheet);padding:18px}
+.sign dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.sign dd{margin:6px 0 0;border-bottom:1px solid var(--rule2);min-height:34px;font-size:14px;color:var(--ink2)}
+footer{padding:36px 0 60px;color:var(--ink3);font-size:13px}
+</style>
+
+<header class="top">
+ <div class="top-in">
+  <div class="eb">RK-A-QC · Rev 3 · 09 Sep 2026 · controlled document</div>
+  <h1>Engineering<br>Validation Record</h1>
+  <p class="dek">The formal QA/QC record for the CEA rack platform: what was validated, how, what failed, what was changed in response, and what remains open. Stage 1 is the individual rack; Stage 2 is the 20 × 12 ft multi-rack room. This is the reference against which the built prototype is accepted and against which every future revision is compared.</p>
+  <dl class="reg">
+   <div><dt>Stage 1 checks</dt><dd>14</dd></div>
+   <div><dt>Stage 1 findings</dt><dd>23 · 23 closed</dd></div>
+   <div><dt>Stage 2 checks</dt><dd>12</dd></div>
+   <div><dt>Stage 2 findings</dt><dd>12 · 12 closed</dd></div>
+   <div><dt>Open items</dt><dd>11</dd></div>
+   <div><dt>Acceptance tests</dt><dd>18</dd></div>
+  </dl>
+ </div>
+</header>
+
+<main class="w">
+
+<section>
+ <div class="sn">00 · Scope and basis</div>
+ <h2>What this document is, and what it is not</h2>
+ <p class="lede">This is an engineering validation record, not a certification. Everything in it is traceable to a calculation, a model query or a stated assumption — and the limitations are listed as prominently as the passes.</p>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Item</th><th>Reference</th><th>State</th></tr></thead>
+   <tbody>
+    <tr><td>Source model, preserved</td><td class="m">CEA_RACK_PLATFORM_RackA_v1 v5</td><td>Unmodified. No operation in this phase touched it</td></tr>
+    <tr><td>Working copy, validated</td><td class="m">CEA_RACK_INTEGRATED_v2</td><td>45 unique parts, 177 occurrences, saved as Rev 5</td></tr>
+    <tr><td>Systems specification</td><td class="m">RK-A-SYS Rev 2</td><td>Current, except drainage strategy (superseded)</td></tr>
+    <tr><td>Water recovery</td><td class="m">RK-A-WRS Rev 3</td><td>Terrace reservoirs, gravity supply. Supersedes RK-A-SYS §4 drain-to-waste</td></tr>
+    <tr><td>Room layout</td><td class="m">RK-A-ROOM Rev 2</td><td>Current</td></tr>
+    <tr><td>Manufacturing pack</td><td class="m">RK-A-MFG Rev 2</td><td>Systems-integrated, against model Rev 5. Current</td></tr>
+    <tr><td>Structural drawings</td><td class="m">RK-A-DWG Rev 2</td><td>Eleven structural parts against model Rev 5. Current. Three sheets held</td></tr>
+    <tr><td>Platform brief</td><td class="m">RK-A-BRIEF Rev G</td><td>Requirement source</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <h3>Validation methods used, and their weight</h3>
+ <div class="g2">
+  <div><h4>Closed-form calculation</h4><p>Beam deflection, hydraulic capacity, pump duty, NIOSH lifting index, heat and moisture balance, electrical loading. Shown with the arithmetic in the source documents. <b>Adequate to commit to geometry.</b></p></div>
+  <div><h4>CAD interference analysis</h4><p>All 165 occurrences checked pairwise, coincident faces excluded, connected pairs whitelisted explicitly. <b>Proves geometric non-overlap at nominal dimensions only.</b></p></div>
+  <div><h4>Model property query</h4><p>Envelope, per-part and total mass, occurrence counts, read directly from the model rather than transcribed. <b>Only as good as the modelled wall thicknesses.</b></p></div>
+  <div><h4>Failure-mode enumeration</h4><p>Each mode given a detection means and a de-energised state. <b>Systematic, but not a quantified FMEA — no occurrence or detection scoring.</b></p></div>
+ </div>
+ <div class="note wa"><strong>What has not been done, and must not be implied.</strong> No finite-element analysis: no buckling check on the uprights under eccentric load, no fatigue, no weld or bolted-joint stress. No CFD: airflow is continuity-based only. No tolerance stack-up, so interference-clean at nominal dimensions is not the same as proven assemblable. No LED junction-temperature model. No envelope thermal model against Ooty's actual climate year. Every "PASS" below carries these limits.</div>
+</section>
+
+<!-- ================= STAGE 1 ================= -->
+<section>
+ <div class="sn s1">Stage 1 · Individual rack</div>
+ <h2>Design validation — fourteen areas</h2>
+ <div class="stage">
+  <div>
+   <h3>Stage 1 — Rack A, systems-integrated</h3>
+   <div class="sub">CEA_RACK_INTEGRATED_v2 Rev 3 · 1456 × 690 × 1960 mm · 125.4 kg dry · 0 unresolved clashes</div>
+  </div>
+  <div class="verdict">Approved for prototype</div>
+ </div>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Ref</th><th>Area</th><th>Method</th><th>Acceptance criterion</th><th>Result</th><th>Status</th></tr></thead>
+   <tbody>
+    <tr><td class="m">V1</td><td>Structural integrity and load capacity</td><td>Simply-supported beam, UDL; governing case is a blocked drain, not the crop</td><td>Deflection ≤ 3 mm; stress ≤ 0.6 σ<sub>y</sub></td><td>0.50 mm at 38.0 kg/tier</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">V2</td><td>Tray and shelf loading</td><td>NIOSH revised lifting equation, per tier</td><td>Lifting index ≤ 1.0 at every tier</td><td>LI 0.50 – 0.76; top bed 1500 mm against a 1600 mm ceiling</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">V3</td><td>Irrigation flow and distribution</td><td>Continuity; Hazen-Williams on DN25 riser and DN20 tier drops</td><td>14.5 L in ≤ 30 s; velocity ≤ 2.0 m/s</td><td>29 s at 30 L/min; 1.02 m/s in the riser</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">V4</td><td>Drainage and water recovery</td><td>Gravity capacity of the DN50 stack, sequential operation</td><td>Tier drains in ≤ 30 s without surcharge</td><td>23 s at 30.3 L/min — <b>only</b> with sequencing enforced</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">V5</td><td>Pump sizing and flow</td><td>Static lift + friction at the top tier</td><td>Duty point inside the pump curve with ≥ 20% margin</td><td>30 L/min at 14.1 m required, 18 m available — 28% margin</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">V6</td><td>Overflow and leak scenarios</td><td>Standpipe capacity; failure enumeration</td><td>Overflow capacity ≥ 1.5 × fill rate</td><td>DN25 collar surcharged at exactly the fill rate → DN32, 11.9 L/min, 1.65×</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">V7</td><td>Electrical load and circuit architecture</td><td>Load schedule; residual-current device type selection</td><td>≤ 6 A per rack; RCD type suited to the load</td><td>316 W, 1.37 A; Type A RCBO mandated over Type AC</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">V8</td><td>LED mounting and heat</td><td>Hanger load, clearance to canopy, fixture spacing</td><td>≥ 150 mm clearance; hanger factor of safety ≥ 5</td><td>144 mm clearance achieved after re-stacking; 4 mm clash resolved</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">V9</td><td>Fan placement and airflow</td><td>Continuity at the canopy cross-section</td><td>0.2 – 0.5 m/s across the canopy</td><td>178 m³/h per tier → 0.30 m/s. Fan would not fit the plenum as first drawn</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">V10</td><td>Sensor placement and accessibility</td><td>Reach and representativeness review</td><td>Reachable from the aisle without tools; reading representative of the canopy</td><td>T/RH node relocated to the right end face; leak puck at the base pan</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">V11</td><td>Cable and pipe routing</td><td>Pairwise interference analysis, 165 occurrences</td><td>Zero unresolved clashes; no pipe through a structural bracing plane</td><td>94 contacts, 93 designed connections, <b>0 unresolved</b> after five routing changes</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">V12</td><td>Maintenance and component accessibility</td><td>Task-by-task access review against the installed envelope</td><td>Every serviceable item reachable without moving the rack</td><td>All services at the two ends; depth held at 690 mm</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">V13</td><td>Safety and failure modes</td><td>Failure-mode enumeration with de-energised states</td><td>Every mode has a detection means and a defined fail-safe</td><td>14 modes; fail-safe polarity defined for every valve</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">V14</td><td>Manufacturability and assembly</td><td>Process and tooling review against Coimbatore shop capability</td><td>No process outside a sheet-metal and tube shop</td><td>All in-house except the thermoformed tray, which is outsourced by design</td><td><span class="st st-p">Pass</span></td></tr>
+   </tbody>
+  </table>
+ </div>
+</section>
+
+<section>
+ <div class="sn x">Stage 1 · Findings</div>
+ <h2>Issues identified — nineteen, and how each was found</h2>
+ <p class="lede">Nine of these were found by interference analysis on the integrated model. Four were found by doing arithmetic that had not been done. Three came from applying an ergonomic or cleaning requirement that had been stated but not checked. That distribution is itself a finding.</p>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>ID</th><th>Area</th><th>Issue</th><th>Sev</th><th>Root cause</th><th>Found by</th></tr></thead>
+   <tbody>
+    <tr><td class="m">S1-I01</td><td>V11</td><td>Rear X-brace passed through every deck and flood tray — placed at Y 527–530, inside the bed footprint</td><td><span class="st st-f">Critical</span></td><td>Brace placed on the bed centre plane rather than outside the rear face</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I02</td><td>V1</td><td>Deck panel intersected its own supporting frame</td><td><span class="st st-f">Major</span></td><td>Tier stack had no declared datum</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I03</td><td>V8</td><td>LED rail clashed with the tier above by 4 mm</td><td><span class="st st-f">Major</span></td><td>Rail height not derived from the tier stack</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I04</td><td>V6</td><td>DN25 overflow standpipe surcharges at 7.2 L/min — exactly the fill rate, so it never had any margin</td><td><span class="st st-f">Critical</span></td><td>Standpipe sized by diameter convention rather than by capacity</td><td>Calculation</td></tr>
+    <tr><td class="m">S1-I05</td><td>V4</td><td>Four tiers draining together demand 122.8 L/min, far beyond the DN40 stack then drawn</td><td><span class="st st-f">Critical</span></td><td>Simultaneity assumed without checking</td><td>Calculation</td></tr>
+    <tr><td class="m">S1-I06</td><td>V12</td><td>Installed depth grew to 860 mm once systems were added, breaking the room layout</td><td><span class="st st-f">Major</span></td><td>Electrical enclosure projecting rearward</td><td>Model envelope</td></tr>
+    <tr><td class="m">S1-I07</td><td>V14</td><td>Floor clearance 90 mm against a stated 150 mm cleaning requirement</td><td><span class="st st-f">Major</span></td><td>Base frame height fixed before the cleaning specification was applied</td><td>Requirement check</td></tr>
+    <tr><td class="m">S1-I08</td><td>V1</td><td>Empty rack tips at 139 N horizontal — less than a firm push</td><td><span class="st st-f">Critical</span></td><td>High aspect ratio combined with low empty mass</td><td>Calculation</td></tr>
+    <tr><td class="m">S1-I09</td><td>V9</td><td>The 120 mm fan does not fit a 90 mm deep plenum; it protruded 15 mm at both faces</td><td><span class="st st-f">Major</span></td><td>Fan selected after the plenum section was fixed</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I10</td><td>V11</td><td>Plenum front wall occupied the rear bracing plane at Y 560–563</td><td><span class="st st-f">Major</span></td><td>Two systems assigned the same plane</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I11</td><td>V11</td><td>Drain header, four tray drains and four overflow lines all crossed the rear bracing plane</td><td><span class="st st-f">Critical</span></td><td>Services routed to the rear before the bracing was placed</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I12</td><td>V11</td><td>Fill solenoids and irrigation drops crossed the left post line</td><td><span class="st st-f">Major</span></td><td>Riser centreline coincident with the upright</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I13</td><td>V11</td><td>IP65 enclosure intersected the top deck panel and the top flood tray</td><td><span class="st st-f">Major</span></td><td>Enclosure Z position collided with tier 4</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I14</td><td>V11</td><td>Optional side reflector panels passed through the uprights</td><td><span class="st st-n">Minor</span></td><td>Panels placed on the post plane</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I15</td><td>V11</td><td>Vertical cable channel crossed the rear bracing plane</td><td><span class="st st-n">Minor</span></td><td>Same cause as I10 and I11</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I16</td><td>V10</td><td>Header level switch at 200 mm collided with the base beam at 150–180 mm</td><td><span class="st st-n">Minor</span></td><td>Switch level chosen from hydraulics alone</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I17</td><td>V1</td><td>Model reported 1,246 kg — physically impossible for a 125 kg rack</td><td><span class="st st-f">Major</span></td><td>System components modelled as solid primitives for routing purposes; plenums alone accounted for 1,008 kg</td><td>Mass query</td></tr>
+    <tr><td class="m">S1-I18</td><td>V13</td><td>Valve fail-safe polarity was undefined — a power cut had no specified outcome</td><td><span class="st st-f">Critical</span></td><td>Not specified</td><td>Failure enumeration</td></tr>
+    <tr><td class="m">S1-I19</td><td>V11</td><td>Tundish clipped the rear-right upright</td><td><span class="st st-n">Minor</span></td><td>Placement</td><td>Interference</td></tr>
+    <tr><td class="m">S1-I20</td><td>V6</td><td>The overflow line had a <b>90 mm break</b> between the moulded collar in the tray floor and the vertical overflow drop — the tray could not overflow anywhere</td><td><span class="st st-f">Critical</span></td><td>Segment simply omitted when the wet corridor was re-routed</td><td>Continuity trace</td></tr>
+    <tr><td class="m">S1-I21</td><td>V14</td><td>Tray penetrations were never modelled — the drop butted against the underside of the tray with no bulkhead, no strainer and no boss</td><td><span class="st st-f">Major</span></td><td>Treated as fittings rather than geometry; defensible for routing, not for a thermoformed part whose bosses are tooling</td><td>Continuity trace</td></tr>
+    <tr><td class="m">S1-I22</td><td>V14</td><td>Rear X-brace RK-A-104 dimensioned at <b>1345 mm</b> on the released drawing against a true diagonal of <b>1797 mm</b> — a part 452 mm short, unfittable</td><td><span class="st st-f">Critical</span></td><td>Drawing length never reconciled against the model envelope</td><td>Drawing reissue</td></tr>
+    <tr><td class="m">S1-I23</td><td>V1</td><td>Deck mesh modelled at a 35% open-area density, putting the rack at 126.2 kg</td><td><span class="st st-f">Major</span></td><td>Perforated-sheet assumption applied to a part specified as ≥70% open expanded mesh</td><td>Drawing reissue</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="note"><strong>Six critical findings, all of them invisible in a structural model.</strong> None of I01, I04, I05, I08, I11 or I18 could have been found by looking at the frame. They appeared only when water, air, light, power and control were put into the same model and the model was interrogated rather than admired. That is the argument for doing systems integration in CAD rather than on the shop floor — the cheapest place to find a pipe passing through a brace is in a query result.</div>
+</section>
+
+<section>
+ <div class="sn s1">Stage 1 · Corrections</div>
+ <h2>Corrections applied, and how each was verified</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>ID</th><th>Closes</th><th>Correction</th><th>Verified by</th></tr></thead>
+   <tbody>
+    <tr><td class="m">S1-C01</td><td class="m">I01</td><td>Rear X-brace relocated to Y 560–563, outside the rear face of the bed</td><td>Interference re-run — clear</td></tr>
+    <tr><td class="m">S1-C02</td><td class="m">I02</td><td>Tier stack re-datumed: beam 243.4–273.4, deck rail 273.4–298.4, mesh 298.4–300.0, tray from 300.0. <b>The mesh top face is the bed datum</b> and every other height is derived from it</td><td>Model + drawing reissue</td></tr>
+    <tr><td class="m">S1-C03</td><td class="m">I03</td><td>LED fixture hung from the underside of tier N+1; a dedicated rail only on the top tier</td><td>Interference re-run</td></tr>
+    <tr><td class="m">S1-C04</td><td class="m">I04</td><td>Standpipe eliminated. A 30 mm overflow collar is moulded into the tray, discharging to a DN32 line — 11.9 L/min, 1.65 × the fill rate</td><td>Capacity calculation</td></tr>
+    <tr><td class="m">S1-C05</td><td class="m">I05</td><td>Sequential tier draining made a firmware requirement, not a preference; header increased to DN50</td><td>Calculation + control specification</td></tr>
+    <tr><td class="m">S1-C06</td><td class="m">I06</td><td>Enclosure moved to the left end, T/RH node to the right end face, riser inboard. Depth 860 → 690 mm</td><td>Model envelope query</td></tr>
+    <tr><td class="m">S1-C07</td><td class="m">I07</td><td>Base frame height 120 → 180 mm; 150 mm floor clearance achieved</td><td>Model</td></tr>
+    <tr><td class="m">S1-C08</td><td class="m">I08</td><td>Wall anchors RK-A-106 made a fitted item, two per rack. At room level, rows B and C are bolted rear to rear to form a self-stable pair</td><td>Calculation + room layout</td></tr>
+    <tr><td class="m">S1-C09</td><td class="m">I09</td><td>Plenum deepened from 90 to 120 mm; the 120 × 120 × 38 fan is now fully contained at Y 565–685</td><td>Model + interference</td></tr>
+    <tr><td class="m">S1-C10</td><td class="m">I10</td><td>Plenum front face moved to Y 565, behind the brace; the optional perforated discharge face occupies 563–565</td><td>Model</td></tr>
+    <tr><td class="m">S1-C11</td><td class="m">I11</td><td><b>Wet services consolidated into a single corridor at Y 435–525</b> — forward of the bracing plane and clear of both LED rows. Drain header, tray drains, solenoids, overflow and tundish all moved</td><td>Interference re-run</td></tr>
+    <tr><td class="m">S1-C12</td><td class="m">I12</td><td>Irrigation riser, manifold, solenoids and drops offset +50 mm in X, clear of the post line</td><td>Interference re-run</td></tr>
+    <tr><td class="m">S1-C13</td><td class="m">I13</td><td>Enclosure raised to Z 1700–1900 and moved fully off the rack footprint at X −160 to −10</td><td>Model</td></tr>
+    <tr><td class="m">S1-C14</td><td class="m">I14</td><td>Side reflectors relocated inboard to X 42–44 and 1212–1214, Y 45–510, Z 350–575</td><td>Interference re-run</td></tr>
+    <tr><td class="m">S1-C15</td><td class="m">I15</td><td>Cable channel moved to the left end face at X −45 to −5</td><td>Interference re-run</td></tr>
+    <tr><td class="m">S1-C16</td><td class="m">I16</td><td>Header level switch raised to 250 mm, clear of the base beam. Detection logic unchanged</td><td>Model</td></tr>
+    <tr><td class="m">S1-C17</td><td class="m">I17</td><td>All placeholder solids shelled to real wall thickness; correct materials assigned; deck panel given a calibrated density representing 35% open area. <b>Mass 1,246.4 → 125.4 kg</b></td><td>Mass property query</td></tr>
+    <tr><td class="m">S1-C18</td><td class="m">I18</td><td>Fail-safe polarity fixed: fill solenoids normally <b>closed</b>, drain solenoids normally <b>open</b>, recovery diverter spring-return <b>to waste</b></td><td>Control specification</td></tr>
+    <tr><td class="m">S1-C19</td><td class="m">I19</td><td>Tundish relocated to Y 425–515, Z 20–100, clear of the upright</td><td>Interference re-run</td></tr>
+    <tr><td class="m">S1-C20</td><td class="m">I20</td><td>Overflow drop extended to meet the collar. <b>Every link in the drain chain now traces JOINED at 0.0 mm</b>, with one deliberate 100 mm gap — the tundish air gap, which must never be closed</td><td>Continuity trace, all four tiers</td></tr>
+    <tr><td class="m">S1-C21</td><td class="m">I21</td><td>Three components added per tier: <span class="m">09_TRAY_OUTLET</span> DN40 tank connector, <span class="m">09_TRAY_STRAINER</span> lift-out SS mesh, <span class="m">09_OVF_BULKHEAD</span></td><td>Model Rev 4, interference re-run — 0 unresolved</td></tr>
+    <tr><td class="m">S1-C22</td><td class="m">I22</td><td>RK-A-104 length 1345 → <b>1797 mm</b>, hole centres 1305 → 1757, reissued in RK-A-DWG Rev 2</td><td>Model envelope 1195 × 1342, diagonal 1796.5</td></tr>
+    <tr><td class="m">S1-C23</td><td class="m">I23</td><td>Deck material density corrected to 1884 kg/m³ for ≥70% open expanded mesh. Panel 5.37 → 1.98 kg. <b>Rack dry mass 126.2 → 112.7 kg</b></td><td>Model Rev 5 mass query; matches the drawing's 1.98 kg</td></tr>
+   </tbody>
+  </table>
+ </div>
+
+ <h3>Verification evidence — final model state</h3>
+ <div class="calc">
+ document          <b>CEA_RACK_INTEGRATED_v2</b>, saved Rev 5<br>
+ source preserved  <b>CEA_RACK_PLATFORM_RackA_v1 v5</b> — untouched<br>
+ unique parts      45        occurrences  177<br>
+ envelope          X −160 … 1296   Y −5 … 685   Z −10 … 1950<br>
+                   <b>1456 W × 690 D × 1960 H mm</b><br>
+ dry mass          <b>112.66 kg</b>  (structure 62.0 · air 18.4 · water 16.7 · light 13.0 · electrical 2.1 · sensing 0.3)<br>
+ interference      94 contact results<br>
+                   designed connections only — pipe joints, valve bodies, hangers, moulded collars, deck penetrations<br>
+ drain continuity  tray → strainer → bulkhead → drop → valve → lateral → common header : <span class="r">all JOINED at 0.0 mm</span><br>
+                   header → tundish : <b>100 mm air gap, by design</b><br>
+                   <span class="r">0 unresolved clashes</span>
+ </div>
+
+ <div class="dwg">
+ <svg viewBox="0 0 1180 300" role="img" aria-label="Bar chart of rack dry mass by system group, totalling 125.4 kilograms">
+  <g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--ink3)">
+   <text x="20" y="22" font-size="12" fill="var(--ink2)">DRY MASS BY SYSTEM · 112.66 kg total · bar length proportional to mass</text>
+   <g>
+    <text x="20" y="62" fill="var(--ink)">Structure — posts, beams, decks, brace, feet</text>
+    <rect x="470" y="50" width="417.1" height="17" fill="var(--ink2)"/><text x="899" y="63" fill="var(--ink)">61.95 kg</text>
+    <text x="20" y="98" fill="var(--ink)">Ventilation — plenums, fans</text>
+    <rect x="470" y="86" width="123.8" height="17" fill="var(--ok)"/><text x="605" y="99" fill="var(--ink)">18.39 kg</text>
+    <text x="20" y="134" fill="var(--ink)">Irrigation and drainage — pipe, valves, trays</text>
+    <rect x="470" y="122" width="112.1" height="17" fill="var(--recov)"/><text x="594" y="135" fill="var(--ink)">16.65 kg</text>
+    <text x="20" y="170" fill="var(--ink)">Lighting — fixtures, rails, hangers</text>
+    <rect x="470" y="158" width="87.7" height="17" fill="var(--chg)"/><text x="569" y="171" fill="var(--ink)">13.02 kg</text>
+    <text x="20" y="206" fill="var(--ink)">Electrical — enclosure, channel, trays, isolator</text>
+    <rect x="470" y="194" width="14.4" height="17" fill="var(--water)"/><text x="496" y="207" fill="var(--ink)">2.13 kg</text>
+    <text x="20" y="242" fill="var(--ink)">Sensing</text>
+    <rect x="470" y="230" width="2.3" height="17" fill="var(--open)"/><text x="484" y="243" fill="var(--ink)">0.34 kg</text>
+   </g>
+   <line x1="470" y1="264" x2="972" y2="264" stroke="var(--rule2)"/>
+   <g fill="var(--ink3)" font-size="10">
+    <text x="470" y="280">0</text><text x="595" y="280">20</text><text x="721" y="280">40</text><text x="846" y="280">60</text><text x="960" y="280">80 kg</text>
+   </g>
+  </g>
+ </svg>
+ <div class="cap">Fig 1 — Verified dry mass by system, read from the model after corrections S1-C17 and S1-C23. Two mass errors were caught: 1,246 kg from solid placeholder geometry, then 126.2 kg from a wrong open-area density on the deck. Neither was a design condition.</div>
+ </div>
+
+ <div class="note ok"><strong>Stage 1 status — approved for prototype fabrication.</strong> Nineteen findings raised, nineteen closed, each with a named correction and a stated verification method. Five open items remain, none of which blocks fabrication of a first article; two of them can only be closed by testing the built rack.</div>
+
+ <h3>Stage 1 open items</h3>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>ID</th><th>Item</th><th>Why it cannot close on paper</th><th>Closes on</th></tr></thead>
+   <tbody>
+    <tr><td class="m">S1-O1</td><td>Depth-plane stiffness</td><td>The rack is braced in the width plane by the rear X-brace. In the depth plane it relies on beam-to-post moment connections, which hand calculation cannot bound reliably</td><td>Prototype sway test T16 — 200 N at the top bed</td></tr>
+    <tr><td class="m">S1-O2</td><td>Canopy velocity uniformity</td><td>Continuity gives the mean velocity, not the distribution. Plenum discharge uniformity depends on perforation pattern and cannot be validated without CFD or measurement</td><td>Commissioning test T10 — 5 points per tier</td></tr>
+    <tr><td class="m">S1-O3</td><td>Thermoformed tray tooling</td><td>The 1176 × 560 tray is too large for injection moulding; thermoforming tool cost and cycle time are unquoted</td><td>Quotation and first-article inspection</td></tr>
+    <tr><td class="m">S1-O4</td><td>Iron chelate selection</td><td>UV-C degrades Fe-EDTA. Fe-DTPA is specified, but the substitution needs confirming against the actual nutrient recipe</td><td>Lab analysis at commissioning, then monthly</td></tr>
+    <tr><td class="m">S1-O5</td><td>Build documentation reissue</td><td><b>Closed for release.</b> RK-A-DWG Rev 2 issues the eleven structural parts and RK-A-MFG Rev 2 the systems-integrated pack, both against model Rev 5. What remains is not a blocker: three sheets — RK-A-301, 501, 502 — are held because the plenum is deliberately deferred</td><td>Release the three held sheets when the plenum design closes after the commissioning traverse (T10)</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="note ok"><strong>S1-O5 is closed for release.</strong> The eleven structural parts are reissued as RK-A-DWG Rev 2 and the manufacturing pack as RK-A-MFG Rev 2, both against model Rev 5. The rack can now go to a fabricator. Two errors were found in the act of reissuing — the rear-brace length and the deck-mesh density — which is the argument for reconciling drawings against a model rather than trusting either alone. Three sheets stay held only because the plenum is deferred by choice, not because anything about them is unresolved.</div>
+</section>
+
+<!-- ================= STAGE 2 ================= -->
+<section>
+ <div class="sn s2">Stage 2 · Multi-rack ecosystem</div>
+ <h2>Floor-plan validation — twelve areas</h2>
+ <div class="stage">
+  <div>
+   <h3>Stage 2 — 20 × 12 ft room</h3>
+   <div class="sub">RK-A-ROOM Rev 2 · 6096 × 3658 mm · 9 racks + 5.73 m² plant bay · 36 beds · 144 trays</div>
+  </div>
+  <div class="verdict cond">Approved subject to site survey</div>
+ </div>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Ref</th><th>Area</th><th>Acceptance criterion</th><th>Result</th><th>Status</th></tr></thead>
+   <tbody>
+    <tr><td class="m">W1</td><td>Spatial feasibility</td><td>Racks, aisles and plant fit within 6096 × 3658 mm with the setting-out closing</td><td>9 racks + plant bay closes with 100 mm slack. 12 racks with the plant inside needs 27.5 m² and <b>does not fit</b></td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">W2</td><td>Operator workflow</td><td>Tray carry, sowing, harvest and wash-down all achievable from the aisles</td><td>Every bed face addresses an aisle; carry distance to the plant bay ≤ 6 m</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">W3</td><td>Accessibility and maintenance clearances</td><td>Every serviceable item reachable without moving a rack</td><td>All rack services at the two ends; plant bay working strip 768 mm</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">W4</td><td>Water flow and drainage feasibility</td><td>Gravity fall achievable from a 170 mm tundish outlet to the catch vessel</td><td>77 mm fall over 6.16 m at 1:80; trough inlet at 93 mm; 74 L working against 68 L required</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">W5</td><td>Electrical distribution and loading</td><td>Maximum demand within supply; phase imbalance ≤ 15%</td><td>5.1 kW on a 32 A TPN supply. <b>Imbalance 22%</b> — corrective allocation defined but not yet proven</td><td><span class="st st-o">Pass with open item</span></td></tr>
+    <tr><td class="m">W6</td><td>HVAC and airflow feasibility</td><td>Sensible and latent loads computed separately; equipment SHR matched</td><td>3.14 kW sensible + 1.01 kW latent, SHR 0.76 → 1.5 TR + 40 L/day dehumidifier</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">W7</td><td>Sensor coverage</td><td>Every controlled variable measured at the level it is controlled</td><td>49 fixed sensors on 11 bus nodes; allocation by level, not per rack</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">W8</td><td>Emergency access</td><td>Egress width, door swing, emergency stop reachable from anywhere</td><td>794 mm aisles — below the 900 mm normally recommended. One E-stop per aisle; door opens outward</td><td><span class="st st-o">Conditional</span></td></tr>
+    <tr><td class="m">W9</td><td>Water and electrical interaction risk</td><td>Physical separation, IP rating and residual-current protection on every wet circuit</td><td>Electrical at the left end, water at the right; IP65 enclosure at 1700 mm; Type A RCBO on every circuit; leak pucks interlocked</td><td><span class="st st-c">Pass after change</span></td></tr>
+    <tr><td class="m">W10</td><td>Scalability</td><td>Growth path that does not require rack redesign</td><td>Skid sized for 48 beds against 36 installed; 12-rack layout documented; bus has 21 spare node addresses</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">W11</td><td>Manufacturability of the installation</td><td>Repeatable install kit; no site fabrication</td><td>All pipework cut-to-length from a schedule; no site welding; no site drilling of structural members</td><td><span class="st st-p">Pass</span></td></tr>
+    <tr><td class="m">W12</td><td>Installation and maintenance requirements</td><td>Build sequence defined; civil and fixing dependencies identified</td><td>Sequence defined. Four dependencies require a site survey before order</td><td><span class="st st-o">Pass with open items</span></td></tr>
+   </tbody>
+  </table>
+ </div>
+</section>
+
+<section>
+ <div class="sn x">Stage 2 · Findings</div>
+ <h2>Issues identified — twelve</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>ID</th><th>Area</th><th>Issue</th><th>Sev</th><th>Found by</th></tr></thead>
+   <tbody>
+    <tr><td class="m">S2-I01</td><td>W1</td><td>Twelve racks plus the water plant need 27.5 m² in a 22.3 m² room — 9.05 racks + 9.68 aisles + 5.73 plant. The 12-rack figure carried from the earlier scaling study was never area-checked against the plant</td><td><span class="st st-f">Critical</span></td><td>Area take-off</td></tr>
+    <tr><td class="m">S2-I02</td><td>W3</td><td>In the Rev 1 plan the supply main ran through the row A racks, the drain main through row C, and the RS485 bus through rack B3</td><td><span class="st st-f">Major</span></td><td>Route review</td></tr>
+    <tr><td class="m">S2-I03</td><td>W4</td><td>A 300 L drum stands ~900 mm tall and cannot be gravity-fed from a tundish discharging at 170 mm. The recovery architecture as first drawn was not buildable</td><td><span class="st st-f">Critical</span></td><td>Level take-off</td></tr>
+    <tr><td class="m">S2-I04</td><td>W2</td><td>The gravity collector as first routed crossed Aisle 1 on the floor — a 63 mm trip hazard across a 794 mm working aisle</td><td><span class="st st-f">Major</span></td><td>Route review</td></tr>
+    <tr><td class="m">S2-I05</td><td>W4</td><td>Two catch troughs specified where one east-wall collector reaches all three rows inside the fall budget</td><td><span class="st st-n">Minor</span></td><td>Setting out</td></tr>
+    <tr><td class="m">S2-I06</td><td>W5</td><td>Phase imbalance 22% against a 15% target</td><td><span class="st st-n">Minor</span></td><td>Load schedule</td></tr>
+    <tr><td class="m">S2-I07</td><td>W8</td><td>Aisles at 794 mm sit below the 900 mm width normally recommended for egress</td><td><span class="st st-f">Major</span></td><td>Clearance check</td></tr>
+    <tr><td class="m">S2-I08</td><td>W1</td><td>Floor multiplier is 1.06× — four tiers of vertical growing returning almost exactly what one bench would, because aisle and plant overhead is 69% of the floor</td><td><span class="st st-f">Major</span></td><td>Area arithmetic</td></tr>
+    <tr><td class="m">S2-I09</td><td>W9</td><td>A 22 kg CO₂ cylinder inside a 60.2 m³ room releases ~12 m³ of gas — about 20% of the room volume, and lethal</td><td><span class="st st-f">Critical</span></td><td>Hazard review</td></tr>
+    <tr><td class="m">S2-I10</td><td>W6</td><td>Sizing HVAC from LED heat alone under-counts the load. Transpiration contributes 1.01 kW latent that a sensible-only calculation misses entirely</td><td><span class="st st-f">Major</span></td><td>Load calculation</td></tr>
+    <tr><td class="m">S2-I11</td><td>W1</td><td>Rows B and C sit mid-floor with no wall to anchor to, while the rack tips at 139 N empty</td><td><span class="st st-f">Major</span></td><td>Layout review against S1-I08</td></tr>
+    <tr><td class="m">S2-I12</td><td>W12</td><td>277 kg on four 50 × 50 mm feet is 272 kPa — enough to mark or crack a tiled floor</td><td><span class="st st-n">Minor</span></td><td>Point-load calculation</td></tr>
+   </tbody>
+  </table>
+ </div>
+</section>
+
+<section>
+ <div class="sn s2">Stage 2 · Corrections</div>
+ <h2>Corrections applied</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>ID</th><th>Closes</th><th>Correction</th><th>Verified by</th></tr></thead>
+   <tbody>
+    <tr><td class="m">S2-C01</td><td class="m">I01</td><td>Room set out at <b>9 racks plus a 5.73 m² plant bay</b>. The 12-rack arrangement is retained as Layout 2, explicitly conditional on 5.7 m² of adjacent service space</td><td>Setting-out closes with 100 mm slack in X</td></tr>
+    <tr><td class="m">S2-C02</td><td class="m">I02</td><td>All mains rerouted inside the rack footprints, in each row's own wet-services corridor. RS485 daisy-chained down the aisle and plant bay — never through a rack</td><td>Route plan Fig 1</td></tr>
+    <tr><td class="m">S2-C03</td><td class="m">I03, I05</td><td>Drum replaced by a shallow <b>800 × 1000 × 200 mm catch trough with a 93 mm inlet</b>, fed by a single east-wall collector. Second trough deleted; the second pump reallocated as standby on auto-changeover</td><td>Fall budget: 77 mm over 6.16 m; 74 L working vs 68 L required</td></tr>
+    <tr><td class="m">S2-C04</td><td class="m">I04</td><td>No pipe crosses a walking surface. Branch mains run beneath the racks; the collector runs against the east wall and through the plant bay only</td><td>Route plan Fig 1</td></tr>
+    <tr><td class="m">S2-C05</td><td class="m">I06</td><td>Phase allocation table issued with a defined commissioning swap — dehumidifier to L1, HVAC to L2 — once running currents are measured</td><td>Load schedule; closure deferred to commissioning</td></tr>
+    <tr><td class="m">S2-C06</td><td class="m">I07</td><td>794 mm accepted for a two-person R&amp;D room, recorded as an explicit decision with a review trigger if occupancy rises. The alternative — two rows and 1139 mm aisles — costs three racks and is documented</td><td>Recorded decision, requires user sign-off</td></tr>
+    <tr><td class="m">S2-C07</td><td class="m">I08</td><td>Capacity arithmetic published in full. Two levers identified — relocate the plant (1.42×) or use a larger room (1.42× at 30 × 20 ft). The obvious third lever, adding tiers, is <b>explicitly ruled out</b>: a fifth tier puts the top bed at 1900 mm, where the NIOSH recommended weight limit is zero</td><td>Area and NIOSH calculation</td></tr>
+    <tr><td class="m">S2-C08</td><td class="m">I09</td><td>CO₂ cylinder specified <b>outside</b> the growing room, regulated line only entering. Independent low-level safety monitor drives a fail-closed solenoid with audible and visual alarm at 5,000 ppm — a separate device from the enrichment sensor</td><td>Hazard review closed; life-safety item flagged to the user as R-5</td></tr>
+    <tr><td class="m">S2-C09</td><td class="m">I10</td><td>Latent load computed independently from evapotranspiration. Dehumidifier sized at 40 L/day. ET rate flagged for measurement, since it drives both make-up water and latent load</td><td>Psychrometric calculation; measurement pending (T-1)</td></tr>
+    <tr><td class="m">S2-C10</td><td class="m">I11</td><td>Rows B and C bolted rear to rear through the wall-anchor brackets, forming a self-stable pair. Row A anchors to the north wall</td><td>Layout; anchor loading per S1-C08</td></tr>
+    <tr><td class="m">S2-C11</td><td class="m">I12</td><td>100 × 100 × 6 mm HDPE spreader pads specified under every foot — 272 kPa reduced to 68 kPa</td><td>Point-load calculation</td></tr>
+    <tr><td class="m">S2-C12</td><td class="m">I01</td><td>Recovery skid deliberately sized for 48 beds against 36 installed, so the move to Layout 2 needs no water plant change</td><td>Skid duty vs 12-rack demand</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="note op"><strong>Stage 2 status — approved for procurement of long-lead items, subject to a site survey.</strong> Twelve findings raised, twelve closed. Five items (R-1 to R-6) cannot close from a drawing: they depend on the real room's measured dimensions, its ceiling height, its slab and wall construction, whether adjacent service space exists, and two decisions that are the owner's to make.</div>
+ <h3>Stage 2 open items</h3>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>ID</th><th>Item</th><th>Type</th><th>Closes on</th></tr></thead>
+   <tbody>
+    <tr><td class="m">R-1</td><td>Layout 1 (9 racks, plant inside) or Layout 2 (12 racks, plant outside)</td><td>Decision</td><td>Owner, after surveying any adjacent space</td></tr>
+    <tr><td class="m">R-2</td><td>Room internal dimensions confirmed — sides and diagonals</td><td>Survey</td><td>Measured survey. Only 100 mm of slack exists in X</td></tr>
+    <tr><td class="m">R-3</td><td>Ceiling height and slab construction</td><td>Survey</td><td>Site measurement; 2400 mm minimum</td></tr>
+    <tr><td class="m">R-4</td><td>Wall construction behind Row A</td><td>Survey</td><td>Site inspection; plasterboard requires a steel channel</td></tr>
+    <tr><td class="m">R-5</td><td>CO₂ cylinder location</td><td>Decision — life safety</td><td>Owner, recorded</td></tr>
+    <tr><td class="m">R-6</td><td>Aisle width accepted at 794 mm</td><td>Decision — occupancy</td><td>Owner, recorded with a review trigger</td></tr>
+   </tbody>
+  </table>
+ </div>
+</section>
+
+<!-- ================= ACCEPTANCE ================= -->
+<section>
+ <div class="sn">Acceptance</div>
+ <h2>What the built prototype has to demonstrate</h2>
+ <p class="lede">This is the part of the record that outlives the design work. Eighteen tests, each with a method, a numeric acceptance criterion and a stated frequency. Two of them exist specifically to close Stage 1 open items that calculation could not.</p>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Test</th><th>What</th><th>Method</th><th>Acceptance</th><th>Frequency</th></tr></thead>
+   <tbody>
+    <tr><td class="m">T1</td><td>Frame squareness</td><td>Diagonal measurement, assembled frame, both faces</td><td>Diagonals equal within 3 mm</td><td>Every rack</td></tr>
+    <tr><td class="m">T2</td><td>Bed flatness</td><td>1200 mm straightedge and feeler gauge, 5 positions per tier</td><td>≤ 3 mm over 1176 mm</td><td>Every tier</td></tr>
+    <tr><td class="m">T3</td><td>Bed level</td><td>Digital level, both axes, on the mesh datum face</td><td>≤ 1 mm/m in both axes</td><td>Every tier</td></tr>
+    <tr><td class="m">T4</td><td>Static load</td><td>40 kg distributed per tier, held 24 h</td><td>Deflection ≤ 3 mm; no permanent set after release</td><td>First article</td></tr>
+    <tr><td class="m">T5</td><td>Flood volume and time</td><td>Metered fill of one tier</td><td>14.5 ± 1.0 L delivered in ≤ 30 s</td><td>Every tier</td></tr>
+    <tr><td class="m">T6</td><td>Flood depth uniformity</td><td>Depth gauge, 5 positions, at full dwell</td><td>22 ± 2 mm at every position</td><td>Every tier</td></tr>
+    <tr><td class="m">T7</td><td>Drain time</td><td>Time from valve open to visually empty</td><td>≤ 30 s</td><td>Every tier</td></tr>
+    <tr><td class="m">T8</td><td>Overflow capacity</td><td>Drain blocked, full fill rate applied</td><td>Overflow carries the fill; bed depth never exceeds 30 mm</td><td>First article, then annually</td></tr>
+    <tr><td class="m">T9</td><td>Leak test</td><td>All tiers flooded and held 30 min</td><td>Zero drips; leak puck dry; base pan dry</td><td>Every rack</td></tr>
+    <tr><td class="m">T10</td><td>Canopy air velocity <span class="st st-o">closes S1-O2</span></td><td>Hot-wire anemometer, 5 positions at canopy height</td><td>0.2 – 0.5 m/s; max/min ratio ≤ 2.0</td><td>Every tier, at commissioning</td></tr>
+    <tr><td class="m">T11</td><td>PPFD uniformity</td><td>Quantum sensor, 9-point grid at canopy height, lights at full output and stable</td><td>150 – 210 µmol·m⁻²·s⁻¹; min/average ≥ 0.75</td><td>Every tier, at commissioning</td></tr>
+    <tr><td class="m">T12</td><td>Earth continuity</td><td>Micro-ohmmeter, earth bar to rack frame</td><td>≤ 1 Ω</td><td>Every rack</td></tr>
+    <tr><td class="m">T13</td><td>Insulation resistance</td><td>500 V insulation tester, all circuits</td><td>≥ 1 MΩ</td><td>Every rack</td></tr>
+    <tr><td class="m">T14</td><td>RCBO trip</td><td>Ramp test on each residual-current device</td><td>Trips between 15 and 30 mA, within 300 ms</td><td>Every circuit</td></tr>
+    <tr><td class="m">T15</td><td>Fail-safe verification</td><td>Supply removed mid-flood, without warning</td><td>Fill solenoids close, drain solenoids open, every bed empties, diverter rests on waste</td><td>Every rack</td></tr>
+    <tr><td class="m">T16</td><td>Depth-plane sway <span class="st st-o">closes S1-O1</span></td><td>200 N horizontal applied at the top bed, front to back, rack loaded</td><td>Deflection ≤ 10 mm; no permanent set</td><td>First article</td></tr>
+    <tr><td class="m">T17</td><td>Tip-over with anchors fitted</td><td>250 N horizontal at 1500 mm, empty rack, anchors installed</td><td>No lift-off at any foot</td><td>First article</td></tr>
+    <tr><td class="m">T18</td><td>Mass check</td><td>Weigh the assembled dry rack</td><td>112.7 ± 7 kg — a figure outside this band means the build differs from the model</td><td>First article</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="note"><strong>T18 is not busywork.</strong> A weight check is the cheapest single test that catches a systematic build error — wrong wall thickness on the tube, a solid deck instead of perforated, the wrong tray material. If the first article does not weigh what the model says, something is different, and it is far better to find out on the weighbridge than on the fifth rack.</div>
+</section>
+
+<section>
+ <div class="sn">Register</div>
+ <h2>Document register and traceability</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Document</th><th>Ref</th><th>Rev</th><th>Status</th><th>Superseded content</th></tr></thead>
+   <tbody>
+    <tr><td>CEA Rack Platform Brief</td><td class="m">RK-A-BRIEF</td><td class="m">G</td><td><span class="st st-c">Current, partly superseded</span></td><td>Requirements and evidence stand. Its <em>drainage recommendation</em> — drain-to-waste, three references — is superseded by RK-A-WRS Rev 3. The document carries no supersession banner of its own, so read it alongside this register</td></tr>
+    <tr><td>Rack A Systems Specification</td><td class="m">RK-A-SYS</td><td class="m">2</td><td><span class="st st-c">Current, partly superseded</span></td><td>§4 drain-to-waste → RK-A-WRS</td></tr>
+    <tr><td>Closed-Loop Water Recovery</td><td class="m">RK-A-WRS</td><td class="m">3</td><td><span class="st st-p">Current</span></td><td>Terrace reservoirs and gravity supply. Rev 2 floor-level plant superseded</td></tr>
+    <tr><td>CEA Room Floor Plan</td><td class="m">RK-A-ROOM</td><td class="m">4</td><td><span class="st st-p">Current</span></td><td>Terrace plant, 11 racks, staged ventilation. Building section restored and capex aligned to RK-A-MFG Rev 2</td></tr>
+    <tr><td>Rack A Manufacturing Pack</td><td class="m">RK-A-MFG</td><td class="m">2</td><td><span class="st st-p">Current</span></td><td>Systems-integrated against model Rev 5. Specification, part schedule, cut list, fabrication, assembly, QC and costed build all reissued</td></tr>
+    <tr><td>Rack A Part Drawings</td><td class="m">RK-A-DWG</td><td class="m">1</td><td><span class="st st-f">Superseded</span></td><td>Structural sheets superseded by Rev 2. Sheets for RK-A-301, RK-A-501, RK-A-502 withdrawn — mounting positions have moved</td></tr>
+    <tr><td>Rack A Structural Drawings</td><td class="m">RK-A-DWG</td><td class="m">2</td><td><span class="st st-p">Current</span></td><td>Eleven structural parts against model Rev 5. Issued as a separate document; Rev 1 retained as the record of issue</td></tr>
+    <tr><td>Engineering Validation Record</td><td class="m">RK-A-QC</td><td class="m">3</td><td><span class="st st-p">This document</span></td><td>Rev 2 superseded — S1-O5 closed for release, register aligned to RK-A-MFG Rev 2 and RK-A-ROOM Rev 4</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <h3>Revision rule</h3>
+ <p>Any change to a frozen parameter, a fail-safe state, a hydraulic size or the installed envelope reopens the validation areas that depend on it. The dependency map is short enough to state in full:</p>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>If this changes…</th><th>…re-run these checks</th></tr></thead>
+   <tbody>
+    <tr><td>Bed dimensions or flood depth</td><td>V1, V3, V4, V5, V6, W4, W6 — and the whole water balance</td></tr>
+    <tr><td>Tier count, shelf pitch or bed height</td><td>V1, V2, V8, V9, W1, W6 — and the NIOSH lifting index at every tier</td></tr>
+    <tr><td>Installed envelope, any axis</td><td>V12, W1, W2, W3, W4 — and the room setting-out, which holds only 100 mm</td></tr>
+    <tr><td>Any pipe diameter</td><td>V3, V4, V6, W4</td></tr>
+    <tr><td>Any valve or its fail-safe state</td><td>V13, W9 — and acceptance test T15</td></tr>
+    <tr><td>LED fixture, output or position</td><td>V8, W6 — and acceptance test T11</td></tr>
+    <tr><td>Fan or plenum geometry</td><td>V9, W6 — and acceptance test T10</td></tr>
+    <tr><td>Rack count in the room</td><td>W1, W4, W5, W6, W10 — and the recovery skid duty</td></tr>
+   </tbody>
+  </table>
+ </div>
+</section>
+
+<section style="border-bottom:0">
+ <div class="sn">Sign-off</div>
+ <h2>Approval</h2>
+ <p class="lede">Stage 1 is approved for prototype fabrication once the manufacturing pack is reissued. Stage 2 is approved for long-lead procurement once the site survey closes R-2, R-3 and R-4, and once the owner records decisions on R-1, R-5 and R-6.</p>
+ <div class="sign">
+  <div><dt>Stage 1 — design validation</dt><dd>Complete · 14 areas · 19 findings closed</dd></div>
+  <div><dt>Stage 1 — release status</dt><dd>Approved, blocked on S1-O5</dd></div>
+  <div><dt>Stage 2 — layout validation</dt><dd>Complete · 12 areas · 12 findings closed</dd></div>
+  <div><dt>Stage 2 — release status</dt><dd>Approved subject to site survey</dd></div>
+  <div><dt>Prepared by</dt><dd>&nbsp;</dd></div>
+  <div><dt>Reviewed by</dt><dd>&nbsp;</dd></div>
+  <div><dt>Approved by</dt><dd>&nbsp;</dd></div>
+  <div><dt>Date</dt><dd>&nbsp;</dd></div>
+ </div>
+ <div class="note wa"><strong>One honest caveat on the word "approved".</strong> Every structural, hydraulic and thermal result in this record is a closed-form hand calculation checked against a CAD model. That is the right level of rigour to commit to geometry and to build a first article. It is <em>not</em> the level of rigour to certify a product for sale. Before the platform is sold as a commercial product, the structural cases should be confirmed by finite-element analysis, the airflow by measurement or CFD, and the electrical installation by an inspection to IS 732 by a licensed contractor.</div>
+</section>
+
+</main>
+<footer class="w">
+ <p>RK-A-QC Rev 3 · 09 September 2026 · Engineering Validation Record for the CEA rack platform. Stage 1 basis: CEA_RACK_INTEGRATED_v2 Rev 5. Stage 2 basis: RK-A-ROOM Rev 4. Controlled document — supersede rather than edit.</p>
+</footer>

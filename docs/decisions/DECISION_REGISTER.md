@@ -41,10 +41,17 @@ not get records.
 | [EDR-007](records/EDR-007-fail-safe-valve-polarity.md) | Fail-safe polarity for every fill, drain, diverter and master valve | ACCEPTED | RK-A, RK-A-WRS |
 | [EDR-008](records/EDR-008-type-a-rcbo.md) | Type A RCBO, not Type AC | ACCEPTED | RK-A, RK-A-ROOM |
 | [EDR-009](records/EDR-009-chelated-iron-under-uvc.md) | Fe-DTPA or Fe-EDDHA under UV-C, not Fe-EDTA | ACCEPTED | RK-A-WRS |
-| [EDR-010](records/EDR-010-rear-brace-true-length.md) | Rear brace `RK-A-104` is 1797 mm, not 1345 mm | ACCEPTED | RK-A |
+| [EDR-010](records/EDR-010-rear-brace-true-length.md) | Rear brace `RK-A-104` is 1797 mm, not 1345 mm | **SUPERSEDED by EDR-018** | RK-A |
 | [EDR-011](records/EDR-011-cad-relocation-method.md) | Relocate Fusion components by delete-and-recreate at absolute coordinates | ACCEPTED | Method |
 | [EDR-012](records/EDR-012-room-density-eleven-racks.md) | Ooty room carries 11 racks with the water plant external | ACCEPTED | RK-A-ROOM |
 | [EDR-013](records/EDR-013-terrace-tank-on-steel-structure.md) | Terrace tank on a steel structure, not bearing on the slab | ACCEPTED | RK-A-WRS, RK-A-ROOM |
+| [EDR-014](records/EDR-014-per-tier-cross-beams.md) | Per-tier cross beams reinstated; decks non-structural | ACCEPTED | RK-A |
+| [EDR-015](records/EDR-015-rivet-nut-gusset-joints.md) | Rivet-nut joints, `RK-A-107B` gusset plates, crush tubes, 4 N·m rule | ACCEPTED | RK-A, platform |
+| [EDR-016](records/EDR-016-valve-technology.md) | Zero-ΔP fill solenoids; motorised spring-return-open drain valves (alternatives to be trialled, ND-09) | ACCEPTED | RK-A, contracts |
+| [EDR-017](records/EDR-017-modular-anchor-strut.md) | Modular adjustable anchor strut `RK-A-106B`, 90–320 mm | ACCEPTED | RK-A, RK-A-ROOM |
+| [EDR-018](records/EDR-018-rear-brace-on-grid.md) | Rear brace 1810 mm, holes 1780.1 mm on grid rows 150/1450; two bars | ACCEPTED | RK-A |
+| [EDR-019](records/EDR-019-flood-tray-formed-geometry.md) | Flood tray modelled as the formed part; deck clearance holes; floor fall → ND-10 | ACCEPTED | RK-A |
+| [EDR-020](records/EDR-020-structural-details.md) | Foot insert, upright drain holes, LED saddles, flattened mesh, datum stack confirmed | ACCEPTED | RK-A |
 
 ## Interface change records
 
@@ -53,4 +60,7 @@ not get records.
 | [ICR-001](records/ICR-001-tray-to-drain-continuity.md) | Close the overflow discontinuity and model the tray penetrations | ACCEPTED | Hydraulic — tray → rack drain header |
 | [ICR-002](records/ICR-002-supply-interface-pumped-to-gravity.md) | Rack supply interface changes from pumped to gravity-fed | ACCEPTED | Hydraulic — rack inlet |
 | [ICR-003](records/ICR-003-recovery-interface-moved-to-shared-infra.md) | Recovery diverter and reservoirs leave rack scope for shared infrastructure | ACCEPTED | Hydraulic — rack drain outlet |
-| [ICR-004](records/ICR-004-plenum-interface-not-frozen.md) | Rack-to-plenum interface is deliberately not frozen | **OPEN** | Mechanical / electrical — plenum mount |
+| [ICR-004](records/ICR-004-plenum-interface-not-frozen.md) | Rack-to-plenum interface is deliberately not frozen (reserve now starts Y 571; header occupies X 1200–1250 of the zone) | **OPEN** | Mechanical / electrical — plenum mount |
+| [ICR-005](records/ICR-005-fill-nozzle-air-gap.md) | Fill nozzle outlet raised to 38 mm above the tray rim | ACCEPTED | Hydraulic — rack inlet side |
+| [ICR-006](records/ICR-006-drain-header-relocated.md) | Drain header behind the rear-right upright; lateral crossing windows; envelope unchanged | ACCEPTED | Mechanical depth allocation, hydraulic drain chain |
+| [ICR-007](records/ICR-007-acceptance-criteria-unified.md) | T7/T8/T16/T18 criteria unified; T19, T20 added | ACCEPTED | Verification, contracts |

@@ -2,10 +2,10 @@
 
 | Product | ID | Stage |
 |---|---|---|
-| CEA Rack Platform (Rack A) | `RK-A` | **Released — `RK-A R1`** |
+| CEA Rack Platform (Rack A) | `RK-A` | **Rev 6 (ECP-01) — re-validated; `RK-A R2` export pending** |
 
 The only fully engineered product Trophic has. Four tiers, 1456 × 690 × 1960 mm
-installed, 112.66 kg dry, released for prototype fabrication.
+installed, 136.4 kg dry (all systems), reviewed and revised 2026-09-10, heading for prototype fabrication on `RK-A R2`.
 
 See `rack-platform/PRODUCT.md` for the product definition and
 `rack-platform/CURRENT_STATE.md` for what is open.

@@ -1,0 +1,719 @@
+<title>Rack A Manufacturing Pack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#F2F5F6; --sheet:#FFFFFF; --sheet2:#E8EDEF; --sheet3:#DCE3E6;
+  --ink:#11171A; --ink2:#46545C; --ink3:#78868E;
+  --rule:#CBD5D9; --rule2:#A6B4BA;
+  --accent:#1F4E6B; --accent-soft:#DDE9F0;
+  --hold:#A8501A; --hold-soft:#F6E7D9;
+  --ok:#2C6249; --ok-soft:#DCEBE4;
+  --stop:#8E3227; --stop-soft:#F6E0DC;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+  --cond:"Barlow Condensed","Arial Narrow",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0C1113; --sheet:#121A1D; --sheet2:#182226; --sheet3:#1F2A2F;
+  --ink:#E6EDEF; --ink2:#A3B1B8; --ink3:#76848B;
+  --rule:#25333A; --rule2:#37474F;
+  --accent:#6FAECF; --accent-soft:#12252F;
+  --hold:#D3934F; --hold-soft:#2B1E12;
+  --ok:#6BB394; --ok-soft:#132720;
+  --stop:#D98577; --stop-soft:#2B1815;
+}}
+:root[data-theme="dark"]{
+  --paper:#0C1113; --sheet:#121A1D; --sheet2:#182226; --sheet3:#1F2A2F;
+  --ink:#E6EDEF; --ink2:#A3B1B8; --ink3:#76848B;
+  --rule:#25333A; --rule2:#37474F;
+  --accent:#6FAECF; --accent-soft:#12252F;
+  --hold:#D3934F; --hold-soft:#2B1E12;
+  --ok:#6BB394; --ok-soft:#132720;
+  --stop:#D98577; --stop-soft:#2B1815;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.prose{max-width:72ch}
+h1,h2,h3,h4{font-family:var(--cond);text-wrap:balance;margin:0;letter-spacing:.01em}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* title block */
+.tb{background:var(--sheet);border-bottom:2px solid var(--rule2)}
+.tb-in{max-width:1180px;margin:0 auto;padding:32px 24px 0}
+h1{font-size:clamp(34px,5.5vw,62px);font-weight:700;line-height:.95;text-transform:uppercase}
+.sub{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.dek{color:var(--ink2);max-width:64ch;margin:12px 0 24px;font-size:16.5px}
+.tbgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));border-top:1px solid var(--rule)}
+.tbgrid div{padding:10px 14px 12px;border-right:1px solid var(--rule)}
+.tbgrid div:last-child{border-right:0}
+.tbgrid dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.tbgrid dd{margin:3px 0 0;font-family:var(--cond);font-size:19px;font-weight:600}
+
+section{padding:46px 0;border-bottom:1px solid var(--rule)}
+.sn{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h2{font-size:clamp(24px,3.2vw,36px);font-weight:700;text-transform:uppercase;margin-bottom:10px}
+h3{font-family:var(--cond);font-size:21px;font-weight:600;text-transform:uppercase;margin:30px 0 8px;letter-spacing:.02em}
+h4{font-size:16px;font-weight:600;margin:18px 0 6px}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:1.2em}
+li{margin-bottom:5px}
+.lede{font-size:16.5px;color:var(--ink2);max-width:72ch;margin-bottom:6px}
+
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet);margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:13px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+   padding:9px 12px;background:var(--sheet2);border-bottom:1px solid var(--rule2);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:500}
+.m{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.n{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
+
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+     padding:2px 6px;border-radius:2px;font-weight:500;white-space:nowrap}
+.t-ok{background:var(--ok-soft);color:var(--ok)}
+.t-nv{background:var(--hold-soft);color:var(--hold)}
+.t-no{background:var(--stop-soft);color:var(--stop)}
+.t-n{background:var(--sheet3);color:var(--ink2)}
+
+.note{background:var(--sheet2);border-left:3px solid var(--accent);padding:14px 18px;margin:16px 0;font-size:14.5px;color:var(--ink2)}
+.note strong{color:var(--ink)}
+.warn{background:var(--hold-soft);border-left:3px solid var(--hold)}
+.stop{background:var(--stop-soft);border-left:3px solid var(--stop)}
+
+.dwg{background:var(--sheet);border:1px solid var(--rule2);padding:14px;margin:18px 0;overflow-x:auto}
+.dwg svg{display:block;width:100%;height:auto;min-width:620px}
+.cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);
+     margin-top:10px;padding-top:8px;border-top:1px solid var(--rule)}
+
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:16px 0}
+ol.steps > li{counter-increment:s;position:relative;padding:12px 0 12px 54px;border-bottom:1px solid var(--rule)}
+ol.steps > li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:11px;
+  font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);
+  background:var(--accent-soft);padding:2px 8px;border-radius:2px}
+ol.steps > li:last-child{border-bottom:0}
+ol.steps strong{font-family:var(--cond);font-size:17px;text-transform:uppercase;display:block;margin-bottom:2px;color:var(--ink)}
+
+.chk{list-style:none;padding:0;margin:14px 0}
+.chk li{padding:8px 0 8px 30px;border-bottom:1px solid var(--rule);position:relative;font-size:14px;color:var(--ink2)}
+.chk li::before{content:"";position:absolute;left:2px;top:11px;width:13px;height:13px;border:1.5px solid var(--rule2);border-radius:2px}
+.chk li:last-child{border-bottom:0}
+.chk b{color:var(--ink);font-weight:600}
+
+.grid2{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:18px 0;
+       grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid2>div{background:var(--sheet);padding:15px 17px}
+.grid2 h4{margin:0 0 5px}
+.grid2 p{font-size:14px;color:var(--ink2);margin:0}
+footer{padding:40px 0 60px;color:var(--ink3);font-size:13.5px}
+</style>
+
+<header class="tb">
+  <div class="tb-in">
+    <div class="sub">Doc RK-A-MFG · Rev 2 · 05 Sep 2026 · systems-integrated</div>
+    <h1>Rack A<br>Manufacturing Pack</h1>
+    <p class="dek">Modular CEA growing rack, 4-tier Grow configuration. Everything a fabricator, an assembler and a QC inspector needs to build and accept one unit. Derived from Fusion model <span class="m">CEA_RACK_INTEGRATED_v2</span> at Rev 5 — the systems-integrated rack, interference-clean. Structural drawings are issued separately as RK-A-DWG Rev 2; validation is recorded in RK-A-QC Rev 2.</p>
+    <dl class="tbgrid">
+      <div><dt>Installed</dt><dd>1456 × 690 × 1960</dd></div>
+      <div><dt>Tiers</dt><dd>4 · 16 trays</dd></div>
+      <div><dt>Mass, complete</dt><dd>112.7 kg</dd></div>
+      <div><dt>Parts in model</dt><dd>45 unique</dd></div>
+      <div><dt>Fasteners</dt><dd>208 structural</dd></div>
+      <div><dt>Validation</dt><dd>26 checks · 35 closed</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ===== 1 SPECIFICATION ===== -->
+<section>
+  <div class="sn">01 · Specification</div>
+  <h2>Final rack specification</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Parameter</th><th>Value</th><th>Basis</th></tr></thead><tbody>
+    <tr><td>Installed envelope</td><td class="m">1456 W × 690 D × 1960 H mm</td><td>Includes end-mounted electrical enclosure and rear plenum</td></tr>
+    <tr><td>Envelope, structure only</td><td class="m">1256 × 563 × 1960 mm</td><td>Frame, decks and trays — the set drawn in RK-A-DWG Rev 2</td></tr>
+    <tr><td>Envelope, Phase 1 build</td><td class="m">1456 × 648 × 1960 mm</td><td>Plenum deferred; <b>still set the room out at 690</b></td></tr>
+    <tr><td>Structural footprint</td><td class="m">1256 × 560 mm</td><td>Upright outer faces</td></tr>
+    <tr><td>Tiers</td><td class="m">4 (structure supports 3–5)</td><td>Uprights drilled for 5</td></tr>
+    <tr><td>Bed heights</td><td class="m">300 · 700 · 1100 · 1500 mm</td><td>Tray support surface</td></tr>
+    <tr><td>Shelf pitch</td><td class="m">400 mm</td><td>350 in the 5-tier build</td></tr>
+    <tr><td>Bed size</td><td class="m">1176 × 560 mm</td><td>4 × 1020 trays per tier</td></tr>
+    <tr><td>Tray standard</td><td class="m">1020, band 530–545 × 275–285 × 55–70</td><td>Design tray 536 × 279 × 64</td></tr>
+    <tr><td>Tray capacity</td><td class="m">16 trays</td><td>4 per tier</td></tr>
+    <tr><td>Rated shelf load</td><td class="m">80 kg UDL per tier</td><td>Governing service case 38.0 kg</td></tr>
+    <tr><td>Bed flatness under load</td><td class="m">≤ 3 mm; 0.50 mm in service</td><td>Flood-and-drain levelness</td></tr>
+    <tr><td>Irrigation</td><td class="m">Flood and drain, <b>closed loop</b></td><td>Flood 22 mm, dwell 10 min. Gravity supply from a terrace reservoir; RK-A-WRS Rev 3</td></tr>
+    <tr><td>Supply / tray drain / header</td><td class="m">DN25 / DN40 / DN50</td><td>Drain always exceeds supply; header sized for sequential tier draining</td></tr>
+    <tr><td>Overflow</td><td class="m">30 mm collar moulded into the tray, DN32 line</td><td>Sets flood depth mechanically. 11.9 L/min against 7.2 L/min fill</td></tr>
+    <tr><td>Wet-services corridor</td><td class="m">Y 435–525 mm from the front face</td><td>Forward of the rear bracing plane, clear of both LED rows</td></tr>
+    <tr><td>Valve fail-safe</td><td class="m">Fill normally CLOSED · drain normally OPEN</td><td>A power cut drains every bed and fills none</td></tr>
+    <tr><td>Flood volume</td><td class="m">14.5 L per tier</td><td>Freeboard 16.5 L</td></tr>
+    <tr><td>Lighting</td><td class="m">2 bars per tier, 144 mm to canopy</td><td>PPFD band 150–210 µmol·m⁻²·s⁻¹</td></tr>
+    <tr><td>Airflow</td><td class="m">178 m³/h per tier, 0.2–0.5 m/s canopy</td><td>Linear rear plenum</td></tr>
+    <tr><td>Electrical</td><td class="m">230 V 1-ph, 316 W, 1.37 A, 30 mA <b>Type A</b> RCBO</td><td>One feed per rack, local isolator. Type A, not AC — LED drivers give pulsating DC residual current</td></tr>
+    <tr><td>Floor clearance</td><td class="m">150 mm under lowest member</td><td>Cleanability</td></tr>
+    <tr><td>Frame material</td><td class="m">Pre-galvanised steel, mill finish</td><td>Powder coat optional</td></tr>
+    <tr><td>Accessory interface</td><td class="m">50 mm hole grid, Ø9, two faces</td><td>36 positions per upright face</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ===== 2 VALIDATION ===== -->
+<section>
+  <div class="sn">02 · Engineering validation</div>
+  <h2>Fifteen checks</h2>
+  <p class="lede prose">Every line is a calculation, not an opinion. Two items are not PASS and are called out below the table. <strong>No FEA has been run</strong> — these are closed-form calculations against the as-modelled geometry, which is appropriate for a determinate bolted frame at this scale but is stated plainly so nobody mistakes it for simulation.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>Check</th><th>Result</th><th>Criterion</th><th>Verdict</th></tr></thead><tbody>
+    <tr><td class="m">1</td><td>Static structural load — beam bending at 80 kg UDL</td><td class="m">σ = 37.3 MPa, SF 5.6</td><td class="m">fy 210 MPa (YST210)</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">2</td><td>Shelf deflection, service / fault / design</td><td class="m">0.50 / 0.85 / 1.79 mm</td><td class="m">≤ 3 mm flatness</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">3</td><td>Upright loading — compression and buckling</td><td class="m">2.31 MPa (SF 91); Pcr 746 kN (SF 1313)</td><td class="m">fy, Euler at Le 400 mm</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">4</td><td>Joint strength — 2 × M8 A2-70 per bracket</td><td class="m">shear SF 157, bearing SF 108</td><td class="m">98 N per bolt</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">5</td><td>Rack stability — seismic Zone III</td><td class="m">74 N·m vs 489 N·m restoring</td><td class="m">IS 1893, Ah 0.050</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">6</td><td>Tip-over — horizontal pull at top bed</td><td class="m">tips at 139 N empty, 307 N loaded</td><td class="m">H:D 3.48:1</td><td><span class="tag t-nv">Anchor</span></td></tr>
+    <tr><td class="m">7</td><td>Water loading — blocked drain</td><td class="m">38.0 kg tier; 16.5 L freeboard, 1.8 min</td><td class="m">solenoid must close &lt; 60 s</td><td><span class="tag t-nv">Commission</span></td></tr>
+    <tr><td class="m">8</td><td>Equipment loading — LED rail with 2 kg fixture</td><td class="m">0.93 mm over 1176 mm</td><td class="m">visually flat</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">9</td><td>LED heat clearance</td><td class="m">144 mm; air rise 1.0 K at 178 m³/h</td><td class="m">band 80–200 mm</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">10</td><td>Fan vibration — beam mode vs fan orders</td><td class="m">13.3 Hz vs 33.3 / 233 Hz</td><td class="m">no coincidence</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">11</td><td>Drainage — DN40 tray outlet under 22 mm head</td><td class="m">30.7 L/min vs 7.2 L/min fill, 4.3×</td><td class="m">drain &gt; fill; sequential tiers</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">12</td><td>Operator access</td><td class="m">343 mm opening; 560 mm reach; LI 0.50–0.72</td><td class="m">NIOSH LI ≤ 1.0</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">13</td><td>Cleaning access — floor clearance</td><td class="m">150 mm (was 90, corrected)</td><td class="m">150 mm target</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">14</td><td>Electrical / water separation</td><td class="m">236 mm vertical, IP65, 4 channels</td><td class="m">no shared route</td><td><span class="tag t-ok">Pass</span></td></tr>
+    <tr><td class="m">15</td><td>Manufacturability — processes and yield</td><td class="m">saw, punch, bolt; 2.5–12% waste in 3s</td><td class="m">Coimbatore capability</td><td><span class="tag t-ok">Pass</span></td></tr>
+    </tbody></table></div>
+
+  <div class="note warn"><strong>Check 6 — tip-over. Fit the wall anchors.</strong> An empty rack tips under a 139 N horizontal pull at the top bed — about 14 kg of force, which a person yanking a stuck tray will exceed without trying. Loaded it takes 307 N. Height-to-depth is 3.48:1, below the 4:1 threshold at which anchoring is normally mandated, so it is defensible as freestanding — but the empty case is genuinely marginal and the fix is trivial. <strong>RK-A-106 wall anchors are included in the BOM and are to be fitted, not optional.</strong> If a rack must stand free, the top tier is to be left unloaded and the rack labelled accordingly.</div>
+
+  <div class="note warn"><strong>Check 7 — the overflow interlock is a control specification, not a structural one.</strong> If the drain blocks with the supply running, the bed reaches the tray rim in 1.8 minutes. The tray contains it — no water reaches the floor — but only if the solenoid closes. The leak/level sensor and solenoid must be proven to shut off within 60 seconds during commissioning, deliberately, with a blocked drain. Until that test is signed off this is <span class="tag t-nv">Needs validation</span>.</div>
+
+  <div class="note"><strong>Also still open from the design phase:</strong> the depth-plane bracing. Removing the per-tier cross beams and relying on the decks as horizontal diaphragms plus the base frame is sound in principle and the tip-over numbers above assume it holds. It has not been checked by frame analysis. If the prototype shows racking under acceptance test <b>T16</b>, the fix is to restore the per-tier cross beams at ₹562.</div>
+  <div class="note warn"><strong>These fifteen checks are the structural set only.</strong> Systems integration added eleven more validation areas and produced <b>twenty-three Stage 1 findings, all closed</b> — including four criticals that no structural check could have found: a rear brace dimensioned 452 mm short, an overflow line with a 90 mm break in it, four tiers whose simultaneous drain exceeded the stack, and valve fail-safe polarity that had never been specified. The full register, with corrections and verification method for each, is <b>RK-A-QC Rev 2</b>. Read it before quoting this pack.</div>
+</section>
+
+<!-- ===== 3 GENERAL ARRANGEMENT ===== -->
+<section>
+  <div class="sn">03 · General arrangement</div>
+  <h2>GA drawing</h2>
+  <div class="dwg">
+  <svg viewBox="0 0 2560 2320" role="img" aria-label="General arrangement: front and side elevation with principal dimensions">
+    <defs>
+      <marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+        <path d="M0,1 L9,4.5 L0,8 Z" fill="var(--ink2)"/>
+      </marker>
+      <marker id="ar2" markerWidth="9" markerHeight="9" refX="1" refY="4.5" orient="auto">
+        <path d="M9,1 L0,4.5 L9,8 Z" fill="var(--ink2)"/>
+      </marker>
+    </defs>
+    <g font-family="IBM Plex Mono, monospace" font-size="30" fill="var(--ink2)">
+
+    <!-- ============ FRONT ELEVATION, origin x=300 baseline y=2110 ============ -->
+    <text x="300" y="120" font-size="38" fill="var(--accent)" font-weight="600">FRONT ELEVATION</text>
+    <text x="300" y="160" font-size="26" fill="var(--ink3)">4-TIER GROW · SCALE 1:1 IN MM</text>
+
+    <!-- floor -->
+    <line x1="200" y1="2110" x2="1700" y2="2110" stroke="var(--rule2)" stroke-width="4"/>
+    <g stroke="var(--rule2)" stroke-width="2">
+      <line x1="220" y1="2110" x2="200" y2="2140"/><line x1="280" y1="2110" x2="260" y2="2140"/>
+      <line x1="340" y1="2110" x2="320" y2="2140"/><line x1="1560" y1="2110" x2="1540" y2="2140"/>
+      <line x1="1620" y1="2110" x2="1600" y2="2140"/><line x1="1680" y1="2110" x2="1660" y2="2140"/>
+    </g>
+
+    <!-- feet -->
+    <rect x="295" y="2100" width="50" height="10" fill="var(--ink3)"/>
+    <rect x="1511" y="2100" width="50" height="10" fill="var(--ink3)"/>
+
+    <!-- uprights -->
+    <rect x="300" y="160" width="40" height="1940" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="3"/>
+    <rect x="1516" y="160" width="40" height="1940" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="3"/>
+    <!-- hole grid ticks -->
+    <g fill="var(--ink3)">
+      <circle cx="320" cy="1960" r="5"/><circle cx="320" cy="1910" r="5"/><circle cx="320" cy="1860" r="5"/>
+      <circle cx="320" cy="1810" r="5"/><circle cx="320" cy="1760" r="5"/><circle cx="320" cy="1710" r="5"/>
+      <circle cx="320" cy="1660" r="5"/><circle cx="320" cy="1610" r="5"/><circle cx="320" cy="1560" r="5"/>
+      <circle cx="320" cy="1510" r="5"/><circle cx="320" cy="1460" r="5"/><circle cx="320" cy="1410" r="5"/>
+      <circle cx="320" cy="1360" r="5"/><circle cx="320" cy="1310" r="5"/><circle cx="320" cy="1260" r="5"/>
+      <circle cx="320" cy="1210" r="5"/><circle cx="320" cy="1160" r="5"/><circle cx="320" cy="1110" r="5"/>
+      <circle cx="320" cy="1060" r="5"/><circle cx="320" cy="1010" r="5"/><circle cx="320" cy="960" r="5"/>
+      <circle cx="320" cy="910" r="5"/><circle cx="320" cy="860" r="5"/><circle cx="320" cy="810" r="5"/>
+      <circle cx="320" cy="760" r="5"/><circle cx="320" cy="710" r="5"/><circle cx="320" cy="660" r="5"/>
+      <circle cx="320" cy="610" r="5"/><circle cx="320" cy="560" r="5"/><circle cx="320" cy="510" r="5"/>
+      <circle cx="320" cy="460" r="5"/><circle cx="320" cy="410" r="5"/><circle cx="320" cy="360" r="5"/>
+      <circle cx="320" cy="310" r="5"/><circle cx="320" cy="260" r="5"/><circle cx="320" cy="210" r="5"/>
+      <circle cx="1536" cy="1960" r="5"/><circle cx="1536" cy="1810" r="5"/><circle cx="1536" cy="1660" r="5"/>
+      <circle cx="1536" cy="1510" r="5"/><circle cx="1536" cy="1360" r="5"/><circle cx="1536" cy="1210" r="5"/>
+      <circle cx="1536" cy="1060" r="5"/><circle cx="1536" cy="910" r="5"/><circle cx="1536" cy="760" r="5"/>
+      <circle cx="1536" cy="610" r="5"/><circle cx="1536" cy="460" r="5"/><circle cx="1536" cy="310" r="5"/>
+    </g>
+
+    <!-- tiers: beam + deck + tray. bed z=300 -> y=1810 -->
+    <g>
+      <!-- tier 1 -->
+      <rect x="340" y="1837" width="1176" height="30" fill="var(--sheet2)" stroke="var(--ink2)" stroke-width="3"/>
+      <rect x="340" y="1812" width="1176" height="25" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="340" y="1763" width="1176" height="47" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+      <rect x="340" y="1465" width="1176" height="20" fill="var(--ink3)"/>
+      <!-- tier 2 -->
+      <rect x="340" y="1437" width="1176" height="30" fill="var(--sheet2)" stroke="var(--ink2)" stroke-width="3"/>
+      <rect x="340" y="1412" width="1176" height="25" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="340" y="1363" width="1176" height="47" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+      <rect x="340" y="1065" width="1176" height="20" fill="var(--ink3)"/>
+      <!-- tier 3 -->
+      <rect x="340" y="1037" width="1176" height="30" fill="var(--sheet2)" stroke="var(--ink2)" stroke-width="3"/>
+      <rect x="340" y="1012" width="1176" height="25" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="340" y="963" width="1176" height="47" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+      <rect x="340" y="665" width="1176" height="20" fill="var(--ink3)"/>
+      <!-- tier 4 -->
+      <rect x="340" y="637" width="1176" height="30" fill="var(--sheet2)" stroke="var(--ink2)" stroke-width="3"/>
+      <rect x="340" y="612" width="1176" height="25" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="340" y="563" width="1176" height="47" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+      <rect x="340" y="265" width="1176" height="20" fill="var(--ink3)"/>
+    </g>
+    <!-- base frame z=150..180 -->
+    <rect x="340" y="1930" width="1176" height="30" fill="var(--sheet2)" stroke="var(--ink2)" stroke-width="3"/>
+    <!-- wall anchors -->
+    <rect x="300" y="230" width="40" height="8" fill="var(--hold)"/>
+    <rect x="1516" y="230" width="40" height="8" fill="var(--hold)"/>
+
+    <!-- vertical dimension chain, left -->
+    <g stroke="var(--ink2)" stroke-width="2" fill="none">
+      <line x1="240" y1="2110" x2="240" y2="1930" marker-start="url(#ar2)" marker-end="url(#ar)"/>
+      <line x1="240" y1="1810" x2="240" y2="1410" marker-start="url(#ar2)" marker-end="url(#ar)"/>
+      <line x1="160" y1="2110" x2="160" y2="1810" marker-start="url(#ar2)" marker-end="url(#ar)"/>
+      <line x1="80"  y1="2110" x2="80"  y2="160"  marker-start="url(#ar2)" marker-end="url(#ar)"/>
+    </g>
+    <text x="252" y="2028" font-size="27">150</text>
+    <text x="252" y="1618" font-size="27">400 PITCH</text>
+    <text x="172" y="1968" font-size="27">300</text>
+    <text x="30" y="1140" font-size="30" transform="rotate(-90 30 1140)" text-anchor="middle">1950 RACK HEIGHT</text>
+
+    <!-- bed height leaders -->
+    <g stroke="var(--rule2)" stroke-width="1.5" stroke-dasharray="10 8">
+      <line x1="1516" y1="1810" x2="1760" y2="1810"/><line x1="1516" y1="1410" x2="1760" y2="1410"/>
+      <line x1="1516" y1="1010" x2="1760" y2="1010"/><line x1="1516" y1="610"  x2="1760" y2="610"/>
+    </g>
+    <g font-size="27" fill="var(--accent)">
+      <text x="1772" y="1820">BED 1 · 300</text><text x="1772" y="1420">BED 2 · 700</text>
+      <text x="1772" y="1020">BED 3 · 1100</text><text x="1772" y="620">BED 4 · 1500</text>
+    </g>
+
+    <!-- width dimension -->
+    <g stroke="var(--ink2)" stroke-width="2" fill="none">
+      <line x1="300" y1="2200" x2="1556" y2="2200" marker-start="url(#ar2)" marker-end="url(#ar)"/>
+      <line x1="340" y1="2270" x2="1516" y2="2270" marker-start="url(#ar2)" marker-end="url(#ar)"/>
+    </g>
+    <text x="928" y="2190" font-size="30" text-anchor="middle">1256 OVERALL</text>
+    <text x="928" y="2260" font-size="27" text-anchor="middle">1176 BED · 4 × 1020 TRAY</text>
+
+    <!-- ============ SIDE ELEVATION, origin x=2000 ============ -->
+    <text x="1980" y="120" font-size="38" fill="var(--accent)" font-weight="600">SIDE ELEVATION</text>
+    <text x="1980" y="160" font-size="26" fill="var(--ink3)">LEFT HAND · AIRFLOW SHOWN</text>
+    <line x1="1930" y1="2110" x2="2620" y2="2110" stroke="var(--rule2)" stroke-width="4"/>
+    <rect x="1995" y="2100" width="50" height="10" fill="var(--ink3)"/>
+    <rect x="2515" y="2100" width="50" height="10" fill="var(--ink3)"/>
+    <!-- front and rear uprights -->
+    <rect x="2000" y="160" width="40" height="1940" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="3"/>
+    <rect x="2520" y="160" width="40" height="1940" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="3"/>
+    <!-- beds seen edge on -->
+    <g>
+      <rect x="2000" y="1763" width="560" height="47" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+      <rect x="2000" y="1363" width="560" height="47" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+      <rect x="2000" y="963"  width="560" height="47" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+      <rect x="2000" y="563"  width="560" height="47" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+    </g>
+    <!-- rear plenum + panel -->
+    <rect x="2563" y="160" width="14" height="1940" fill="var(--ok-soft)" stroke="var(--ok)" stroke-width="3"/>
+    <text x="2596" y="1100" font-size="26" fill="var(--ok)" transform="rotate(-90 2596 1100)" text-anchor="middle">REAR PANEL / PLENUM FACE</text>
+    <!-- airflow arrows -->
+    <g stroke="var(--ok)" stroke-width="3" fill="none" marker-end="url(#ar)">
+      <line x1="2545" y1="1740" x2="2120" y2="1740"/>
+      <line x1="2545" y1="1340" x2="2120" y2="1340"/>
+      <line x1="2545" y1="940"  x2="2120" y2="940"/>
+      <line x1="2545" y1="540"  x2="2120" y2="540"/>
+    </g>
+    <!-- LED bars edge on -->
+    <g fill="var(--ink3)">
+      <rect x="2150" y="1465" width="60" height="20"/><rect x="2350" y="1465" width="60" height="20"/>
+      <rect x="2150" y="1065" width="60" height="20"/><rect x="2350" y="1065" width="60" height="20"/>
+      <rect x="2150" y="665"  width="60" height="20"/><rect x="2350" y="665"  width="60" height="20"/>
+      <rect x="2150" y="265"  width="60" height="20"/><rect x="2350" y="265"  width="60" height="20"/>
+    </g>
+    <rect x="2000" y="1930" width="560" height="30" fill="var(--sheet2)" stroke="var(--ink2)" stroke-width="3"/>
+    <!-- depth dims -->
+    <g stroke="var(--ink2)" stroke-width="2" fill="none">
+      <line x1="2000" y1="2200" x2="2560" y2="2200" marker-start="url(#ar2)" marker-end="url(#ar)"/>
+      <line x1="2000" y1="2270" x2="2577" y2="2270" marker-start="url(#ar2)" marker-end="url(#ar)"/>
+    </g>
+    <text x="2280" y="2190" font-size="30" text-anchor="middle">560 BED DEPTH</text>
+    <text x="2288" y="2260" font-size="27" text-anchor="middle">570 OVERALL</text>
+    <!-- LED clearance callout -->
+    <g stroke="var(--accent)" stroke-width="2" fill="none">
+      <line x1="2300" y1="1485" x2="2300" y2="1629" marker-start="url(#ar2)" marker-end="url(#ar)"/>
+    </g>
+    <text x="2318" y="1566" font-size="26" fill="var(--accent)">144 LED→CANOPY</text>
+    </g>
+  </svg>
+  <div class="cap">RK-A-000 · General arrangement · all dimensions mm · derived from the Fusion model, not re-drawn</div>
+  </div>
+</section>
+
+<!-- ===== 4 TIER SECTION ===== -->
+<section>
+  <div class="sn">04 · Tier section</div>
+  <h2>The stack, tier by tier</h2>
+  <p class="lede prose">This is the drawing that matters most on the shop floor, because every vertical dimension in the rack is set by it. Datum is the bed — the tray support surface.</p>
+  <div class="dwg">
+  <svg viewBox="0 0 1500 700" role="img" aria-label="Tier section showing vertical build-up from beam to LED rail">
+    <defs>
+      <marker id="tar" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+        <path d="M0,1 L9,4.5 L0,8 Z" fill="var(--ink2)"/>
+      </marker>
+      <marker id="tar2" markerWidth="9" markerHeight="9" refX="1" refY="4.5" orient="auto">
+        <path d="M9,1 L0,4.5 L9,8 Z" fill="var(--ink2)"/>
+      </marker>
+    </defs>
+    <g font-family="IBM Plex Mono, monospace" font-size="21" fill="var(--ink2)">
+      <line x1="120" y1="470" x2="1180" y2="470" stroke="var(--accent)" stroke-width="3" stroke-dasharray="14 8"/>
+      <text x="1195" y="477" fill="var(--accent)" font-size="22">BED DATUM 0</text>
+
+      <rect x="200" y="527" width="900" height="60" fill="var(--sheet2)" stroke="var(--ink2)" stroke-width="3"/>
+      <text x="1120" y="565" font-size="20">BEAM 30×30×1.5 · −56.6 to −26.6</text>
+      <rect x="200" y="477" width="900" height="50" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="2"/>
+      <text x="1120" y="510" font-size="20">DECK RAIL 25×25×1.5 · −26.6 to −1.6</text>
+      <rect x="200" y="468" width="900" height="9" fill="var(--ok-soft)" stroke="var(--ok)" stroke-width="2"/>
+      <text x="1120" y="462" font-size="20" fill="var(--ok)">MESH PANEL 1.6 · TOP FACE = DATUM</text>
+
+      <rect x="200" y="376" width="900" height="94" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+      <text x="215" y="432" font-size="21" fill="var(--accent)">FLOOD TRAY · RIM 47 · FLOOD 22</text>
+      <rect x="230" y="404" width="840" height="44" fill="var(--sheet)" stroke="var(--ink2)" stroke-width="2"/>
+      <line x1="230" y1="426" x2="1070" y2="426" stroke="var(--accent)" stroke-width="2" stroke-dasharray="8 6"/>
+      <text x="1120" y="420" font-size="20">1020 TRAY 64 HIGH</text>
+
+      <rect x="260" y="331" width="780" height="45" fill="var(--ok-soft)" stroke="var(--ok)" stroke-width="2"/>
+      <text x="1120" y="360" font-size="20" fill="var(--ok)">CANOPY · +139</text>
+
+      <rect x="380" y="147" width="180" height="40" fill="var(--ink3)"/>
+      <rect x="740" y="147" width="180" height="40" fill="var(--ink3)"/>
+      <text x="1120" y="175" font-size="20">LED FIXTURE · +283 to +323</text>
+      <rect x="380" y="127" width="180" height="20" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="740" y="127" width="180" height="20" fill="var(--sheet3)" stroke="var(--ink2)" stroke-width="2"/>
+      <text x="1120" y="132" font-size="20">LED RAIL 20×20 · +325 to +345</text>
+
+      <line x1="120" y1="127" x2="1180" y2="127" stroke="var(--ink2)" stroke-width="3"/>
+      <text x="1195" y="120" font-size="20">TIER ABOVE · +345</text>
+
+      <g stroke="var(--accent)" stroke-width="2" fill="none">
+        <line x1="160" y1="331" x2="160" y2="187" marker-start="url(#tar2)" marker-end="url(#tar)"/>
+      </g>
+      <text x="60" y="264" font-size="21" fill="var(--accent)">144</text>
+      <g stroke="var(--ink2)" stroke-width="2" fill="none">
+        <line x1="100" y1="470" x2="100" y2="127" marker-start="url(#tar2)" marker-end="url(#tar)"/>
+      </g>
+      <text x="40" y="300" font-size="21">345</text>
+    </g>
+  </svg>
+  <div class="cap">RK-A-001 · Tier section · dimensions relative to bed datum · 400 mm pitch</div>
+  </div>
+  <div class="note"><strong>The one rule a fabricator must not break:</strong> the mesh panel top face <em>is</em> the bed datum. Everything below it (deck rail, beam) hangs from that face, and everything above it (tray, canopy, LED) is measured up from it. Build the deck to the datum, not to the beam.</div>
+</section>
+
+<!-- ===== 5 PART SCHEDULE ===== -->
+<section>
+  <div class="sn">05 · Part schedule</div>
+  <h2>Part-by-part specification</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Part no.</th><th>Description</th><th>Material / section</th><th>Cut size</th><th>Qty</th><th>Mass</th><th>Process</th></tr></thead><tbody>
+    <tr><td class="m">RK-A-101</td><td>Upright</td><td>GI SHS 40×40×1.6</td><td class="m">1950</td><td class="n">4</td><td class="n">3.65</td><td>Saw, punch 2 faces, deburr, cap</td></tr>
+    <tr><td class="m">RK-A-102</td><td>Beam, long</td><td>GI SHS 30×30×1.5</td><td class="m">1176</td><td class="n">10</td><td class="n">1.58</td><td>Saw, punch ends, deburr</td></tr>
+    <tr><td class="m">RK-A-103</td><td>Beam, short (base)</td><td>GI SHS 30×30×1.5</td><td class="m">480</td><td class="n">2</td><td class="n">0.64</td><td>Saw, punch ends, deburr</td></tr>
+    <tr><td class="m">RK-A-104</td><td>Rear X-brace pair</td><td>GI flat 25×3</td><td class="m">1797 × 2 <b>corrected</b></td><td class="n">1</td><td class="n">2.12</td><td>Laser or shear, punch, deburr</td></tr>
+    <tr><td class="m">RK-A-105</td><td>Levelling foot</td><td>M12 nylon-base adj. foot</td><td class="m">Ø50 × 60</td><td class="n">4</td><td class="n">0.16</td><td>Bought out</td></tr>
+    <tr><td class="m">RK-A-106</td><td>Wall anchor bracket</td><td>GI plate 4 mm</td><td class="m">60 × 60</td><td class="n">2</td><td class="n">0.15</td><td>Laser, bend, slot</td></tr>
+    <tr><td class="m">RK-A-107</td><td>Beam-end L-bracket</td><td>GI plate 3 mm</td><td class="m">50 × 50 × 40</td><td class="n">12</td><td class="n">0.07</td><td>Laser, bend, punch</td></tr>
+    <tr><td class="m">RK-A-201</td><td>Deck rail, long</td><td>GI SHS 25×25×1.5</td><td class="m">1176</td><td class="n">8</td><td class="n">1.30</td><td>Saw, punch, deburr</td></tr>
+    <tr><td class="m">RK-A-202</td><td>Deck rail, cross</td><td>GI SHS 25×25×1.5</td><td class="m">510</td><td class="n">16</td><td class="n">0.56</td><td>Saw, punch, deburr</td></tr>
+    <tr><td class="m">RK-A-203</td><td>Deck mesh panel</td><td>GI expanded mesh 1.6, 76% open</td><td class="m">1176 × 560</td><td class="n">4</td><td class="n">1.98</td><td>Shear, edge fold, rivet</td></tr>
+    <tr><td class="m">RK-A-301</td><td>LED mounting rail <span class="tag t-nv">drawing held</span></td><td>Al 6061 SHS 20×20×1.5</td><td class="m">1176</td><td class="n">8</td><td class="n">0.35</td><td>Saw, drill, deburr</td></tr>
+    <tr><td class="m">RK-A-401</td><td>Flood tray, wet module</td><td>HDPE 3 mm, natural white</td><td class="m">1176 × 560 × 47</td><td class="n">4</td><td class="n">2.31</td><td>Thermoform — collar and both bosses formed in the tool</td></tr>
+    <tr><td class="m">RK-A-402</td><td>Tray drain bulkhead</td><td>PP tank connector, EPDM wet-face washer</td><td class="m">DN40</td><td class="n">4</td><td class="n">0.04</td><td>Bought out</td></tr>
+    <tr><td class="m">RK-A-403</td><td>Tray strainer, lift-out</td><td>SS316 mesh dome</td><td class="m">Ø40 × 22</td><td class="n">4</td><td class="n">0.10</td><td>Bought out or press-formed</td></tr>
+    <tr><td class="m">RK-A-404</td><td>Overflow bulkhead</td><td>PP tank connector, EPDM wet-face washer</td><td class="m">DN32</td><td class="n">4</td><td class="n">0.03</td><td>Bought out</td></tr>
+    <tr><td class="m">RK-A-501</td><td>Plenum face / reflector <span class="tag t-nv">Phase 2</span></td><td>White PP 2 mm</td><td class="m">1040 × 170</td><td class="n">4</td><td class="n">0.34</td><td>Shear, punch, perforate — pattern set by the commissioning velocity traverse</td></tr>
+    <tr><td class="m">RK-A-502</td><td>Reflective panel, side <span class="tag t-nv">optional</span></td><td>White PP 2 mm</td><td class="m">465 × 225</td><td class="n">8</td><td class="n">0.20</td><td>Shear, punch</td></tr>
+    </tbody></table></div>
+
+  <h3>Upright hole pattern — RK-A-101</h3>
+  <p class="prose">This is the accessory interface and the single most important feature in the rack. Get it wrong and nothing else fits.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Feature</th><th>Specification</th></tr></thead><tbody>
+    <tr><td>Hole diameter</td><td class="m">Ø9.0 +0.2 / −0.0 (M8 clearance)</td></tr>
+    <tr><td>Pitch</td><td class="m">50.0 ± 0.2 mm cumulative over any 400 mm</td></tr>
+    <tr><td>First hole</td><td class="m">150 mm from the foot end</td></tr>
+    <tr><td>Count per face</td><td class="m">36 (150 to 1900)</td></tr>
+    <tr><td>Faces</td><td class="m">Two adjacent faces, holes on the section centreline</td></tr>
+    <tr><td>Through condition</td><td class="m">Through both walls, in line, single hit</td></tr>
+    <tr><td>Edge distance</td><td class="m">15.5 mm to face edge (min 1.5 × d = 12)</td></tr>
+    <tr><td>Burr</td><td class="m">Both sides, ≤ 0.1 mm — a burr inside the tube is a water trap</td></tr>
+    </tbody></table></div>
+  <div class="note warn"><strong>Cumulative pitch, not incremental.</strong> Measure every hole from the datum end, never hole-to-hole. A 0.2 mm error repeated 36 times is 7 mm at the top, and the four uprights will no longer accept a common beam.</div>
+</section>
+
+<!-- ===== 6 BOM / MATERIALS ===== -->
+<section>
+  <div class="sn">06 · BOM and materials</div>
+  <h2>Bill of materials</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Item</th><th>Part no.</th><th>Qty</th><th>Material specification</th><th>Source</th></tr></thead><tbody>
+    <tr><td>Structural sections</td><td class="m">101–103</td><td class="n">16</td><td>Pre-galvanised steel hollow section to IS 4923, grade YST210 min, Z275 coating</td><td>Local, stocked</td></tr>
+    <tr><td>Deck sections</td><td class="m">201–202</td><td class="n">24</td><td>Pre-galvanised SHS 25×25×1.5, IS 4923</td><td>Local, stocked</td></tr>
+    <tr><td>Expanded mesh</td><td class="m">203</td><td class="n">4</td><td>GI expanded metal, 1.6 mm, ≥ 70% open area</td><td>Local</td></tr>
+    <tr><td>Flat bar</td><td class="m">104</td><td class="n">2</td><td>GI flat 25 × 3 mm</td><td>Local</td></tr>
+    <tr><td>Plate parts</td><td class="m">106–107</td><td class="n">14</td><td>GI sheet 3 mm and 4 mm</td><td>Local laser</td></tr>
+    <tr><td>Aluminium rail</td><td class="m">301</td><td class="n">8</td><td>Al 6061-T6 SHS 20×20×1.5, mill or clear anodised</td><td>Local extruder</td></tr>
+    <tr><td>Flood tray</td><td class="m">401</td><td class="n">4</td><td>HDPE 3 mm, food-contact grade, natural / white, resin traceable</td><td>Thermoformer</td></tr>
+    <tr><td>Reflective panels</td><td class="m">501–502</td><td class="n">12</td><td>White PP sheet 2 mm, matte, ≥ 85% diffuse reflectance</td><td>Local</td></tr>
+    <tr><td>Levelling feet</td><td class="m">105</td><td class="n">4</td><td>M12 × 60 adjustable, nylon base, ±20 mm</td><td>Bought out</td></tr>
+    <tr><td>Fasteners</td><td class="m">—</td><td class="n">208</td><td>See §07</td><td>Bought out</td></tr>
+    </tbody></table></div>
+  <div class="note"><strong>Two material clauses that are not negotiable.</strong> The flood tray must be food-contact grade with documented resin traceability — it is the only part in the rack the crop touches. And every cut end of galvanised section exposes bare steel: ends are either capped (uprights, RK-A-101) or sealed with zinc-rich touch-up (all others) before assembly. This is exactly what commercial greenhouse benching does and it is what makes mill-finish GI acceptable in a wet room.</div>
+</section>
+
+<!-- ===== 7 FASTENERS ===== -->
+<section>
+  <div class="sn">07 · Fasteners</div>
+  <h2>Fastener schedule</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Application</th><th>Fastener</th><th>Qty</th><th>Torque</th></tr></thead><tbody>
+    <tr><td>Beam to upright, 24 joints × 2</td><td class="m">M8 × 20 hex, SS304 A2-70 + flange nut</td><td class="n">48</td><td class="m">18 N·m</td></tr>
+    <tr><td>Deck long rail to beam, 16 ends</td><td class="m">M8 × 20 hex, SS304 + flange nut</td><td class="n">16</td><td class="m">18 N·m</td></tr>
+    <tr><td>Deck cross to long rail, 32 ends</td><td class="m">M8 × 20 hex, SS304 + flange nut</td><td class="n">32</td><td class="m">18 N·m</td></tr>
+    <tr><td>Rear brace to upright, 4 ends × 2</td><td class="m">M8 × 20 hex, SS304 + flange nut</td><td class="n">8</td><td class="m">18 N·m</td></tr>
+    <tr><td>LED rail to grid, 8 rails × 2</td><td class="m">M8 × 20 hex, SS304 + flange nut</td><td class="n">16</td><td class="m">12 N·m</td></tr>
+    <tr><td>Wall anchor to upright</td><td class="m">M8 × 20 hex, SS304 + flange nut</td><td class="n">4</td><td class="m">18 N·m</td></tr>
+    <tr><td>Wall anchor to wall</td><td class="m">M8 masonry anchor, min 60 mm embed</td><td class="n">4</td><td class="m">per anchor maker</td></tr>
+    <tr><td>Levelling feet</td><td class="m">M12 × 60 adjustable foot</td><td class="n">4</td><td class="m">hand + locknut</td></tr>
+    <tr><td>Deck mesh to deck frame</td><td class="m">4.8 mm blind rivet, SS</td><td class="n">32</td><td class="m">—</td></tr>
+    <tr><td>Reflective panels to grid</td><td class="m">M6 × 16 + penny washer, SS304</td><td class="n">48</td><td class="m">6 N·m</td></tr>
+    </tbody></table></div>
+  <div class="note warn"><strong>208 fasteners is high, and it is the honest number.</strong> All-stainless was a deliberate call — a rusting bolt in a food room is not worth the ₹330 saved by mixing grades. But the count is a real assembly-time cost, and it is the strongest argument for the v2 tooling: a formed keyhole beam-end removes 48 M8, and a tabbed deck cross rail removes a further 32. That is 38% of the fastener count gone, along with most of the assembly labour.</div>
+</section>
+
+<!-- ===== 8 CUT LIST ===== -->
+<section>
+  <div class="sn">08 · Cut list</div>
+  <h2>Nested cut list</h2>
+  <p class="lede prose">Order material in batches of three racks. On a single rack, offcut waste runs 22–35%; nested across three it falls to 2.5–12%, and the uprights alone go from 35% waste to 2.5%.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Stock</th><th>Cuts required, 1 rack</th><th>Bars, 1 rack</th><th>Waste</th><th>Bars, 3 racks</th><th>Waste</th></tr></thead><tbody>
+    <tr><td>GI SHS 40×40×1.6, 6 m</td><td class="m">4 × 1950</td><td class="n">2</td><td class="n">35.0%</td><td class="n">4</td><td class="n">2.5%</td></tr>
+    <tr><td>GI SHS 30×30×1.5, 6 m</td><td class="m">10 × 1176 · 2 × 480</td><td class="n">3</td><td class="n">29.3%</td><td class="n">7</td><td class="n">9.1%</td></tr>
+    <tr><td>GI SHS 25×25×1.5, 6 m</td><td class="m">8 × 1176 · 16 × 510</td><td class="n">4</td><td class="n">26.8%</td><td class="n">10</td><td class="n">12.2%</td></tr>
+    <tr><td>Al SHS 20×20×1.5, 6 m</td><td class="m">8 × 1176</td><td class="n">2</td><td class="n">21.6%</td><td class="n">5</td><td class="n">5.9%</td></tr>
+    <tr><td>GI flat 25×3</td><td class="m">2 × 1797</td><td class="n">1</td><td class="n">40.1%</td><td class="n">2</td><td class="n">10.2%</td></tr>
+    <tr><td>GI sheet 3 / 4 mm</td><td class="m">12 brackets · 2 anchors</td><td class="n">nest</td><td class="n">—</td><td class="n">nest</td><td class="n">—</td></tr>
+    </tbody></table></div>
+  <div class="note warn"><strong>The brace length changed in Rev 2.</strong> RK-A-104 was cut at 1345 mm in Rev 1 and is <b>1797 mm</b> — the diagonal of a 1195 × 1342 opening. A 1345 mm brace cannot be fitted at all. It also improves the nest: three racks now waste 10.2% of the flat bar instead of 32.8%.</div>
+  <div class="note"><strong>Saw allowance:</strong> add 3 mm kerf per cut when issuing to the shop. The nesting above already assumes it is absorbed in the waste figure. Cut all four uprights from the same bar batch so any mill tolerance is common to the set.</div>
+</section>
+
+<!-- ===== 9 SUBSYSTEMS ===== -->
+<section>
+  <div class="sn">09 · Subsystems</div>
+  <h2>Subsystem layouts</h2>
+
+  <p class="lede prose">Every subsystem below is modelled in <span class="m">CEA_RACK_INTEGRATED_v2 Rev 5</span> and is interference-clean against the structure. Positions are given from the rack origin: X along the width from the left end, Y from the front face, Z from the floor.</p>
+  <div class="grid2">
+    <div><h4>LED mounting</h4><p>Two RK-A-301 rails per tier at Y 168 and 372, bolted to the <strong>underside of the tier above</strong> — not to their own supports, which is what caused the original 4 mm clash. Only the top tier gets a dedicated rail. Fixtures hang on M8 threaded-rod hangers giving continuous trim; as built, 144 mm to canopy. Drivers remote in the end enclosure, 48 V DC to the tier, IP65 keyed connector.</p></div>
+    <div><h4>Ventilation — Phase 1</h4><p><strong>Standalone EC fans.</strong> One 120 × 120 × 38 fan per tier on a grid-mounted bracket at the rear-right of the bed, 178 m³/h. Expect a canopy velocity CV near 33% from a point source. <strong>Traverse five points per tier at commissioning</strong> — that measurement is the design input for the Phase 2 plenum, not just an acceptance check.</p></div>
+    <div><h4>Ventilation — Phase 2</h4><p>Folded 0.8 mm GI plenum, 1040 × 120 × 170 at Y 565–685, the fan moving into its end cap and the perforated face RK-A-501 at Y 563–565. Same air, distributed along the full 1176 mm, CV about 10%. Bolts to the same grid holes the Phase 1 bracket uses. Adds 42 mm to installed depth — which is why the room is set out at 690 from the start.</p></div>
+    <div><h4>Irrigation</h4><p>DN25 riser on the left, X 57–83, fed by gravity from the terrace reservoir. Fill manifold at Z 1000–1300 with all four solenoids grouped at working height. DN20 drop per tier to a nozzle discharging <strong>above the tray rim</strong> — a physical air gap at all sixteen fill points, so back-siphonage is prevented by geometry, not by a check valve. 14.5 L per tier, 10 minute dwell.</p></div>
+    <div><h4>Drainage</h4><p>All wet services in one corridor at <span class="m">Y 435–525</span>, forward of the rear bracing plane. Each tray drains through a DN40 bulkhead with a lift-out strainer, down to a drain solenoid, across to the DN50 vertical header, and out over a <strong>100 mm air gap</strong> into the tundish at 170 mm. The overflow runs in parallel from the moulded 30 mm collar through its own DN32 bulkhead — two independent penetrations, so a blocked drain still has a path.</p></div>
+    <div><h4>Sensors and electrical</h4><p>T/RH node on the right end face at Z 1200; leak puck in the base pan; header high-level switch at 250 mm. Electrical is all at the <strong>left end</strong>: IP65 enclosure at Z 1700–1900 with the isolator on its front face, cable channel down the left end, per-tier trays. Nothing at mains potential exists below canopy — the tier is 24 V and 48 V only.</p></div>
+  </div>
+</section>
+
+<!-- ===== 10 FABRICATION ===== -->
+<section>
+  <div class="sn">10 · Fabrication</div>
+  <h2>Fabrication instructions</h2>
+  <div class="note"><strong>There is no welding in this rack.</strong> Every structural joint is bolted. That is deliberate — it removes the need for pickling and passivation, removes weld distortion from a frame that must hold 3 mm flatness, and lets a general fabrication shop build it. The only welding anywhere is the flood tray, and only if it is fabricated from sheet rather than thermoformed.</div>
+  <ol class="steps">
+    <li><strong>Cut</strong> All sections to the §08 cut list, cold saw or bandsaw. Square cut, ±1.0 mm on length, ±0.5° on squareness. Do not flame cut galvanised section.</li>
+    <li><strong>Punch the uprights</strong> To the RK-A-101 pattern. Cumulative dimensioning from the foot end. Punch or laser; if drilling, use a jig — freehand marking will not hold 0.2 mm cumulative.</li>
+    <li><strong>Punch beam and rail ends</strong> Two Ø9 holes per end on the centreline, 25 mm and 75 mm from the end face.</li>
+    <li><strong>Laser the plate parts</strong> RK-A-106 anchors and RK-A-107 brackets from 3 and 4 mm GI sheet. Bend to 90° ± 0.5°.</li>
+    <li><strong>Deburr everything</strong> Both faces of every hole, every cut end. A burr inside a tube holds water and starts corrosion from the inside where nobody sees it.</li>
+    <li><strong>Seal the cut ends</strong> Zinc-rich touch-up on every sawn end. Press plastic caps into both ends of all four uprights. This is what makes mill-finish GI viable in a humid room.</li>
+    <li><strong>Optional powder coat</strong> Grow and Pro tiers only. Polyester powder over the galvanising, RAL to brand. Mask the 50 mm grid holes or ream after coating — a coated hole will not take an M8 cleanly.</li>
+    <li><strong>Deck assembly</strong> Rivet the expanded mesh into the deck frame, mesh top face flush with the frame top face. This face is the bed datum.</li>
+    <li><strong>Flood tray</strong> Thermoform. <b>Three features are formed in the tool, not drilled on site:</b> the 30 mm overflow collar, the DN40 drain boss at 60 mm from the right end and 480 mm from the front edge, and the DN32 overflow boss 60 mm from it on the same line. Form a 2–3 mm fall across the floor toward the drain boss. If fabricated from sheet for the prototype, weld corners inside and out and radius them.</li>
+    <li><strong>Flood-test every tray</strong> To the rim, 30 minutes, before it leaves the shop. A leak found in the workshop costs nothing; the same leak on a loaded rack costs a crop.</li>
+  </ol>
+</section>
+
+<!-- ===== 11 ASSEMBLY ===== -->
+<section>
+  <div class="sn">11 · Assembly</div>
+  <h2>Assembly manual</h2>
+  <p class="lede prose">Two people, roughly 90 minutes for a first build, 45 once familiar. Tools: 13 mm spanner and socket, 10 mm spanner, torque wrench, rivet gun, spirit level, tape.</p>
+  <ol class="steps">
+    <li><strong>Lay out the two side frames</strong> On a flat floor, lay one front and one rear upright with the grid faces inward. Bolt the base short beam RK-A-103 between them at 150 mm, using the L-brackets. Repeat for the second side. Do not torque yet.</li>
+    <li><strong>Stand and connect</strong> Stand both side frames. Bolt the two base long beams RK-A-102 front and rear at 150 mm. The rack is now self-standing but loose. <em>Second person required.</em></li>
+    <li><strong>Fit the tier beams</strong> Working bottom to top, bolt a pair of long beams at each tier — beam top face at <span class="m">bed − 26.6 mm</span>, i.e. holes at 250, 650, 1050, 1450 from the floor. Count grid holes from the bottom, do not measure each one.</li>
+    <li><strong>Fit the rear X-brace</strong> RK-A-104, <span class="m">1797 mm</span> between hole centres 1757 — check the length against the opening before you cut a batch. Bolted to the rear face of all four upright ends. <strong>Square the rack before torquing:</strong> measure both rear diagonals and adjust until they are within 3 mm of each other. The brace locks in whatever squareness you leave it with.</li>
+    <li><strong>Torque the frame</strong> All M8 to 18 N·m, working from the base upward. Re-check the diagonals afterwards.</li>
+    <li><strong>Fit the feet and level</strong> Thread in the four RK-A-105 feet. Level across the width and the depth at the lowest tier. <strong>Levelness is a functional requirement, not a nicety</strong> — an out-of-level bed gives uneven flood depth across the four trays.</li>
+    <li><strong>Fit the wall anchors</strong> RK-A-106 to the rear uprights at 1870 mm, then to the wall. This is not optional — see validation check 6.</li>
+    <li><strong>Drop in the decks</strong> One deck assembly per tier, resting on the tier beams, bolted at four corners. Check the deck top face is level and sits at the nominal bed height.</li>
+    <li><strong>Fit the LED rails</strong> Two per tier on the grid at bed + 325 mm. Hang fixtures and set height to 144 mm above expected canopy, or to suit the crop.</li>
+    <li><strong>Fit the tray bulkheads</strong> DN40 drain and DN32 overflow tank connectors, <strong>EPDM washer on the wet face</strong> — water pressure then seats the seal instead of lifting it. Drop the lift-out strainer into the drain boss. Do not overtighten; HDPE creeps.</li>
+    <li><strong>Plumb</strong> Riser and fill manifold on the left, all four fill solenoids grouped at 1100 mm. Drain header on the right in the wet corridor at Y 435–525. Terminate over the tundish with the <strong>100 mm air gap</strong> — never a direct connection.</li>
+    <li><strong>Wire</strong> Enclosure on the left end at 1700 mm, cable channel down the left end, per-tier trays. Four segregated channels: mains, 48 V LED, 0–10 V dim, RS485 and sensors. Keep every water route below every electrical route.</li>
+    <li><strong>Fit the fans</strong> One per tier on the grid bracket at the rear-right of each bed. Phase 2 replaces the bracket with the plenum end cap; the fan and its cable move across unaltered.</li>
+    <li><strong>Optional panels</strong> Side reflectors inboard of the uprights, M6 with penny washers, 6 N·m. The plenum face is a Phase 2 part.</li>
+    <li><strong>Flood test before planting</strong> Fill each tier, hold ten minutes, drain. Check for leaks, check flood depth is even across all four tray positions, and confirm the drain empties in under a minute.</li>
+  </ol>
+</section>
+
+<!-- ===== 12 QC ===== -->
+<section>
+  <div class="sn">12 · Quality control</div>
+  <h2>QC checklist</h2>
+  <h3>Incoming and in-process</h3>
+  <ul class="chk">
+    <li><b>Section grade</b> — mill certificate for IS 4923 YST210, Z275 coating, retained per batch</li>
+    <li><b>Cut length</b> — every part measured, ±1.0 mm; sample 100% on the first batch</li>
+    <li><b>Upright hole pattern</b> — cumulative position from datum end, ±0.2 mm over any 400 mm; check all 4 uprights of every rack</li>
+    <li><b>Hole diameter</b> — Ø9.0 go / Ø9.3 no-go gauge</li>
+    <li><b>Deburr</b> — visual and finger check both faces of every hole and every cut end</li>
+    <li><b>End sealing</b> — zinc-rich touch-up present on every sawn end; caps fitted to all upright ends</li>
+    <li><b>Deck flatness</b> — mesh top face flush with frame, ≤ 1 mm step</li>
+    <li><b>Flood tray</b> — 30 minute flood test to rim, zero leakage, before despatch</li>
+    <li><b>Tray collar crest</b> — 30 +0/−1 mm above the tray floor, measured at four points around the crest</li>
+    <li><b>Tray boss positions</b> — centres 60 ±1.0 mm apart and 480 ±1.0 mm from the front edge, on all four trays of a rack</li>
+    <li><b>Brace length</b> — RK-A-104 at 1797 ±1.5 mm, hole centres 1757 ±1.0 mm <span class="tag t-nv">Rev 2 change</span></li>
+  </ul>
+  <h3>Assembled rack — acceptance</h3>
+  <ul class="chk">
+    <li><b>Squareness</b> — rear diagonals within 3 mm of each other</li>
+    <li><b>Bed height</b> — each bed within ±3 mm of nominal 300 / 700 / 1100 / 1500</li>
+    <li><b>Bed level</b> — ≤ 1 mm/m in both axes, every tier, measured loaded if possible</li>
+    <li><b>Torque</b> — sample 20% of M8 joints at 18 N·m, mark each checked bolt</li>
+    <li><b>Flood depth uniformity</b> — flood one tier, measure depth at all four tray positions, spread ≤ 3 mm</li>
+    <li><b>Drain time</b> — full tier empties in under 90 seconds</li>
+    <li><b>Drain continuity</b> — trace tray → strainer → bulkhead → drop → valve → lateral → header, joint by joint; confirm the tundish air gap is 100 mm and is <b>not</b> plumbed closed</li>
+    <li><b>Fail-safe</b> — cut power mid-flood: fill solenoids close, drain solenoids open, every bed empties <span class="tag t-nv">Hold point</span></li>
+    <li><b>Mass</b> — assembled dry rack 112.7 ± 7 kg; outside that band the build differs from the model</li>
+    <li><b>Leak interlock</b> — block the drain, confirm solenoid closes within 60 seconds <span class="tag t-nv">Hold point</span></li>
+    <li><b>Earth continuity</b> — &lt; 0.1 Ω from frame to earth terminal</li>
+    <li><b>RCD trip</b> — 30 mA device trips within rated time</li>
+    <li><b>Wall anchor</b> — fitted, both brackets, into sound substrate</li>
+    <li><b>Edges</b> — no sharp edge or burr reachable by hand anywhere on the rack</li>
+    <li><b>Labels</b> — part/serial label and rated load label fitted</li>
+  </ul>
+</section>
+
+<!-- ===== 13 PROTOTYPE TESTS ===== -->
+<section>
+  <div class="sn">13 · Prototype testing</div>
+  <h2>Prototype test plan</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Stage</th><th>Objective</th><th>Test</th><th>Pass criterion</th></tr></thead><tbody>
+    <tr><td class="m">P1</td><td>Single deck</td><td>Load one deck to 80 kg UDL for 24 h</td><td>Deflection ≤ 3 mm, no permanent set after unload</td></tr>
+    <tr><td class="m">P1</td><td>Flood levelness</td><td>Flood one bed, measure depth at 4 tray positions</td><td>Spread ≤ 3 mm</td></tr>
+    <tr><td class="m">P2</td><td>Single tier live</td><td>LED + fan + irrigation for one full crop cycle</td><td>Canopy 0.2–0.5 m/s; PPFD 150–210, CV ≤ 15%; no leak</td></tr>
+    <tr><td class="m">P2</td><td>LED thermal</td><td>Run 24 h continuous, log fixture and air temperature</td><td>Air rise ≤ 3 K; no LED derating</td></tr>
+    <tr><td class="m">P3</td><td>Two-tier frame</td><td><strong>Sway test</strong> — 300 N horizontal at top bed, front-back and side</td><td>Residual deflection ≤ 5 mm; <em>this closes the open depth-plane bracing item</em></td></tr>
+    <tr><td class="m">P3</td><td>Tip-over</td><td>Anchored and unanchored, 300 N pull at top bed</td><td>Anchored: no lift. Unanchored: confirm the 139 N / 307 N calculation</td></tr>
+    <tr><td class="m">P4</td><td>Full rack, loaded</td><td>All tiers at service load, 30 days</td><td>No loosening; re-torque check within 10%</td></tr>
+    <tr><td class="m">P4</td><td>Fault case</td><td>Block a drain with supply running</td><td>Solenoid closes &lt; 60 s, zero water on floor</td></tr>
+    <tr><td class="m">P4</td><td>Cleaning cycle</td><td>Full strip, wash, reassemble, timed</td><td>≤ 45 min for one person; no tool needed for deck or tray removal</td></tr>
+    <tr><td class="m">P5</td><td>Production prototype</td><td>Full crop trial, both Ooty crops</td><td>Yield and quality against the Phase A targets; operator sign-off on handling</td></tr>
+    </tbody></table></div>
+  <div class="note warn"><strong>This plan is superseded by the eighteen acceptance tests in RK-A-QC Rev 2.</strong> Those are numbered T1–T18, carry numeric acceptance criteria and a stated frequency, and two of them exist specifically to close Stage 1 open items: <b>T16</b>, the depth-plane sway test, replaces P3 and closes the bracing question; <b>T10</b>, the canopy velocity traverse, closes the airflow uniformity item and doubles as the design input for the Phase 2 plenum. The staged P1–P5 sequence above is retained because it is a sensible order in which to build up to a full rack; the acceptance criteria to sign against are the T-numbers.</div>
+</section>
+
+<!-- ===== 14 COST ===== -->
+<section>
+  <div class="sn">14 · Cost and price</div>
+  <h2>Costed build</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Element</th><th>Detail</th><th>Cost</th></tr></thead><tbody>
+    <tr><td>GI sections</td><td class="m">34.66 kg @ ₹100/kg</td><td class="n">₹3,467</td></tr>
+    <tr><td>Punching</td><td class="m">50 mm grid, end prep</td><td class="n">₹1,800</td></tr>
+    <tr><td>L-brackets</td><td class="m">12 pcs laser</td><td class="n">₹840</td></tr>
+    <tr><td>Fasteners</td><td class="m">208 pcs, SS304</td><td class="n">₹1,444</td></tr>
+    <tr><td>Feet and caps</td><td class="m">4 + end caps</td><td class="n">₹520</td></tr>
+    <tr><td>Assembly labour</td><td class="m">bolted, no welding</td><td class="n">₹1,000</td></tr>
+    <tr><td><strong>Frame subtotal</strong></td><td></td><td class="n"><strong>₹9,071</strong></td></tr>
+    <tr><td>Decks × 4</td><td class="m">rails 19.44 kg + mesh 7.93 kg + fab</td><td class="n">₹3,320</td></tr>
+    <tr><td><strong>CORE</strong></td><td class="m">frame + decks</td><td class="n"><strong>₹12,391</strong></td></tr>
+    <tr><td>Flood trays × 4</td><td class="m">HDPE, collar and bosses formed in the tool</td><td class="n">₹4,835</td></tr>
+    <tr><td>Tray fittings</td><td class="m">4 × DN40 bulkhead, 4 × strainer, 4 × DN32 overflow connector</td><td class="n">₹680</td></tr>
+    <tr><td>LED mounting</td><td class="m">8 rails, 16 hangers, 16 saddles, 4 IP65 connector pairs</td><td class="n">₹5,460</td></tr>
+    <tr><td>Irrigation</td><td class="m">riser, manifold, 4 fill solenoids, 4 drain solenoids, nozzles, isolation</td><td class="n">₹7,650</td></tr>
+    <tr><td>Drainage</td><td class="m">DN50 header, laterals, tundish, air gap, level switch</td><td class="n">₹1,300</td></tr>
+    <tr><td>Ventilation <span class="tag t-nv">Phase 1</span></td><td class="m">4 EC fans + grid brackets — plenum deferred</td><td class="n">₹2,880</td></tr>
+    <tr><td>Electrical and control</td><td class="m">IP65 enclosure, isolator, Type A RCBO, 24 V PSU, rack controller, segregated cabling</td><td class="n">₹9,580</td></tr>
+    <tr><td>Rack sensors</td><td class="m">T/RH node in radiation shield, leak puck, header level switch</td><td class="n">₹1,650</td></tr>
+    <tr><td>Powder coat</td><td class="m">optional, over GI</td><td class="n">₹2,700</td></tr>
+    <tr><td>Rev 2 detail changes</td><td class="m">moulded collar, grouped fill manifold, level switch</td><td class="n">+₹170</td></tr>
+    <tr><td><strong>GROW — Phase 1 build</strong></td><td class="m">as built at Ooty, plenum deferred</td><td class="n"><strong>₹49,296</strong></td></tr>
+    <tr><td>Plenum retrofit</td><td class="m">Phase 2, month 2–3 — 4 folded GI plenums + perforated faces</td><td class="n">+₹2,640</td></tr>
+    <tr><td><strong>GROW — complete</strong></td><td class="m">with ducted plenum</td><td class="n"><strong>₹51,936</strong></td></tr>
+    <tr><td><strong>PRO</strong></td><td class="m">+ SS304 wet zone, + per-tier sensing</td><td class="n"><strong>₹56,996</strong></td></tr>
+    </tbody></table></div>
+  <div class="scroll"><table>
+    <thead><tr><th>Tier</th><th>Cost</th><th>Price @ 40% GM</th><th>Price @ 45% GM</th><th>Position</th></tr></thead><tbody>
+    <tr><td>Core</td><td class="n">₹12,391</td><td class="n">₹20,650</td><td class="n">₹22,500</td><td>Entry platform, germination rack</td></tr>
+    <tr><td>Grow, Phase 1</td><td class="n">₹49,296</td><td class="n">₹82,160</td><td class="n">₹89,630</td><td>Flagship as built at Ooty, excludes LED fixtures</td></tr>
+    <tr><td>Grow, complete</td><td class="n">₹51,936</td><td class="n">₹86,560</td><td class="n">₹94,430</td><td>With the ducted plenum fitted</td></tr>
+    <tr><td>Pro</td><td class="n">₹56,996</td><td class="n">₹94,995</td><td class="n">₹103,630</td><td>R&amp;D, institutional</td></tr>
+    </tbody></table></div>
+  <div class="note"><strong>The Grow figure moved a long way from Rev 1, and the reason is honest.</strong> Rev 1 carried ₹32,965 with irrigation, electrical and ventilation as placeholders. Specifying them properly — per-tier valving, an IP65 enclosure with a controller, real sensing — put the engineered build at ₹49,296. Deferring the plenum takes ₹2,640 out for now and it comes back in month two or three. Core is unchanged.</div>
+  <div class="note"><strong>Core landed at ₹12,391 against the ₹11,438 design estimate — 8.3% over.</strong> Two causes, both real: the fastener count came out at 208 rather than the 80 I budgeted, and the deck rails were heavier than assumed. Neither is a surprise once modelled, and both are attacked by the same v2 tooling. At 100+ units with the keyhole beam-end and a tabbed deck cross, Core should reach roughly ₹9,000 and price near ₹15,000.</div>
+</section>
+
+<!-- ===== 15 CAD FILES ===== -->
+<section>
+  <div class="sn">15 · CAD release</div>
+  <h2>File index</h2>
+  <p class="lede prose">Exported to <span class="m">Desktop\CEA_RACK_v1\INTEGRATED_v2_Rev5</span> on your machine. Model is Z-up, the mechanical convention. The earlier <span class="m">INTEGRATED_v2</span> folder is from Rev 3, before the tray bulkheads and the deck-mesh mass correction — <strong>delete it or archive it, do not quote from it</strong>.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Folder</th><th>Contents</th><th>Give to</th></tr></thead><tbody>
+    <tr><td class="m">STEP\</td><td><b>45 part files</b>, one per modelled component — structure, wet module, irrigation, drainage, ventilation, lighting, electrical and sensing</td><td>Fabricator and integrator — one file per part, no assembly to unpick</td></tr>
+    <tr><td class="m">ASSEMBLY\</td><td><span class="m">CEA_RACK_INTEGRATED_v2_Rev5.step</span> and <span class="m">.f3d</span></td><td>Reference, and your own archive</td></tr>
+    <tr><td class="m">MANIFEST.txt</td><td>Part list with quantity and mass per part, model revision, envelope, total dry mass, interference status</td><td>Goods-in — check the delivered set against it</td></tr>
+    </tbody></table></div>
+  <div class="note"><strong>What is not in the export.</strong> No DXF folder in this release — the flat profiles have not been regenerated against Rev 5, and the brace length changed, so the Rev 1 DXFs are wrong. Ask and I will regenerate them. Tube parts never had DXFs: they are cut-to-length with punched holes, and a shop wants the cut list in §08 and the hole pattern in §05.</div>
+  <div class="note warn"><strong>Read the systems STEP files as envelopes, not as parts to make.</strong> Pipes, valve bodies, plenums, the enclosure and the fans are modelled at their true installed size and position so that routing and clearances are real and the interference check means something. They are <em>not</em> manufacturing geometry for those items — those are bought-out components specified in RK-A-WRS Rev 3 and the systems specification. The structural set — uprights, beams, brace, decks, trays, brackets and feet — is manufacturing geometry, and is what RK-A-DWG Rev 2 draws.</div>
+</section>
+
+<!-- ===== 16 ROADMAP ===== -->
+<section style="border-bottom:0">
+  <div class="sn">16 · Roadmap</div>
+  <h2>Upgrade and accessory roadmap</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>When</th><th>Item</th><th>Why</th></tr></thead><tbody>
+    <tr><td class="m">Now</td><td>3, 4 and 5-tier configurations</td><td>Same uprights, 50 mm grid. 5-tier lifting index 0.76 — comfortable</td></tr>
+    <tr><td class="m">Now</td><td>Germination rack</td><td><strong>Is</strong> the Core rack: more tiers, tighter pitch, no wet module. Near-zero development</td></tr>
+    <tr><td class="m">Now</td><td>Interchangeable tier modules</td><td>Flood table, drained shelf, capillary mat, deep bed, NFT channel, plain shelf</td></tr>
+    <tr><td class="m">6 mo</td><td>v2 joint tooling</td><td>Keyhole beam-end + tabbed deck cross. Breakeven ≈ 40 racks. Cuts 80 fasteners and most assembly labour</td></tr>
+    <tr><td class="m">6 mo</td><td>Thermoformed flood tray</td><td>Tool ₹30–80k, tray ₹1,228 → under ₹700. Ask your uncle's shop about platen size</td></tr>
+    <tr><td class="m">6–12 mo</td><td>Sensor and camera brackets</td><td>Bolt to the existing grid — no rack change, which was the whole point of the interface</td></tr>
+    <tr><td class="m">12 mo</td><td>Castor kit, inter-rack coupling</td><td>Optional. Castors change the tip-over case and need re-validation</td></tr>
+    <tr><td class="m">12 mo+</td><td>Saffron deep-bed module</td><td>150–200 mm substrate. Same bay interface, different module</td></tr>
+    <tr><td class="m">12 mo+</td><td>Published accessory interface</td><td>Open the 50 mm grid spec so third parties build to it</td></tr>
+    </tbody></table></div>
+</section>
+
+<footer>
+  <p>RK-A-MFG Rev 2 · 05 September 2026 · Derived from Fusion model CEA_RACK_INTEGRATED_v2 Rev 5 and requirement register RACK-P0 Rev G. Companion documents: RK-A-DWG Rev 2 (structural drawings), RK-A-QC Rev 2 (validation record and 18 acceptance tests), RK-A-WRS Rev 3 (water recovery), RK-A-ROOM Rev 3 (floor plan). Structural results are closed-form calculations, not FEA. Open: depth-plane bracing, closed by acceptance test T16; canopy velocity uniformity, closed by T10.</p>
+</footer>
+</main>

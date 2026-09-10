@@ -2,8 +2,9 @@
 
 **Interface ID:** `IF-RK-A-HYD`
 **Between:** A — Rack product · B — Shared CEA infrastructure
-**Authority:** `RK-A-SYS` Rev 2, `RK-A-WRS` Rev 3
-**Related decisions:** ADR-001, EDR-005, EDR-006, ICR-001, ICR-002, ICR-003
+**Authority:** `RK-A-SYS` Rev 2 + addendum B, `RK-A-WRS` Rev 3
+**Related decisions:** ADR-001, EDR-005, EDR-006, EDR-016, ICR-001, ICR-002, ICR-003, ICR-005, ICR-006, ICR-007
+**Revision:** 2 (2026-09-10, ECP-01)
 
 ---
 
@@ -64,7 +65,7 @@ Hazen-Williams, C = 150, at 7.2 L/min:
 | DN32 main | 0.028 |
 | DN25 riser | 0.012 |
 | DN20 drop | 0.023 |
-| DN20 solenoid, Kv 4 | **0.119** |
+| DN20 **zero-ΔP** solenoid, Kv ≥ 4 (EDR-016) | **0.119** |
 | Fittings | 0.150 |
 | **Total** | **0.33** |
 
@@ -80,7 +81,7 @@ not assumed equivalent.
 
 | Parameter | Value |
 |---|---|
-| Outlet elevation | **Z 200 mm** |
+| Outlet elevation | **Z 200 mm** — header now at X 1200–1250, Y 575–625 behind the rear-right upright (ICR-006) |
 | Nominal size | DN50 |
 | Tundish rim elevation | Z 100 mm |
 | **Air gap** | **100 mm = 2 × DN50** |
@@ -107,9 +108,7 @@ not mistake the gap for a modelling omission.
 Established by ICR-001. Listed here because its continuity is what makes the
 interface valid:
 
-`tray floor` → `09_TRAY_OUTLET` → `09_TRAY_STRAINER` → `09_OVF_BULKHEAD` →
-moulded overflow collar (Z 300–330) → `09_OVF_V` vertical drop (Z 160–300) →
-branch → rack drain header → outlet (Z 200).
+`tray floor` → `09_TRAY_OUTLET` → `09_TRAY_STRAINER` → drain valve (motorised, spring-return open) → lateral −X at Y 500–540 → crossing window X 1040–1080 → +Y through the rear beam plane → +X at Y 580–620 → header → outlet (Z 200). Overflow: moulded collar (Z 300–330, now part of the tray body) → `09_OVF_V` → lateral crossing at X 1080–1112 (tiers 2–4) or X 990–1022 (tier 1, Z 182–214) → header rear face.
 
 Tray `RK-A-401` carries the moulded features: `boss_y = 480`, `ovf_x = 120`,
 `ovf_dia = 32`, `collar_h = 30`.
@@ -120,8 +119,8 @@ Tray `RK-A-401` carries the moulded features: `boss_y = 480`, `ovf_x = 120`,
 
 | Device | Owner | Fail state |
 |---|---|---|
-| Fill solenoids | A — rack | Normally **CLOSED** |
-| Drain solenoids | A — rack | Normally **OPEN** |
+| Fill solenoids (zero-ΔP) | A — rack | Normally **CLOSED** |
+| Drain valves (motorised ball, spring-return) | A — rack | Returns **OPEN** on power loss, within the 5–15 s stroke |
 | Recovery diverter `FV-01` | B — infrastructure | Spring-return **TO WASTE** |
 | Terrace master valve `MV-01` | B — infrastructure | Fails **CLOSED** |
 
@@ -130,7 +129,11 @@ discards. See EDR-007.
 
 ---
 
-## 7. Reserved space
+## 7. Fill-point air gap (ICR-005)
+
+Every fill nozzle outlet is **38 mm above the tray rim** (Z 385 vs 347), ≥ 2 × DN16. Verified at install and by acceptance test T20. A nozzle fitted lower than 30 mm above the rim is a reject.
+
+## 8. Reserved space
 
 The wet-services corridor at **Y 435 – 525 mm** from the rack front face is
 reserved exclusively for irrigation and drainage (EDR-003). No other service may

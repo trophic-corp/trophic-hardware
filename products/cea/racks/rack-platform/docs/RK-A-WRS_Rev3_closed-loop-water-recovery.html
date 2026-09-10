@@ -1,0 +1,512 @@
+<title>Closed-Loop Water Recovery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+ --paper:#F2F6F6; --sheet:#FFFFFF; --card:#F8FBFB; --band:#E6EEEE; --band2:#D8E4E4;
+ --ink:#0D1616; --ink2:#3F5252; --ink3:#718585;
+ --rule:#CBD9D9; --rule2:#A6B9B9;
+ --water:#15628F; --water-s:#DCEAF3;
+ --recov:#0E6E68; --recov-s:#D6EAE8;
+ --air:#256B4E; --air-s:#DCECE4;
+ --power:#8E5A0E; --power-s:#F4E9D6;
+ --warn:#963224; --warn-s:#F6E1DD;
+ --ok:#256B4E; --ok-s:#DCECE4;
+ --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+ --sans:"Instrument Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --paper:#080D0D; --sheet:#111A1A; --card:#0F1718; --band:#162223; --band2:#1D2B2C;
+ --ink:#E6EFEF; --ink2:#9EB1B1; --ink3:#6F8383;
+ --rule:#22302F; --rule2:#334544;
+ --water:#6FB4DC; --water-s:#0F2430; --recov:#5CC2B8; --recov-s:#0A2624;
+ --air:#6FBF98; --air-s:#0F2620; --power:#D4A055; --power-s:#2A2013;
+ --warn:#DD8878; --warn-s:#2C1815; --ok:#6FBF98; --ok-s:#0F2620;
+}}
+:root[data-theme="dark"]{
+ --paper:#080D0D; --sheet:#111A1A; --card:#0F1718; --band:#162223; --band2:#1D2B2C;
+ --ink:#E6EFEF; --ink2:#9EB1B1; --ink3:#6F8383;
+ --rule:#22302F; --rule2:#334544;
+ --water:#6FB4DC; --water-s:#0F2430; --recov:#5CC2B8; --recov-s:#0A2624;
+ --air:#6FBF98; --air-s:#0F2620; --power:#D4A055; --power-s:#2A2013;
+ --warn:#DD8878; --warn-s:#2C1815; --ok:#6FBF98; --ok-s:#0F2620;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.62}
+.w{max-width:1200px;margin:0 auto;padding:0 26px}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+a{color:var(--recov)}
+:focus-visible{outline:2px solid var(--recov);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.top{background:var(--sheet);border-bottom:1px solid var(--rule2)}
+.top-in{max-width:1200px;margin:0 auto;padding:40px 26px 0}
+.eb{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--recov)}
+h1{font-size:clamp(32px,5.4vw,56px);font-weight:700;letter-spacing:-.025em;line-height:1.03;margin:14px 0 12px}
+.dek{font-size:17.5px;color:var(--ink2);max-width:66ch;margin:0 0 26px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid var(--rule)}
+.kv div{padding:11px 15px 13px;border-right:1px solid var(--rule)}
+.kv div:last-child{border-right:0}
+.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+.kv dd{margin:4px 0 0;font-size:19px;font-weight:600;font-variant-numeric:tabular-nums}
+section{padding:46px 0;border-bottom:1px solid var(--rule)}
+.sn{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;margin-bottom:7px;color:var(--recov)}
+.sn.w1{color:var(--water)} .sn.p1{color:var(--power)} .sn.x1{color:var(--warn)}
+h2{font-size:clamp(23px,3.1vw,33px);font-weight:700;letter-spacing:-.018em;margin-bottom:9px}
+h3{font-size:19px;font-weight:600;margin:30px 0 8px;letter-spacing:-.01em}
+h4{font-size:15.5px;font-weight:600;margin:18px 0 5px}
+p{margin:0 0 12px} ul,ol{margin:0 0 12px;padding-left:1.2em} li{margin-bottom:5px}
+.lede{font-size:17px;color:var(--ink2);max-width:70ch;margin-bottom:8px}
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet);margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:13.2px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+   padding:9px 12px;background:var(--band);border-bottom:1px solid var(--rule2);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:500}
+.m{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.n{font-family:var(--mono);font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+th.n{text-align:right}
+tr.tot td{background:var(--band);color:var(--ink);font-weight:600;border-top:1px solid var(--rule2)}
+.tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;font-weight:600;white-space:nowrap}
+.t-w{background:var(--water-s);color:var(--water)}
+.t-r{background:var(--recov-s);color:var(--recov)}
+.t-p{background:var(--power-s);color:var(--power)}
+.t-x{background:var(--warn-s);color:var(--warn)}
+.t-o{background:var(--ok-s);color:var(--ok)}
+.t-n{background:var(--band2);color:var(--ink2)}
+.note{background:var(--band);border-left:3px solid var(--recov);padding:14px 18px;margin:16px 0;font-size:14.6px;color:var(--ink2)}
+.note strong{color:var(--ink)}
+.note.wa{background:var(--warn-s);border-left-color:var(--warn)}
+.note.po{background:var(--power-s);border-left-color:var(--power)}
+.note.ok{background:var(--ok-s);border-left-color:var(--ok)}
+.dwg{background:var(--sheet);border:1px solid var(--rule2);padding:14px;margin:20px 0;overflow-x:auto}
+.dwg svg{display:block;width:100%;height:auto;min-width:840px}
+.cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+     margin-top:10px;padding-top:8px;border-top:1px solid var(--rule)}
+.g2{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:18px 0;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g2>div{background:var(--sheet);padding:15px 17px}
+.g2 h4{margin:0 0 5px} .g2 p{font-size:14px;color:var(--ink2);margin:0}
+ol.st{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+ol.st>li{counter-increment:s;position:relative;padding:11px 0 11px 46px;border-bottom:1px solid var(--rule);color:var(--ink2);font-size:14.6px}
+ol.st>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:11px;font-family:var(--mono);
+  font-size:11px;font-weight:600;color:var(--recov);background:var(--recov-s);padding:2px 7px;border-radius:2px}
+ol.st>li:last-child{border-bottom:0}
+ol.st b{color:var(--ink)}
+.calc{background:var(--card);border:1px solid var(--rule);padding:14px 17px;margin:14px 0;font-family:var(--mono);font-size:12.6px;color:var(--ink2);overflow-x:auto}
+.calc b{color:var(--ink);font-weight:600}
+.calc .r{color:var(--recov);font-weight:600}
+.calc .x{color:var(--warn);font-weight:600}
+footer{padding:38px 0 60px;color:var(--ink3);font-size:13px}
+</style>
+
+<header class="top">
+ <div class="top-in">
+  <div class="eb">RK-A-WRS · Rev 3 · 05 Sep 2026 · terrace reservoir, gravity feed</div>
+  <h1>Closed-Loop<br>Water Recovery</h1>
+  <p class="dek">Both reservoirs move to the terrace, one floor above the room. That single decision deletes the supply pump, lets every bed flood by gravity, and turns the recovery side into one trough, one pump and one rising main. It also introduces three risks that did not exist before, and they are the most important part of this document.</p>
+  <dl class="kv">
+   <div><dt>Circulated</dt><dd>1,914 L/day</dd></div>
+   <div><dt>Make-up</dt><dd>235 L/day</dd></div>
+   <div><dt>Recovery ratio</dt><dd>87.7%</dd></div>
+   <div><dt>Discharge cut</dt><dd>554 m³/yr</dd></div>
+   <div><dt>Pumps in system</dt><dd>1 duty + 1 standby</dd></div>
+   <div><dt>Skid cost</dt><dd>₹79k / ₹153k</dd></div>
+  </dl>
+ </div>
+</header>
+
+<main class="w">
+
+<section>
+ <div class="sn">01 · The terrace decision</div>
+ <h2>What moving the tanks upstairs actually buys</h2>
+ <p class="lede">Rev 2 had a floor-standing 500 L reservoir, a supply pump, a catch trough, a transfer pump, a recovery reservoir and a return pump. Putting the reservoir on the terrace collapses most of that.</p>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Element</th><th>Rev 2 — plant in the room</th><th>Rev 3 — reservoir on the terrace</th></tr></thead>
+   <tbody>
+    <tr><td>Supply pump P-01</td><td>0.55 kW, 30 L/min @ 18 m, runs every flood</td><td><span class="tag t-o">Deleted</span> Gravity does it. 2.66 m of head at the top tier against 0.33 m of loss</td></tr>
+    <tr><td>Recovery reservoir TK-03</td><td>300 L at floor level, plus a return pump</td><td><span class="tag t-o">Deleted</span> The gate is now decided in the trough, before anything is pumped</td></tr>
+    <tr><td>Return pump P-03</td><td>0.25 kW</td><td><span class="tag t-o">Deleted</span></td></tr>
+    <tr><td>Transfer pump P-02</td><td>0.37 kW, 25 L/min @ 12 m</td><td>Uprated to <b>0.75 kW, 25 L/min @ 20 m</b> — it now lifts to the terrace as well as pushing through the filters</td></tr>
+    <tr><td>Room floor area for plant</td><td>5.73 m² bay</td><td><b>1.02 m² service corner</b> — one rack instead of three</td></tr>
+    <tr><td>Racks in the room</td><td>9</td><td><b>11</b> · grow area 29.0 m² · floor multiplier <b>1.30×</b></td></tr>
+    <tr><td>Fill concurrency</td><td>One tier at a time, pump-limited</td><td>Up to four tiers at once — gravity has the head to spare. Room cycle 88 min → 22 min</td></tr>
+    <tr><td>Carrying fertiliser salts</td><td>To the room</td><td><b>Not to the roof</b> — dosing injects into the rising main at floor level</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="note ok"><strong>The dosing point is the detail that makes this work.</strong> The obvious objection to a roof tank is that someone has to carry 25 kg bags of A and B salts up a ladder three times a week. They don't: the dosing skid stays at floor level and injects into the <em>rising</em> main, so every litre of recovered water is dosed on its way up and mixed by its own inflow into the tank. EC in TK-01 is the feedback signal. The only thing that ever goes up there is water.</div>
+</section>
+
+<section>
+ <div class="sn w1">02 · Gravity feed</div>
+ <h2>Does 3.75 m of terrace actually flood a bed at 1.5 m?</h2>
+ <p class="lede">Comfortably, and with enough spare head to flood all four tiers at once. The arithmetic matters because it is what deletes the supply pump.</p>
+ <div class="calc">
+ terrace slab            +3750 mm above room floor<br>
+ tank on a 500 mm plinth → outlet at <b>+4250 mm</b>, worst case is a nearly-empty tank<br>
+ top tier fill nozzle    +1590 mm<br>
+ <b>available static head = 4250 − 1590 = 2.66 m</b><br><br>
+ losses at the design fill rate of 7.2 L/min per tier (Hazen-Williams, C = 150):<br>
+ &nbsp;DN32 down-main, 14 m          0.028 m<br>
+ &nbsp;DN25 riser, 1.5 m             0.012 m<br>
+ &nbsp;DN20 tier drop, 1.0 m         0.023 m<br>
+ &nbsp;DN20 fill solenoid, Kv 4      0.119 m  ← the dominant loss<br>
+ &nbsp;fittings                      0.150 m<br>
+ &nbsp;<b>total 0.33 m</b>   →   <span class="r">margin 2.33 m · passes by a factor of eight</span><br><br>
+ with all four tiers of a rack filling together, 28.8 L/min in the down-main:<br>
+ &nbsp;total 0.67 m  →  <span class="r">margin 1.99 m · still passes</span><br><br>
+ head runs out at roughly <b>15 L/min per tier</b>, twice the design rate
+ </div>
+ <p>Two consequences follow. First, there is no supply pump anywhere in the system — the only pump is the one lifting recovered water back up. Second, the sequential-filling rule that existed to protect a 7.2 L/min pump is no longer needed on the supply side. <b>A rack can flood all four tiers at once</b>, which takes the whole-room fill window for eleven racks from 88 minutes to about 22.</p>
+ <div class="note wa"><strong>Sequential <em>draining</em> is still mandatory.</strong> Nothing about the terrace changes the DN50 drain stack or the size of the catch trough. Draining stays one tier at a time, and — new in this revision — one <em>rack</em> per recovery batch, because the gate is decided on a settled batch and the trough holds 79 L against a 46 L rack drain.</div>
+</section>
+
+<section>
+ <div class="sn">03 · Process</div>
+ <h2>The loop, end to end</h2>
+ <div class="dwg">
+ <svg viewBox="0 0 1240 780" role="img" aria-label="Process flow diagram: terrace reservoir gravity feeds the racks, drainage returns through a floor-level trough, filters and UV to a rising main">
+  <defs>
+   <marker id="w3a" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto"><path d="M0,1.5 L11,5.5 L0,9.5 Z" fill="var(--recov)"/></marker>
+   <marker id="w3b" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto"><path d="M0,1.5 L11,5.5 L0,9.5 Z" fill="var(--water)"/></marker>
+   <marker id="w3c" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto"><path d="M0,1.5 L11,5.5 L0,9.5 Z" fill="var(--warn)"/></marker>
+   <pattern id="w3h" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+     <rect width="8" height="8" fill="var(--band)"/><line x1="0" y1="0" x2="0" y2="8" stroke="var(--rule2)" stroke-width="1.1"/>
+   </pattern>
+  </defs>
+  <g font-family="JetBrains Mono, monospace" font-size="10.5" fill="var(--ink3)">
+
+  <!-- terrace band -->
+  <rect x="20" y="26" width="1200" height="176" fill="var(--card)"/>
+  <text x="36" y="48" fill="var(--recov)" font-size="10" letter-spacing="1.6">TERRACE · +3750</text>
+  <rect x="20" y="202" width="1200" height="16" fill="url(#w3h)"/>
+  <text x="1204" y="214" text-anchor="end" font-size="9.5">SLAB</text>
+  <text x="36" y="238" fill="var(--water)" font-size="10" letter-spacing="1.6">GROWING ROOM · FFL 0</text>
+
+  <!-- TK-04 break tank -->
+  <rect x="56" y="60" width="104" height="56" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.5"/>
+  <text x="108" y="82" text-anchor="middle" fill="var(--water)" font-size="11" font-weight="600">TK-04</text>
+  <text x="108" y="97" text-anchor="middle" font-size="9.5">break tank 100 L</text>
+  <text x="108" y="110" text-anchor="middle" font-size="9.5">type AB air gap</text>
+  <path d="M108,40 L108,58" stroke="var(--water)" stroke-width="1.5" marker-end="url(#w3b)"/>
+  <text x="118" y="44" font-size="9.5">mains</text>
+  <path d="M162,88 L196,88" stroke="var(--water)" stroke-width="1.5" marker-end="url(#w3b)"/>
+
+  <!-- TK-01 -->
+  <rect x="200" y="48" width="228" height="120" fill="var(--water-s)" stroke="var(--water)" stroke-width="1.8"/>
+  <text x="314" y="76" text-anchor="middle" fill="var(--water)" font-size="13" font-weight="600">TK-01</text>
+  <text x="314" y="94" text-anchor="middle" font-size="10">MAIN RESERVOIR 500 L</text>
+  <text x="314" y="110" text-anchor="middle" font-size="10">insulated + shaded · opaque</text>
+  <text x="314" y="126" text-anchor="middle" font-size="10">on 500 plinth over a beam line</text>
+  <text x="314" y="145" text-anchor="middle" font-size="10">LT-02 · AT-01 EC · AT-02 pH · TE-01</text>
+  <line x1="212" y1="155" x2="416" y2="155" stroke="var(--water)" stroke-width="2.2"/>
+
+  <!-- master valve + vacuum breaker -->
+  <path d="M314,168 L314,182" stroke="var(--water)" stroke-width="2"/>
+  <path d="M298,182 L330,182 L314,204 Z" fill="var(--warn-s)" stroke="var(--warn)" stroke-width="1.8"/>
+  <text x="342" y="192" font-size="10.5" fill="var(--warn)" font-weight="600">MV-01</text>
+  <text x="342" y="206" font-size="9.5" fill="var(--warn)">master valve · fails CLOSED</text>
+  <circle cx="470" cy="250" r="10" fill="var(--sheet)" stroke="var(--water)" stroke-width="1.5"/>
+  <text x="470" y="254" text-anchor="middle" font-size="9" fill="var(--water)">VB</text>
+  <text x="484" y="248" font-size="9.5">vacuum breaker at the high point</text>
+
+  <!-- down main -->
+  <path d="M314,206 L314,250 L456,250" stroke="var(--water)" stroke-width="2.2"/>
+  <path d="M484,250 L560,250 L560,296" stroke="var(--water)" stroke-width="2.2" marker-end="url(#w3b)"/>
+  <text x="330" y="244" font-size="9.5" fill="var(--water)">DN32 gravity down-main · 2.66 m head at the top tier</text>
+
+  <!-- racks -->
+  <rect x="560" y="300" width="300" height="250" fill="var(--sheet)" stroke="var(--ink3)" stroke-width="1.4"/>
+  <text x="710" y="292" text-anchor="middle" font-size="10.5" fill="var(--ink2)">RACK × 11 · 4 TIERS EACH · 44 BEDS</text>
+  <g stroke="var(--rule2)">
+   <rect x="578" y="316" width="264" height="40" fill="var(--water-s)"/>
+   <rect x="578" y="372" width="264" height="40" fill="var(--water-s)"/>
+   <rect x="578" y="428" width="264" height="40" fill="var(--water-s)"/>
+   <rect x="578" y="484" width="264" height="40" fill="var(--water-s)"/>
+  </g>
+  <text x="710" y="341" text-anchor="middle" font-size="9.5">bed 1176 × 560 · flood 22 mm · 14.5 L · fill NC</text>
+  <text x="710" y="397" text-anchor="middle" font-size="9.5">moulded 30 mm overflow collar · DN32</text>
+  <text x="710" y="453" text-anchor="middle" font-size="9.5">tray bulkhead DN40 + lift-out strainer</text>
+  <text x="710" y="509" text-anchor="middle" font-size="9.5">drain solenoid NO · DN50 common header</text>
+
+  <!-- drain out -->
+  <path d="M860,534 L900,534 L900,570" stroke="var(--recov)" stroke-width="2" marker-end="url(#w3a)"/>
+  <path d="M872,582 L928,582 L912,608 L888,608 Z" fill="var(--recov-s)" stroke="var(--recov)" stroke-width="1.6"/>
+  <text x="940" y="588" font-size="10" fill="var(--recov)">tundish · 100 mm air gap · outlet +170</text>
+  <path d="M900,608 L900,650 L952,650" stroke="var(--recov)" stroke-width="2" marker-end="url(#w3a)"/>
+  <text x="912" y="642" font-size="9.5" fill="var(--recov)">DN63 gravity main · 1:80</text>
+
+  <!-- trough -->
+  <rect x="956" y="626" width="256" height="112" fill="var(--recov-s)" stroke="var(--recov)" stroke-width="1.8"/>
+  <text x="1084" y="652" text-anchor="middle" fill="var(--recov)" font-size="13" font-weight="600">TK-02</text>
+  <text x="1084" y="668" text-anchor="middle" font-size="10">CATCH TROUGH 1400 × 650 × 200</text>
+  <text x="1084" y="684" text-anchor="middle" font-size="10">inlet +87 · working 79 L · batch 46 L</text>
+  <text x="1084" y="702" text-anchor="middle" font-size="10">S-01 basket 200 µm · LS-01/02/03</text>
+  <text x="1084" y="722" text-anchor="middle" font-size="10" fill="var(--recov)">AT-03 EC · AT-04 pH · TE-02 — GATE DECIDED HERE</text>
+
+  <!-- pump and train, right to left -->
+  <circle cx="908" cy="690" r="20" fill="var(--sheet)" stroke="var(--recov)" stroke-width="1.6"/>
+  <path d="M918,680 L894,690 L918,700 Z" fill="var(--recov)"/>
+  <text x="908" y="730" text-anchor="middle" font-size="10" fill="var(--recov)">P-02 A/B</text>
+  <path d="M954,690 L930,690" stroke="var(--recov)" stroke-width="2" marker-end="url(#w3a)"/>
+  <text x="876" y="664" font-size="9.5">25 L/min @ 20 m</text>
+
+  <rect x="792" y="652" width="54" height="80" fill="var(--sheet)" stroke="var(--recov)" stroke-width="1.6"/>
+  <text x="819" y="680" text-anchor="middle" font-size="10.5" fill="var(--recov)">F-01</text>
+  <text x="819" y="696" text-anchor="middle" font-size="9">BAG</text>
+  <text x="819" y="709" text-anchor="middle" font-size="9">100 µm</text>
+  <path d="M886,690 L849,690" stroke="var(--recov)" stroke-width="2" marker-end="url(#w3a)"/>
+
+  <rect x="706" y="652" width="54" height="80" fill="var(--sheet)" stroke="var(--recov)" stroke-width="1.6"/>
+  <text x="733" y="680" text-anchor="middle" font-size="10.5" fill="var(--recov)">F-02</text>
+  <text x="733" y="696" text-anchor="middle" font-size="9">20&quot; CART</text>
+  <text x="733" y="709" text-anchor="middle" font-size="9">20 µm</text>
+  <path d="M789,690 L763,690" stroke="var(--recov)" stroke-width="2" marker-end="url(#w3a)"/>
+  <text x="756" y="756" text-anchor="middle" font-size="9.5">PDI-01 across F-01 + F-02 · inhibit at 1.0 bar</text>
+
+  <rect x="580" y="664" width="96" height="54" rx="4" fill="var(--recov-s)" stroke="var(--recov)" stroke-width="1.8"/>
+  <text x="628" y="688" text-anchor="middle" font-size="11" fill="var(--recov)" font-weight="600">UV-01</text>
+  <text x="628" y="704" text-anchor="middle" font-size="9">40 W · 100 mJ/cm²</text>
+  <path d="M703,690 L679,690" stroke="var(--recov)" stroke-width="2" marker-end="url(#w3a)"/>
+  <text x="628" y="740" text-anchor="middle" font-size="9.5">UIT-01 intensity · FS-01 flow</text>
+
+  <!-- diverter -->
+  <path d="M577,690 L536,690" stroke="var(--recov)" stroke-width="2" marker-end="url(#w3a)"/>
+  <path d="M492,666 L534,690 L492,714 Z" fill="var(--warn-s)" stroke="var(--warn)" stroke-width="1.8"/>
+  <text x="486" y="742" text-anchor="end" font-size="10.5" fill="var(--warn)" font-weight="600">FV-01</text>
+  <text x="486" y="756" text-anchor="end" font-size="9.5" fill="var(--warn)">de-energised → WASTE</text>
+  <path d="M513,714 L513,764 L400,764" stroke="var(--warn)" stroke-width="2" marker-end="url(#w3c)"/>
+  <text x="392" y="768" text-anchor="end" font-size="9.5" fill="var(--warn)">to drain</text>
+
+  <!-- rising main + dosing -->
+  <path d="M513,666 L513,600 L436,600 L436,140 L196,140" stroke="var(--recov)" stroke-width="2.2" fill="none" marker-end="url(#w3a)"/>
+  <text x="446" y="380" font-size="10" fill="var(--recov)" transform="rotate(-90 446 380)">DN20 RISING MAIN · 4.76 m static</text>
+  <rect x="316" y="560" width="104" height="56" fill="var(--power-s)" stroke="var(--power)" stroke-width="1.5"/>
+  <text x="368" y="582" text-anchor="middle" font-size="10.5" fill="var(--power)" font-weight="600">DOSING</text>
+  <text x="368" y="597" text-anchor="middle" font-size="9.5">A + B + acid</text>
+  <text x="368" y="610" text-anchor="middle" font-size="9.5">at floor level</text>
+  <path d="M422,588 L434,588" stroke="var(--power)" stroke-width="1.8" marker-end="url(#w3a)"/>
+  </g>
+ </svg>
+ <div class="cap">Fig 1 — Rev 3 process flow. Blue is gravity, teal is pumped recovery, amber is dosing, red is the waste path and the fail-safe positions. One pump, one rising main, one crossing of the clean/unverified boundary at FV-01.</div>
+ </div>
+</section>
+
+<section>
+ <div class="sn x1">04 · New risks</div>
+ <h2>Three things that did not exist when the tanks were indoors</h2>
+ <p class="lede">This is the part of the terrace decision that has to be engineered rather than assumed. All three are manageable; none is optional.</p>
+
+ <h3>Risk 1 — solution temperature</h3>
+ <p>A tank on a terrace is a solar collector. In Coimbatore, an unshaded HDPE tank routinely reaches 40 °C by mid-afternoon in April and May. Nutrient solution above 26 °C loses dissolved oxygen and becomes hospitable to <em>Pythium</em> — it is gate G3 in the reuse logic, and here it would be failing on the <em>supply</em> side, where there is no gate at all.</p>
+ <div class="calc">
+ dissolved O₂ at 20 °C   <b>9.1 mg/L</b><br>
+ dissolved O₂ at 30 °C   <b>7.6 mg/L</b>  — a 16% loss before any root has used a molecule<br>
+ dissolved O₂ at 40 °C   <b>6.4 mg/L</b>  — <span class="x">30% loss, and Pythium zoospore activity peaks in this band</span>
+ </div>
+ <div class="g2">
+  <div><h4>Minimum — Ooty</h4><p>Opaque tank under a shade structure, 25 mm PUF wrap with white UPVC cladding, and fill/draw scheduled so the tank turns over overnight. Ooty's ambient does the rest. <b>Sufficient for the first six months.</b></p></div>
+  <div><h4>Required — Coimbatore</h4><p>Everything above, plus temperature logged continuously with an alarm at 26 °C, and budget for a ½ TR inline water chiller. Assume you will need it; be pleased if the data says otherwise.</p></div>
+ </div>
+
+ <h3>Risk 2 — a 500 L tank with a gravity path into the room</h3>
+ <p>A burst hose or a failed union downstairs, with the tank full, empties 500 litres onto the growing room floor. Nothing in the Rev 2 architecture could do that, because the reservoir sat on the same floor as the leak.</p>
+ <ul>
+  <li><b>MV-01, motorised master valve at the tank outlet, spring-return closed.</b> Energised only during a flood window. Everything downstream of it is dry between floods.</li>
+  <li><b>Vacuum breaker at the down-main high point</b>, so a downstream failure cannot siphon the tank.</li>
+  <li><b>Room flood sensor de-energises MV-01 directly</b>, hard-wired, not through the bus.</li>
+  <li><b>Flow totaliser on the down-main.</b> A flood window that delivers more than 1.3 × the expected volume closes MV-01 and alarms — this catches a slow leak that a flood sensor at one floor point would miss.</li>
+ </ul>
+
+ <h3>Risk 3 — terrace slab loading</h3>
+ <div class="calc">
+ TK-01 filled 500 L + tank 25 kg + plinth ≈ <b>560 kg</b><br>
+ TK-04 filled 100 L + tank                ≈ <b>110 kg</b><br>
+ on a 1.0 m² footprint  =  <span class="x">5.5 kN/m² — an accessible terrace is typically designed for 1.5–2.0</span><br><br>
+ spread over a <b>2.0 × 1.5 m</b> platform bearing on beam lines:<br>
+ &nbsp;670 kg / 3.0 m² = <span class="r">2.2 kN/m² — at the limit, and only acceptable over beams, never mid-span</span>
+ </div>
+ <div class="note wa"><strong>This needs a structural engineer's sign-off before the tank is ordered, not after.</strong> The load is concentrated, permanent and sits on a slab that was probably designed for foot traffic. The platform must bear on the beam or column lines, and the check has to be done against the building's actual drawings. It is the one item in this document that cannot be resolved by choosing better equipment.</div>
+</section>
+
+<section>
+ <div class="sn w1">05 · Water balance</div>
+ <h2>Eleven racks, 44 beds, three cycles a day</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Stream</th><th class="n">L / cycle</th><th class="n">L / day</th><th class="n">m³ / yr</th><th>Basis</th></tr></thead>
+   <tbody>
+    <tr><td>Gross flood delivered</td><td class="n">638</td><td class="n">1,914</td><td class="n">632</td><td>44 beds × 14.5 L (1176 × 560 × 22 mm)</td></tr>
+    <tr><td>Evapotranspiration</td><td class="n">14.5</td><td class="n">43.5</td><td class="n">14.4</td><td>1.5 L·m⁻²·d⁻¹ at DLI 10.4 × 29.0 m² canopy</td></tr>
+    <tr><td>Water leaving with harvest</td><td class="n">6.3</td><td class="n">19.0</td><td class="n">6.3</td><td>4.8 kg fresh per bed, 90% water, 10-day cycle</td></tr>
+    <tr><td>Substrate charge on re-sowing</td><td class="n">8.8</td><td class="n">26.4</td><td class="n">8.7</td><td>6 L per bed per 10-day cycle</td></tr>
+    <tr><td>Returned to trough</td><td class="n">608</td><td class="n">1,825</td><td class="n">602</td><td>gross − consumption</td></tr>
+    <tr><td>Blowdown for salt control</td><td class="n">48.7</td><td class="n">146</td><td class="n">48.2</td><td>8% of returned volume, or as Na⁺ demands</td></tr>
+    <tr class="tot"><td>Make-up required</td><td class="n">78.3</td><td class="n">235</td><td class="n">77.6</td><td>consumption 88.9 + blowdown 146</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="calc">
+ recovery ratio = 1 − 235 / 1,914 = <span class="r">87.7%</span><br>
+ annual discharge, closed loop      <b>48.2 m³</b><br>
+ annual discharge, drain-to-waste   <b>632 m³</b><br>
+ <b>reduction</b> = <span class="r">554 m³/yr · 92%</span>
+ </div>
+ <div class="note"><strong>One rack per recovery batch.</strong> The trough holds 79 L of working volume against a full rack drain of 46 L, and the reuse gate is decided on a settled, mixed batch rather than a moving stream. That sets the cadence: drain one rack (2.7 min), settle (30 s), test (3 min), transfer (2 min) — about 8 minutes per rack, 88 minutes for eleven, three times a day. It is the drain side, not the fill side, that now sets the room's clock.</div>
+</section>
+
+<section>
+ <div class="sn">06 · Equipment</div>
+ <h2>What is left, after the terrace deleted three items</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Tag</th><th>Item</th><th>Location</th><th>Duty / specification</th><th>Why</th></tr></thead>
+   <tbody>
+    <tr><td class="m">TK-01</td><td>Main nutrient reservoir</td><td>Terrace</td><td>500 L opaque HDPE, 25 mm PUF + white cladding, shaded, on a 2.0 × 1.5 m spread platform</td><td>Opaque against algae, insulated against the sun, spread against the slab</td></tr>
+    <tr><td class="m">TK-04</td><td>Make-up break tank</td><td>Terrace</td><td>100 L, type AB air gap, float valve, 5 µm + carbon pre-filter</td><td>Backflow prevention belongs at the highest point in the system</td></tr>
+    <tr><td class="m">MV-01</td><td>Master supply valve</td><td>Terrace, tank outlet</td><td>DN32 motorised, <b>spring-return closed</b></td><td>The only thing standing between 500 L and the room</td></tr>
+    <tr><td class="m">VB-01</td><td>Vacuum breaker</td><td>Down-main high point</td><td>DN32 anti-siphon</td><td>A downstream failure must not siphon the tank</td></tr>
+    <tr><td class="m">TK-02</td><td>Catch trough</td><td>Room, NE service corner</td><td>1400 × 650 × 200 mm fabricated HDPE, inlet at 87 mm, 79 L working, bunded lip</td><td>Shallow because tier 1 discharges at 170 mm; a standard drum cannot be gravity-fed</td></tr>
+    <tr><td class="m">S-01</td><td>Basket strainer</td><td>In TK-02</td><td>200 µm SS316, lift-out</td><td>Root hairs and coir fines, before they reach an impeller</td></tr>
+    <tr><td class="m">P-02 A/B</td><td>Transfer / lift pump, duty + standby</td><td>Room, service corner</td><td><b>0.75 kW, 25 L/min @ 20 m</b>, self-priming, EPDM seals, IP55, auto-changeover</td><td>One pump now does filtration, disinfection and the 4.76 m lift. Standby because there is no second path</td></tr>
+    <tr><td class="m">F-01</td><td>Bag filter</td><td>Skid frame over TK-02</td><td>100 µm, size-1 bag, 3 spares</td><td>Bulk solids; cheaper per gram of dirt than a cartridge</td></tr>
+    <tr><td class="m">F-02</td><td>Cartridge filter</td><td>Skid frame</td><td>20-inch wound PP, 20 µm, 5 spares</td><td>20-inch, not 10-inch — a single 10&quot; element is rated 11–15 L/min and would throttle P-02</td></tr>
+    <tr><td class="m">UV-01</td><td>UV-C disinfection</td><td>Skid frame</td><td>40 W amalgam, 316L, quartz sleeve, intensity sensor · 1.5 m³/h at 100 mJ/cm²</td><td>100 mJ/cm² is the horticultural design dose for oomycete and bacterial control</td></tr>
+    <tr><td class="m">FV-01</td><td>Diverter valve</td><td>Skid frame, before the rising main</td><td>DN25 motorised 3-way, <b>spring-return to waste</b></td><td>Unverified water never enters the rising main without power and a passed gate</td></tr>
+    <tr><td class="m">DOS-01</td><td>Dosing skid</td><td>Room, floor level</td><td>A + B + acid peristaltic, injecting into the rising main</td><td>Nobody carries fertiliser salts to a roof</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="calc">
+ <b>P-02 duty check</b><br>
+ static lift, trough water 87 mm → tank inlet 4850 mm   4.76 m<br>
+ DN20 rising main, 14 m at 25 L/min                     1.13 m<br>
+ F-01 + F-02 clean                                      3.70 m<br>
+ UV-01                                                  2.80 m<br>
+ fittings and the diverter                              0.60 m<br>
+ <b>clean duty  12.4 m</b>  ·  at the 1.0 bar filter-change limit  <b>18.9 m</b><br>
+ specify <span class="r">25 L/min at 20 m — 0.75 kW</span>, not the 0.37 kW of Rev 2
+ </div>
+</section>
+
+<section>
+ <div class="sn p1">07 · Instruments and the gate</div>
+ <h2>The reuse decision moves upstream</h2>
+ <p class="lede">In Rev 2 the water was filtered, disinfected and stored, and only then tested. In Rev 3 it is tested first, in the trough, and only water that passes is ever pumped. That saves a tank, a pump and the energy of lifting water you are about to throw away.</p>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Gate</th><th>Condition</th><th>Threshold</th><th>Measured at</th><th>On failure</th></tr></thead>
+   <tbody>
+    <tr><td class="m">G1</td><td>Electrical conductivity</td><td>≤ 1.5 × setpoint — ≤ 1.80 mS/cm at a 1.20 setpoint</td><td>AT-03, in the trough</td><td>Trough dump valve to waste</td></tr>
+    <tr><td class="m">G2</td><td>pH</td><td>4.5 – 7.5</td><td>AT-04, in the trough</td><td>Dump to waste</td></tr>
+    <tr><td class="m">G3</td><td>Temperature</td><td>≤ 26 °C</td><td>TE-02, in the trough</td><td>Hold 60 min, re-test, then dump</td></tr>
+    <tr><td class="m">G4</td><td>Filter differential pressure</td><td>&lt; 1.0 bar across F-01 + F-02</td><td>PDI-01</td><td>Inhibit P-02, alarm, change elements</td></tr>
+    <tr><td class="m">G5</td><td>Disinfection proven</td><td>UIT-01 ≥ 70% <em>and</em> lamp on <em>and</em> FS-01 made</td><td>UV-01</td><td>FV-01 to waste mid-transfer</td></tr>
+    <tr><td class="m">G6</td><td>Leak detectors clear</td><td>No leak puck active this cycle</td><td>LD-01…11</td><td>Dump to waste; isolate that rack</td></tr>
+    <tr><td class="m">G7</td><td>Operator contamination hold</td><td>Not set</td><td>Controller</td><td>Dump to waste until cleared by a named operator</td></tr>
+    <tr><td class="m">G8</td><td>TK-01 has room</td><td>LT-02 &lt; 90%</td><td>Terrace</td><td>Hold in trough until level falls</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <h3>Sequence for one recovery batch</h3>
+ <ol class="st">
+  <li><b>One rack drains.</b> Four tiers in sequence into the trough — 46 L. LSH-04 confirms each header is empty before the next tier.</li>
+  <li><b>Settle 30 s.</b> Solids to the strainer basket, air out of the sample.</li>
+  <li><b>Test 3 min.</b> AT-03, AT-04 and TE-02 read as 60-second rolling means on the mixed batch, not spot values on a moving stream.</li>
+  <li><b>Evaluate G1, G2, G3, G6, G7, G8.</b> Fail on any → the trough dump valve opens to waste and the event is logged with the failing gate named. Nothing is pumped.</li>
+  <li><b>UV pre-strike.</b> On a pass, UV-01 energises and holds 60 s of amalgam warm-up before the pump starts.</li>
+  <li><b>Transfer.</b> P-02 runs; FS-01 must make within 10 s. G4 and G5 are watched continuously — either failing throws FV-01 to waste mid-transfer.</li>
+  <li><b>Dose on the way up.</b> DOS-01 injects A, B and acid into the rising main, proportional to the trough EC deficit against setpoint.</li>
+  <li><b>Stop.</b> P-02 stops on LS-01 low or a 4-minute run limit — the run limit is what catches a stuck float.</li>
+  <li><b>Blowdown.</b> Daily at 02:00, the first batch is dumped regardless of gate result. This is what stops sodium accumulating; it is not an error condition.</li>
+ </ol>
+ <div class="note wa"><strong>The supply side has no gate.</strong> Water in TK-01 has already passed once, but it sits on a roof between uses, warming and concentrating by evaporation. TK-01 therefore carries its own EC, pH and temperature block, read before every flood window, with MV-01 inhibited if temperature exceeds 28 °C. That is a supply-side interlock, not a reuse gate, and it is the direct consequence of putting the tank in the sun.</div>
+</section>
+
+<section>
+ <div class="sn x1">08 · Fail-safes</div>
+ <h2>De-energised states</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Device</th><th>De-energised</th><th>Reason</th></tr></thead>
+   <tbody>
+    <tr><td>MV-01 terrace master valve</td><td><span class="tag t-o">CLOSED</span></td><td>500 L above the room has exactly one thing holding it back, and it must not be electricity</td></tr>
+    <tr><td>Rack fill solenoids</td><td><span class="tag t-o">CLOSED</span></td><td>No bed fills unattended</td></tr>
+    <tr><td>Rack drain solenoids</td><td><span class="tag t-o">OPEN</span></td><td>Beds self-drain; no standing water on a dead rack</td></tr>
+    <tr><td>FV-01 diverter</td><td><span class="tag t-x">TO WASTE</span></td><td>Unverified water never enters the rising main</td></tr>
+    <tr><td>Trough dump valve</td><td><span class="tag t-o">CLOSED</span></td><td>A power cut must not silently discard a good batch</td></tr>
+    <tr><td>Make-up float valve</td><td><span class="tag t-n">MECHANICAL</span></td><td>Float, not solenoid — TK-04 keeps working through a power cut</td></tr>
+    <tr><td>P-02, UV-01, DOS-01</td><td><span class="tag t-n">OFF</span></td><td>—</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <p>Every vessel keeps a gravity overflow one nominal size larger than its largest inlet, terminating with a visible air gap: TK-01 and TK-04 overflow to the terrace rainwater outlet, TK-02 to the room's waste. An overflow discharging into a closed pipe is not an overflow — it is a second way to pressurise the tank.</p>
+ <div class="note wa"><strong>Recirculation still spreads root disease, and the terrace does not change that.</strong> A shared loop connects all 44 beds hydraulically; <em>Pythium</em> and <em>Fusarium</em> zoospores travel in solution and one infected bed can inoculate the room in two cycles. UV-C at ≥ 100 mJ/cm², 20 µm pre-filtration, and the G7 operator hold that drops the room to drain-to-waste in one button press are the three controls, and none is optional at production scale. <b>UV-C also degrades Fe-EDTA</b> — specify Fe-DTPA or Fe-EDDHA and verify iron by lab test monthly, or you will diagnose a pH problem that is actually a chelate problem, two weeks late.</div>
+</section>
+
+<section>
+ <div class="sn p1">09 · Cost</div>
+ <h2>Two build levels</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Rate ₹</th><th class="n">R1 ₹</th><th class="n">R2 add ₹</th></tr></thead>
+   <tbody>
+    <tr><td>TK-01 500 L opaque HDPE + PUF insulation + cladding</td><td class="n">1</td><td class="n">14,200</td><td class="n">14,200</td><td class="n">—</td></tr>
+    <tr><td>Terrace platform, GI, spread over beam lines</td><td class="n">1</td><td class="n">11,500</td><td class="n">11,500</td><td class="n">—</td></tr>
+    <tr><td>Shade structure over the tanks</td><td class="n">1</td><td class="n">8,400</td><td class="n">8,400</td><td class="n">—</td></tr>
+    <tr><td>TK-04 break tank 100 L + float valve + pre-filter</td><td class="n">1</td><td class="n">4,900</td><td class="n">4,900</td><td class="n">—</td></tr>
+    <tr><td>MV-01 master valve DN32, spring-return closed</td><td class="n">1</td><td class="n">6,800</td><td class="n">6,800</td><td class="n">—</td></tr>
+    <tr><td>VB-01 vacuum breaker + down-main DN32, 14 m</td><td class="n">1</td><td class="n">7,600</td><td class="n">7,600</td><td class="n">—</td></tr>
+    <tr><td>TK-02 catch trough 1400 × 650 × 200, fabricated HDPE</td><td class="n">1</td><td class="n">9,500</td><td class="n">9,500</td><td class="n">—</td></tr>
+    <tr><td>S-01 basket strainer 200 µm SS316</td><td class="n">1</td><td class="n">1,800</td><td class="n">1,800</td><td class="n">—</td></tr>
+    <tr><td>Float switch set, low / high / high-high</td><td class="n">1</td><td class="n">1,350</td><td class="n">1,350</td><td class="n">—</td></tr>
+    <tr><td>P-02 A/B, 0.75 kW self-priming, duty + standby</td><td class="n">2</td><td class="n">12,400</td><td class="n">24,800</td><td class="n">—</td></tr>
+    <tr><td>F-01 bag housing + 3 bags</td><td class="n">1</td><td class="n">6,200</td><td class="n">6,200</td><td class="n">—</td></tr>
+    <tr><td>F-02 cartridge housing 20&quot; + 5 elements</td><td class="n">1</td><td class="n">4,400</td><td class="n">4,400</td><td class="n">—</td></tr>
+    <tr><td>PDI-01 differential pressure gauges</td><td class="n">2</td><td class="n">1,450</td><td class="n">2,900</td><td class="n">—</td></tr>
+    <tr><td>Rising main DN20, 14 m, valves, unions, supports</td><td class="n">lot</td><td class="n">—</td><td class="n">6,900</td><td class="n">—</td></tr>
+    <tr><td>Skid frame, GI, powder-coated, wall-mounted over TK-02</td><td class="n">1</td><td class="n">6,500</td><td class="n">6,500</td><td class="n">—</td></tr>
+    <tr><td>FV-01 3-way — manual (R1) / motorised fail-to-waste (R2)</td><td class="n">1</td><td class="n">1,900 / 7,400</td><td class="n">1,900</td><td class="n">7,400</td></tr>
+    <tr><td>Dosing skid DOS-01, A + B + acid peristaltic</td><td class="n">1</td><td class="n">18,600</td><td class="n">18,600</td><td class="n">—</td></tr>
+    <tr><td>Panel additions — contactors, Type A RCBO, terminals</td><td class="n">1</td><td class="n">7,400</td><td class="n">7,400</td><td class="n">5,300</td></tr>
+    <tr><td>UV-C 40 W amalgam, 316L, intensity sensor</td><td class="n">1</td><td class="n">24,500</td><td class="n">—</td><td class="n">24,500</td></tr>
+    <tr><td>EC / pH / temperature blocks — trough and TK-01</td><td class="n">2</td><td class="n">16,500</td><td class="n">—</td><td class="n">33,000</td></tr>
+    <tr><td>Level transmitters LT-01 / LT-02</td><td class="n">2</td><td class="n">4,200</td><td class="n">—</td><td class="n">8,400</td></tr>
+    <tr><td>FS-01 flow switch + down-main flow totaliser</td><td class="n">2</td><td class="n">4,600</td><td class="n">—</td><td class="n">9,200</td></tr>
+    <tr><td>Controller I/O expansion, 8 DI / 4 DO / 6 AI</td><td class="n">1</td><td class="n">6,800</td><td class="n">—</td><td class="n">6,800</td></tr>
+    <tr class="tot"><td>Sub-total</td><td class="n"></td><td class="n"></td><td class="n">145,250</td><td class="n">94,600</td></tr>
+    <tr class="tot"><td>Against Rev 2 (plant in the room)</td><td class="n"></td><td colspan="3" class="n">R1 ₹86,350 → ₹145,250 · but two racks and 5.73 m² of floor come back</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="note"><strong>The skid got more expensive and the room got cheaper.</strong> Rev 3 adds ₹58,900 of terrace works — platform, shade, insulation, master valve, down-main — and a bigger pump. Against that it returns <b>two racks</b> of capacity worth roughly ₹102,500 at build cost, releases 4.7 m² of floor, and deletes two pumps and a 300 L tank. It is net positive on capex and clearly positive on capacity, but the money moved from equipment you can return to civil work you cannot. That is worth knowing before the platform is fabricated.</div>
+</section>
+
+<section>
+ <div class="sn x1">10 · Open</div>
+ <h2>What still needs a measurement or a decision</h2>
+ <div class="scroll">
+  <table>
+   <thead><tr><th>Ref</th><th>Item</th><th>Type</th><th>Closes on</th></tr></thead>
+   <tbody>
+    <tr><td class="m">D-5</td><td>Terrace slab capacity at the tank position</td><td><span class="tag t-x">Blocking</span></td><td>Structural engineer's check against the building drawings, before the platform is fabricated</td></tr>
+    <tr><td class="m">D-6</td><td>Confirmed terrace height, room FFL to slab soffit</td><td>Survey</td><td>Measured on site. 3.75 m is assumed; the whole gravity case rests on it</td></tr>
+    <tr><td class="m">D-2</td><td>UV transmittance of the recovered solution</td><td>Test</td><td>Measure UVT on a real drain sample before ordering UV-01; re-size if below 80%</td></tr>
+    <tr><td class="m">D-3</td><td>Source water analysis — Na⁺, Cl⁻, hardness, alkalinity</td><td>Test</td><td>One irrigation-water lab analysis. Sets the blowdown rate and whether RO is needed</td></tr>
+    <tr><td class="m">D-7</td><td>Solution temperature through a Coimbatore summer</td><td>Test</td><td>Log TK-01 temperature for one April–May before deciding on a chiller</td></tr>
+    <tr><td class="m">D-4</td><td>Build level — R1 now or straight to R2</td><td>Decision</td><td>R1 defers ₹94,600 but leaves the reuse gate with an operator and a handheld meter</td></tr>
+    <tr><td class="m">T-1</td><td>Evapotranspiration rate</td><td>Test</td><td>Log make-up volume with the blowdown closed for one full crop cycle</td></tr>
+   </tbody>
+  </table>
+ </div>
+</section>
+
+<footer class="w">
+ <p>RK-A-WRS Rev 3 · 05 September 2026 · Closed-loop water recovery with terrace reservoirs and gravity supply. Supersedes Rev 2 (floor-level plant) and the drain-to-waste strategy in RK-A-SYS Rev 2 §4. Room arrangement per RK-A-ROOM Rev 3. Validation record RK-A-QC.</p>
+</footer>
+</main>

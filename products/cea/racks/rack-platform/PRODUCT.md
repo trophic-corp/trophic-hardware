@@ -3,7 +3,7 @@
 **Product ID:** `RK-A`
 **Family:** CEA
 **Type:** Modular controlled-environment growing rack
-**Authoritative CAD:** Fusion 360 `CEA_RACK_INTEGRATED_v2` (see `docs/engineering/CAD_INDEX.md`)
+**Authoritative CAD:** Fusion 360 `CEA_RACK_INTEGRATED_v3` v1 (Rev 6, ECP-01) — see `docs/engineering/CAD_INDEX.md`
 
 ---
 
@@ -19,8 +19,8 @@ The rack is sold and built in three configurations:
 
 | Configuration | Contents | Cost |
 |---|---|---|
-| **Core** | Frame, decks, trays, drainage. No active systems | ₹12,391 |
-| **Grow (Phase 1)** | Core + irrigation, LED interface, standalone EC fans, sensing, control enclosure | **₹49,296** |
+| **Core** | Frame, decks, trays, drainage. No active systems | ≈ ₹17,400 (Rev 3 estimate; was ₹12,391) |
+| **Grow (Phase 1)** | Core + irrigation, LED interface, standalone EC fans, sensing, control enclosure | **≈ ₹54,300** before valve re-quote (was ₹49,296) |
 | **Grow (complete)** | Grow Phase 1 + ducted plenum ventilation | ₹51,936 |
 | **Pro** | Grow complete + reflective panel set and extended sensing | ₹56,996 |
 
@@ -73,8 +73,8 @@ a decision record.
 |---|---|
 | Installed envelope (W × D × H) | 1456 × 690 × 1960 mm |
 | Structure-only envelope | 1256 × 563 × 1960 mm |
-| Phase-1 build envelope (no plenum) | 1456 × 648 × 1960 mm |
-| Dry mass | 112.66 kg |
+| Phase-1 build envelope | 1456 × 690 × 1960 mm (648 withdrawn) |
+| Dry mass | 136.39 kg model, all systems · Core 91.7 · Grow Phase 1 108.0 · Grow complete 126.9 kg |
 
 ### Tier geometry
 
@@ -98,7 +98,8 @@ revised lifting equation the recommended weight limit falls to zero above
 
 | Corridor | Location | Purpose |
 |---|---|---|
-| Wet services | Y 435 – 525 mm from the front face | Irrigation and drainage. Forward of the rear bracing plane, clear of both LED rows |
+| Wet services | Y 435 – 525 mm from the front face | In-bed drain hardware. Laterals leave at Y 500–540 and cross the rear plane only in the ICR-006 windows |
+| Rear service zone | Y 571 – 690 | Header, laterals, tundish, Phase-1 fans; plenum reserve X ≤ 1150 |
 | LED row 1 | Y 148 – 208 mm | Fixture body |
 | LED row 2 | Y 352 – 412 mm | Fixture body |
 
@@ -107,15 +108,16 @@ revised lifting equation the recommended weight limit falls to zero above
 | Invariant | Rule |
 |---|---|
 | Backflow air gap | 100 mm between drain header outlet (Z 200) and tundish rim (Z 100) = 2 × DN50. **Must never be plumbed closed** (IS 12234 / EN 1717) |
-| Fill solenoids | Normally **closed** |
-| Drain solenoids | Normally **open** |
+| Fill solenoids (zero-ΔP) | Normally **closed** |
+| Drain valves (motorised ball) | Spring-return **open** |
+| Fill-point air gap | Nozzle outlet ≥ 30 mm above the tray rim (38 nominal) — ICR-005 |
 | Recovery diverter FV-01 | Spring-return **to waste** |
 | Terrace master valve MV-01 | Fails **closed** |
 | Residual current device | **Type A RCBO**, not Type AC — LED drivers and inverter compressors produce pulsating DC residual current |
 
 ### Materials
 
-Frame and decks: GI to **IS 4923 YST210, Z275** coating. uPVC pipework to
+Frame and decks: GI to **IS 4923 YST210, Z275** coating. Joints: 3 mm GI gusset plates on M8 rivet nuts with crush tubes (EDR-015). Deck mesh: flattened expanded metal. uPVC pipework to
 **IS 4985**. Earthing to **IS 3043**. Seismic per **IS 1893**. Inspection per
 **IS 732**.
 
@@ -130,10 +132,13 @@ monthly. This constrains the nutrient specification, not the rack hardware.
 | Document | ID | Rev | Location |
 |---|---|---|---|
 | Platform brief | `RK-A-BRIEF` | G | `requirements/` |
-| Systems specification | `RK-A-SYS` | 2 + addendum | `design/` |
-| Structural drawings | `RK-A-DWG` | 2 | `drawings/` |
-| Manufacturing pack | `RK-A-MFG` | 2 | `manufacturing/` |
-| Engineering validation record | `RK-A-QC` | 3 | `verification/` |
+| Systems specification | `RK-A-SYS` | 2 + addenda A, B | `design/` |
+| Parameter master | `RK-A-PARAM` | 2 | `design/` |
+| Structural drawings | `RK-A-DWG` | 3 (tabular) | `drawings/` |
+| Manufacturing pack | `RK-A-MFG` | 3 | `manufacturing/` |
+| Engineering validation record | `RK-A-QC` | 4 | `verification/` |
+| Independent review | `RK-A-REV` | A | `verification/` |
+| Change package | `RK-A-ECP-01` | A | `changes/` |
 
 Interface specifications live under `interfaces/`. Published-artifact URLs for
 each document are in `docs/system/DOCUMENT_REGISTER.md`.
@@ -157,3 +162,6 @@ each document are in `docs/system/DOCUMENT_REGISTER.md`.
    There is no supply pump.
 5. The drain chain must be continuous joint-by-joint from every tray outlet to
    the rack drain header outlet, and then break at the air gap.
+6. **No bolt through a hollow section without a crush tube or rivet nut** at 18 N·m; 4 N·m otherwise (EDR-015).
+7. **No pipe intersects a brace bar**; crossings of the rear plane only in the ICR-006 windows.
+8. **Every gravity-operated valve is specified at ΔP-min = 0** (EDR-016).

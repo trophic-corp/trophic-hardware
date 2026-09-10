@@ -21,12 +21,14 @@ the repository copy lives and where the published artifact lives.
 | Doc ID | Title | Rev | Class | Repository copy | Published artifact |
 |---|---|---|---|---|---|
 | `RK-A-BRIEF` | CEA Rack Platform Brief | G | AUTHORITATIVE | `products/cea/racks/rack-platform/requirements/RK-A-BRIEF_RevG_platform-brief.html` | `claude.ai/code/artifact/d7a1cc62-50f1-4220-84ad-c3029f1d8e44` |
-| `RK-A-SYS` | Rack A Systems Specification | 2 + addendum | AUTHORITATIVE | `.../design/RK-A-SYS_Rev2_systems-specification.html` | `.../0c57d39f-9bc9-4948-905b-133c1d5968b8` (v5) |
-| `RK-A-DWG` | Rack A Structural Drawings | 2 | AUTHORITATIVE | `.../drawings/RK-A-DWG_Rev2_structural-drawings.html` | `.../d66da629-a6ca-406d-bb9d-f914d187d7ee` |
-| `RK-A-MFG` | Rack A Manufacturing Pack | 2 | AUTHORITATIVE | `.../manufacturing/RK-A-MFG_Rev2_manufacturing-pack.html` | `.../9f5e09e5-c02a-4d5b-965e-43731a32c19c` |
-| `RK-A-QC` | Engineering Validation Record | 3 | SUPPORTING EVIDENCE | `.../verification/RK-A-QC_Rev3_engineering-validation-record.html` | `.../62520307-f088-4d7d-8a69-242f1bff45c9` (v4) |
-| `RK-A-PARAM` | Fusion Parameter Master | 1 | AUTHORITATIVE | `.../design/RK-A-PARAM_Rev1_parameter-master.md` | — read from CAD, not published |
-| `RK-A-R1` | Engineering Release Manifest | — | AUTHORITATIVE | `.../release/RK-A-R1_MANIFEST.md` | — |
+| `RK-A-SYS` | Rack A Systems Specification | 2 + addenda A, B | AUTHORITATIVE | `.../design/RK-A-SYS_Rev2_systems-specification.html` + `.../design/RK-A-SYS_Rev2_addendum-B.md` | `.../0c57d39f-9bc9-4948-905b-133c1d5968b8` (v5); addendum B not yet published |
+| `RK-A-DWG` | Rack A Structural Drawings | **3** (tabular; sheets pending) | AUTHORITATIVE for the 12 parts it lists; Rev 2 remains valid for the others | `.../drawings/RK-A-DWG_Rev3_structural-drawings.md` (Rev 2 HTML retained) | not yet published |
+| `RK-A-MFG` | Rack A Manufacturing Pack | **3** | AUTHORITATIVE (Rev 2 SUPERSEDED for the sections Rev 3 restates) | `.../manufacturing/RK-A-MFG_Rev3_manufacturing-pack.md` (Rev 2 HTML retained) | not yet published |
+| `RK-A-QC` | Engineering Validation Record | **4** | SUPPORTING EVIDENCE | `.../verification/RK-A-QC_Rev4_engineering-validation-record.md` (Rev 3 HTML retained) | not yet published |
+| `RK-A-REV` | Independent Engineering Review | A | SUPPORTING EVIDENCE | `.../verification/RK-A-REV_RevA_independent-engineering-review.md` | Claude project doc |
+| `RK-A-ECP-01` | Engineering Change Package | A | AUTHORITATIVE for the change scope | `.../changes/RK-A-ECP-01_RevA_engineering-change-package.md` | Claude project doc |
+| `RK-A-PARAM` | Fusion Parameter Master | **2** | AUTHORITATIVE | `.../design/RK-A-PARAM_Rev2_parameter-master.md` (Rev 1 retained) | — read from CAD, not published |
+| `RK-A-R1` | Engineering Release Manifest | — | AUTHORITATIVE, **constrained** (CURRENT_STATE §4) | `.../release/RK-A-R1_MANIFEST.md` | — |
 
 ## 2. Shared CEA infrastructure
 
@@ -55,6 +57,10 @@ content** (loads, set-out, water balance) is nonetheless validated and current.
 
 ---
 
+## 4a. Format note (2026-09-10)
+
+Rev 3 / Rev 4 documents issued by ECP-01 are Markdown in the repository. Rule 1 (repository copy = published artifact) is satisfied once each is rendered and published; until then the repository Markdown is the authoritative copy and the previous HTML revision is retained beside it, superseded for the content the new revision restates.
+
 ## 5. Errata against issued documents
 
 | Document | Erratum | Effect |
@@ -76,10 +82,7 @@ One case where the two disagree in form but not in substance, recorded so nobody
 | Mass each | 1.06 kg | 2.071 kg |
 | Total | 2.116 kg | 2.071 kg |
 
-The drawing counts two individual braces; the CAD models the crossing pair as one
-component. Totals agree to 2 %, consistent with shared material at the crossing.
-1797 × 25 × 3 mm of steel at 7850 kg/m³ = 1.058 kg, so the drawing's per-piece figure
-is arithmetically correct. **Not a discrepancy — a representation difference.**
+Superseded 2026-09-10: `_v3` v1 models two bars (`05_REAR_BRACE_A/B`, 1.063 kg each at 1810 mm) matching RK-A-DWG Rev 3. The 1797 figure was itself wrong (EDR-018).
 
 ---
 

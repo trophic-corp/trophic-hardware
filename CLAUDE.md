@@ -19,7 +19,7 @@ Manufacturing base: **Coimbatore, India** (411 m ASL).
 R&D facility: **Ooty, India** (2,240 m ASL) — the reference CEA room.
 
 Today one product line has completed engineering: the **CEA Rack Platform
-(Rack A)**, released as `RK-A R1`. Eleven other products exist as **Phase 0**
+(Rack A)** — independently reviewed and revised on 2026-09-10 (ECP-01, Rev 6, design of record `CEA_RACK_INTEGRATED_v3` v1); `RK-A R1` is constrained and `RK-A R2` is pending. Eleven other products exist as **Phase 0**
 scope documents — real folders with real documents, no engineering.
 
 `products/PRODUCT_INDEX.md` is the map. A Phase 0 document holds what is decided,
@@ -51,10 +51,12 @@ That set is small and is enough for most rack work.
 
 | Artifact | Load when |
 |---|---|
-| `design/RK-A-SYS_Rev2_systems-specification.html` | Changing or querying a system in detail (irrigation, electrical, ventilation, sensing) |
+| `design/RK-A-SYS_Rev2_systems-specification.html` + `design/RK-A-SYS_Rev2_addendum-B.md` | Changing or querying a system in detail (irrigation, electrical, ventilation, sensing) |
+| `drawings/RK-A-DWG_Rev3_structural-drawings.md` / `manufacturing/RK-A-MFG_Rev3_manufacturing-pack.md` | Part geometry, BOM, fasteners, assembly — Rev 2 HTML only for the sections Rev 3 does not restate |
 | `drawings/RK-A-DWG_Rev2_structural-drawings.html` | Working on part geometry or fabrication detail |
 | `manufacturing/RK-A-MFG_Rev2_manufacturing-pack.html` | Sourcing, BOM, costing, vendor packs |
-| `verification/RK-A-QC_Rev3_engineering-validation-record.html` | Reviewing validation evidence or adding a verification record |
+| `verification/RK-A-QC_Rev4_engineering-validation-record.md` (Rev 3 HTML for Stage 2) | Reviewing validation evidence or adding a verification record |
+| `verification/RK-A-REV_RevA_independent-engineering-review.md`, `changes/RK-A-ECP-01_RevA_engineering-change-package.md` | Understanding why Rev 6 differs from Rev 5, or reopening any ECP-01 decision |
 | `products/cea/irrigation/water-recovery/**` | Water recovery, reservoirs, terrace plant |
 | `products/cea/facility-reference/ooty-room-20x12/**` | Room layout, multi-rack ecosystem, facility services |
 | `docs/engineering/CAD_INDEX.md` | Touching Fusion 360 or a release export |
