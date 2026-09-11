@@ -33,6 +33,16 @@ question you are answering actually requires it.
 | REF-05 | UV-C degradation of chelated iron | Horticultural literature | Fe-EDTA degrades under UV-C; Fe-DTPA / Fe-EDDHA required | `RK-A-WRS` nutrient management | Third-party literature | RESEARCH |
 | REF-06 | Expanded metal mesh effective density | Material data | ≥70 % open mesh → 1884 kg/m³ effective; basis for the mass correction | `RK-A` deck panels | Vendor / material data | VENDOR SOURCE |
 
+## 2a. Lighting program references (added 2026-09-11)
+
+| ID | Title | Location | Purpose | Relevant product/system | Authority | Status |
+|---|---|---|---|---|---|---|
+| LREF-01 | Lighting Platform Reference | `lighting/LIGHTING_PLATFORM_REFERENCE.md` | Part A durable fundamentals (units, LED physics, MCPCB, control, optics, environment). Part B LED engines: B1 CEA fixed-spectrum bar hardware incl. the 48 V remote-driver readings and OCV hazard, B2 aquarium Core engine classes, B3 WRGB architectures and UVA assessment, B4 shared control electronics and Indian radio/BIS notes. Part C power platform: 24/36/48 V derivation, adapter availability, BIS scope, PSU-family standardisation, fixture protection. Part D biology: D1 microgreens (fixed vs tunable, PPFD/DLI, photoperiod, trial protocol), D2 planted aquaria (PAR, attenuation, spectrum, algae, UVA, trial protocol). **Answers most "what does the science or the datasheet say" questions for all three lights** | `LT-A`, `AQ-LT-A`, `AQ-LT-B` | Peer-reviewed, datasheets, standards summaries, inference (labelled) | RESEARCH (Part A REFERENCE ONLY) |
+| LREF-02 | Competitor Lighting Reference | `lighting/COMPETITOR_LIGHTING_REFERENCE.md` | Neo Helios, Chihiros, Week Aqua, Twinstar, ONF, ADA and others: family architecture, channels, controls, PSU rails, controller placement, ingress, warranty, Indian prices (dated 2026-09-11), field complaints, cross-brand patterns, lessons. Not requirements | `AQ-LT-A`, `AQ-LT-B` | Manufacturer, distributor, retailer, community (labelled) | RESEARCH |
+| VEN-02 | Lighting Supplier Landscape | `suppliers/LIGHTING_SUPPLIER_LANDSCAPE.md` | Coimbatore / Tamil Nadu-India / import tiers for extrusion, anodise, machining, end caps, gaskets, harness, packaging, EMS, MCPCB, drivers, adapters, optics, connectors, distributors, test labs; cost classes; supply events (Samsung exit, Lumileds, ams OSRAM, Cree); duty pointers; dual-sourcing map; research-required list. **No supplier is qualified** | `LT-A`, `AQ-LT-A`, `AQ-LT-B` | Website claims, directory listings, manufacturer partner lists (labelled) | VENDOR SOURCE |
+
+Product-specific sourcing implications are in each product's `sourcing/SOURCING_STRATEGY.md`, not here. The program roadmap and phase-gate evidence are in `docs/engineering/LIGHTING_PROGRAM_ROADMAP.md`.
+
 ## 3. Historical and superseded material
 
 | ID | Title | Location | Purpose | Relevant product/system | Authority | Status |
@@ -48,10 +58,9 @@ question you are answering actually requires it.
 |---|---|---|---|
 | VEN-01 | Component sourcing, pricing and lead times | `RK-A-MFG` Rev 2 (embedded in the manufacturing pack) | VENDOR SOURCE |
 
-Vendor research is currently held inside the manufacturing pack rather than as
-standalone documents. If it grows, extract it to
-`docs/references/suppliers/` and index it here rather than expanding the
-manufacturing pack.
+Rack vendor research is held inside the manufacturing pack. Lighting vendor research
+is the first standalone supplier document, `suppliers/LIGHTING_SUPPLIER_LANDSCAPE.md`
+(VEN-02 above).
 
 ---
 

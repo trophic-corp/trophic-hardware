@@ -21,7 +21,8 @@ collide with CEA.
 
 | ID | Product |
 |---|---|
-| `AQ-LT-A` | Programmable aquarium light |
+| `AQ-LT-A` | Core smart aquascaping light (fixed spectrum, one logical channel) — re-scoped 2026-09-11, ADR-007 |
+| `AQ-LT-B` | Premium programmable WRGB aquascaping light — added 2026-09-11, ADR-007. Same platform as `AQ-LT-A`, materially different product, hence the variant letter |
 | `AQ-CT-A` | Aquarium sensor / controller |
 | `AQ-LP-A` | Lily pipes |
 | `AQ-FL-A` | Filtration |

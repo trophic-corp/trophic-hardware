@@ -19,8 +19,8 @@ Manufacturing base: **Coimbatore, India** (411 m ASL).
 R&D facility: **Ooty, India** (2,240 m ASL) — the reference CEA room.
 
 Today one product line has completed engineering: the **CEA Rack Platform
-(Rack A)** — independently reviewed and revised on 2026-09-10 (ECP-01, Rev 6, design of record `CEA_RACK_INTEGRATED_v3` v1); `RK-A R1` is constrained and `RK-A R2` is pending. Eleven other products exist as **Phase 0**
-scope documents — real folders with real documents, no engineering.
+(Rack A)** — independently reviewed and revised on 2026-09-10 (ECP-01, Rev 6, design of record `CEA_RACK_INTEGRATED_v3` v1); `RK-A R1` is constrained and `RK-A R2` is pending. Twelve other products exist as **Phase 0**
+scope documents — real folders with real documents, no engineering. Three of them, the lighting program (`LT-A`, `AQ-LT-A`, `AQ-LT-B`), completed Phase 0A research on 2026-09-11 and wait on 0B architecture decisions.
 
 `products/PRODUCT_INDEX.md` is the map. A Phase 0 document holds what is decided,
 what is inherited, and what is open, and refuses to fill the gaps. **Thin sections
@@ -63,6 +63,8 @@ That set is small and is enough for most rack work.
 | `docs/references/REFERENCE_INDEX.md` | Looking for supplier research, standards, historical studies |
 | `docs/system/CEA_SUITE_AUDIT.md` | Any question about what the CEA software suite believes about the hardware, or why a contract says what it says |
 | `docs/system/CAD_SEED_GUIDE.md` | **Before generating any 3D model from a Phase 0 document.** Defines model classes and what a generation prompt may not use |
+| `docs/system/AGENT_ROUTING_POLICY.md` | Deciding whether and which specialist agent(s) to delegate to — see §7 |
+| `platform/lighting/README.md` (common lighting area: control interface concept, cost model, launch plan), `products/aquarium/lighting/PLATFORM.md`, `docs/engineering/LIGHTING_PROGRAM_ROADMAP.md`, `docs/references/lighting/**` | Any lighting work (`LT-A`, `AQ-LT-A`, `AQ-LT-B`, Smart Module): start at the common area's index, then the platform strategy, phase gates and shared research so nothing is redone |
 | `platform/**` | Starting a new product, or deviating from a shared standard |
 | `archive/**` | Provenance questions only. Never as a source of current values |
 
@@ -93,6 +95,11 @@ That set is small and is enough for most rack work.
    that claims to be a design, or in a contract.
 7. A generated CAD model is class ENVELOPE or CONCEPT until the product's open
    decisions are answered. It never becomes DESIGN by being edited.
+
+This authority hierarchy is not delegable. No specialist agent under §7 may
+approve a product, alter an approved requirement, change an authoritative CAD
+model, mark a product Validated/Released, change a frozen interface, or write
+a decision record as "decided" — see `docs/system/AGENT_ROUTING_POLICY.md`.
 
 ---
 
@@ -150,3 +157,25 @@ anything that crosses the boundary.
 - Do not create empty folders for structural symmetry.
 - The rack product, shared CEA infrastructure, and the reference facility are
   three different owners. Check `PRODUCT.md` before filing anything new.
+
+---
+
+## 7. Specialist agent routing
+
+Six project-scoped specialist agents live in `.claude/agents/`:
+`systems-architect`, `lighting-electronics-engineer`,
+`plant-science-specialist`, `industrial-design-cmf`,
+`manufacturing-sourcing-engineer`, `qa-reliability-engineer`.
+
+Operating principle: **Main Claude owns the task. Specialists are consulted
+only when their domain materially changes the answer. QA is a gate, not a
+participant in every conversation.** Most tasks need zero or one specialist;
+cross-domain tasks default to at most two; QA is invoked specifically for
+verification, validation, release, and safety-critical gates — never as a
+routine third participant.
+
+Full routing levels, the routing table, disagreement handling, and the
+"agents do not create authority" rule are in
+`docs/system/AGENT_ROUTING_POLICY.md`. Each agent's own file states its
+domain, when to use it, when not to, and its authority boundary — read the
+policy file to decide *whether and which* agent to use, not this section.

@@ -1,7 +1,7 @@
 # CURRENT_STATE — trophic-hardware
 
-**As of:** 2026-09-10
-**Repository state:** rack design reviewed and revised (ECP-01, Rev 6); `RK-A R2` export pending.
+**As of:** 2026-09-11
+**Repository state:** rack design reviewed and revised (ECP-01, Rev 6); `RK-A R2` export pending; lighting program Phase 0A research complete, ADR-008 (modular control) proposed, common lighting area and planning cost model created.
 
 ---
 
@@ -17,8 +17,14 @@ correctly owned elsewhere:
 - **Ooty 20 × 12 ft room** — a reference implementation of a facility built
   from racks, not a product.
 
-Eleven further products now have **Phase 0 documents** — four CEA and seven
-aquarium. None has engineering. Each document separates what is inherited and
+Twelve further products now have **Phase 0 documents** — four CEA and eight
+aquarium. None has engineering. On 2026-09-11 the three lighting products (`LT-A`,
+`AQ-LT-A`, `AQ-LT-B`) completed **Phase 0A research**: shared reference material in
+`docs/references/lighting/` and `docs/references/suppliers/`, a platform strategy
+(`products/aquarium/lighting/PLATFORM.md`, ADR-007), product sourcing strategies, and
+a roadmap with phase-gate evidence (`docs/engineering/LIGHTING_PROGRAM_ROADMAP.md`).
+No CAD was touched; the 0B architecture decisions (bus voltage, PSU family, chassis
+sharing, size classes, WRGB channel count, `LT-A` driver model) are open. Each document separates what is inherited and
 decided from what is open, and does not fill the gaps; the CEA ones carry real
 inherited interface facts because the rack fixed them, and the aquarium ones are
 mostly open questions, which is correct.
@@ -34,11 +40,12 @@ Shared standards extracted from the rack's decisions now live in `platform/`.
 | CEA Rack Platform (Rack A) | `RK-A` | A — Rack product | `products/cea/racks/rack-platform/` | **Rev 6 (ECP-01) — re-validated, R2 export pending** |
 | Closed-loop water recovery | `RK-A-WRS` | B — Shared CEA infra | `products/cea/irrigation/water-recovery/` | Design validated |
 | Ooty 20 × 12 ft CEA room | `RK-A-ROOM` | C — Facility reference | `products/cea/facility-reference/ooty-room-20x12/` | Layout validated |
-| LED grow bar | `LT-A` | A | `products/cea/lighting/led-grow-bar/` | **Phase 0** |
+| LED grow bar | `LT-A` | A | `products/cea/lighting/led-grow-bar/` | **Phase 0A research complete (2026-09-11), 0B pending** |
 | Ducted ventilation plenum | `EV-A` | A | `products/cea/environmental-control/ventilation-plenum/` | **Phase 0** |
 | Rack controller | `CT-A` | A | `products/cea/sensors-controllers/rack-controller/` | **Phase 0** |
 | Room controller | `CT-B` | B | `products/cea/sensors-controllers/room-controller/` | **Phase 0** |
-| Aquarium range, 7 products | `AQ-*` | A | `products/aquarium/` | **Phase 0** |
+| Aquarium lighting, Core + WRGB | `AQ-LT-A`, `AQ-LT-B` | A | `products/aquarium/lighting/` | **Phase 0A research complete (2026-09-11), 0B pending** — shared platform, ADR-007 |
+| Aquarium range, 6 further products | `AQ-*` | A | `products/aquarium/` | **Phase 0** |
 
 Owner classes are defined in `products/cea/racks/rack-platform/PRODUCT.md` §2.
 Full map with cross-product open decisions: `products/PRODUCT_INDEX.md`.
@@ -86,9 +93,11 @@ figure found in `archive/`.
 | ND-08 | NEEDS DECISION | `RK-A-ROOM` Rev 5: floor/anchor loads at 136.4 kg, strut anchoring detail; no set-out change |
 | ND-09 | NEEDS DECISION | Valve technology trial scope (EDR-016 alternatives) |
 | ND-10 | NEEDS DECISION | Tray floor: flat + tolerance, or formed drainage channels — before tooling |
+| ND-11 | NEEDS DECISION | **PPFD ceiling rationale.** RK-A-SYS §00 and the CEA suite `safety-rules.json` state that PPFD above 210 µmol/m²/s risks photoinhibition. The 2026-09-11 microgreen literature review (`docs/references/lighting/LIGHTING_PLATFORM_REFERENCE.md` D1) found no evidence of photoinhibition at ≤ 210; Brassica microgreens were grown to 315–600 without damage. The 210 ceiling is defensible as an energy, thermal and uniformity optimum, not as a biological limit. **Nothing has been changed**; the operating band stands. Decide whether the safety-rule rationale is restated (and whether `trophic-contracts` and the suite need the change) |
+| ND-12 | NEEDS DECISION | **LED supply reading and driver open-circuit voltage.** RK-A-SYS §07 permits either a constant-voltage 48 V DC supply or a constant-current supply with output ≤ 60 V; `LT-A`'s Phase 0 document had simplified this to "48 V DC". Under the CC reading a remote driver's open-circuit voltage appears at the IP65 canopy connector when a bar is unplugged (Mean Well XLG-L 225 V, -M 115 V, -H 60 V). Only ≤ 60 V OCV drivers keep the ELV boundary. This becomes a selection criterion inside the open "driver model" decision (`IF-RK-A-ELE` §4); recorded so it is not lost |
 | ND-07 | **UNKNOWN — low priority** | Terrace slab loading 5.5 kN/m² concentrated against a typical 1.5–2.0 kN/m² rating. **Owner decision 2026-09-09: not a blocker** — the tank will be mounted on a steel structure rather than bearing directly on the slab. Kept open as unknown: the steel structure's own design and its bearing points are not yet specified |
 
-ND-05 to ND-07 were raised by the CEA suite audit. Full detail is in
+ND-05 to ND-07 were raised by the CEA suite audit; ND-11 and ND-12 by the lighting Phase 0A research. Full detail is in
 `products/cea/racks/rack-platform/CURRENT_STATE.md`,
 `docs/system/MIGRATION_REPORT.md` and `docs/system/CEA_SUITE_AUDIT.md`.
 

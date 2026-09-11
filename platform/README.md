@@ -9,6 +9,7 @@ re-decide these; it either complies or raises a decision record to deviate.
 | `mechanical-standards/README.md` | Materials, sections, hole grid, fasteners, finish, ergonomics |
 | `electrical-standards/README.md` | ELV boundary, protection, earthing, connectors, enclosure |
 | `PRODUCT_TEMPLATE.md` | The Phase 0 document every new product starts from |
+| `lighting/README.md` | Common lighting area: reusable lighting knowledge index, engine/module control-interface concept, BOM/cost/commercial model, launch plan (planning material, not yet standards) |
 
 ## Provenance
 

@@ -2,11 +2,14 @@
 
 **No engineering exists in this family.** Every product below is Phase 0: a scope
 statement, the design variables that must be settled, and — where useful — industry
-reference points that bound the design space.
+reference points that bound the design space. The two lighting products completed
+Phase 0A research on 2026-09-11 and share an intended platform (ADR-007); start at
+`lighting/README.md`.
 
 | Product | ID | Stage |
 |---|---|---|
-| Programmable aquarium light | `AQ-LT-A` | Phase 0 |
+| Core smart aquascaping light | `AQ-LT-A` | Phase 0A research complete — `lighting/` |
+| Premium programmable WRGB light | `AQ-LT-B` | Phase 0A research complete — `lighting/` |
 | Sensor / controller | `AQ-CT-A` | Phase 0 |
 | Lily pipes | `AQ-LP-A` | Phase 0 |
 | Filtration | `AQ-FL-A` | Phase 0 |

@@ -27,6 +27,8 @@ not get records.
 | [ADR-004](records/ADR-004-hardware-software-repository-boundary.md) | Keep hardware and software repositories independent; publish via `trophic-contracts` | ACCEPTED | Repository-wide |
 | [ADR-005](records/ADR-005-plenum-deferred-to-phase-2.md) | Defer the ducted plenum to a Phase-2 entity; ship standalone EC fans in Phase 1 | ACCEPTED | RK-A |
 | [ADR-006](records/ADR-006-fusion-authoritative-for-cad.md) | Fusion 360 remains authoritative for native CAD; STEP/F3D are release artifacts | ACCEPTED | Repository-wide |
+| [ADR-008](records/ADR-008-light-engine-smart-module-architecture.md) | Aquarium lights as a Light Engine (LED board, CC drivers, engine MCU, thermal backstop, hardware ID, default profile, signal-only control port) plus an optional user-swappable Smart Module (radio, RTC, schedules, app, OTA); engines radio-free; tier ladder Basic/Smart; not reused by `LT-A`. Rejected: integrated control, inline DC-path controller, MCU-less signal-wire Core (challenger), module carrying LED power | **PROPOSED** (owner to accept; evaluated 2026-09-11) | AQ-LT-A, AQ-LT-B, Smart Module |
+| [ADR-007](records/ADR-007-aquarium-lighting-shared-platform.md) | Aquarium lighting is two products, `AQ-LT-A` Core and `AQ-LT-B` WRGB, on one intended shared platform with late differentiation; standalone-first; external certified adapter → ELV DC → internal CC drivers; Core exposes one logical channel. Bus voltage, PSU, chassis sharing, sizes, channel count all remain open | ACCEPTED (recorded from owner intent 2026-09-11; owner to confirm) | AQ-LT-A, AQ-LT-B |
 
 ## Engineering decisions
 
