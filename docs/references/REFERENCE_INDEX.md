@@ -43,6 +43,18 @@ question you are answering actually requires it.
 
 Product-specific sourcing implications are in each product's `sourcing/SOURCING_STRATEGY.md`, not here. The program roadmap and phase-gate evidence are in `docs/engineering/LIGHTING_PROGRAM_ROADMAP.md`.
 
+## 2b. Lily pipe references (added 2026-09-17, moved here 2026-09-17 to match the lighting layout)
+
+| ID | Title | Location | Purpose | Relevant product/system | Authority | Status |
+|---|---|---|---|---|---|---|
+| LPREF-01 | Lily Pipe Research Brief | `lily-pipes/LILY_PIPE_RESEARCH_BRIEF.md` | Scope, research questions, method, access limits, **evidence and status tags**, assumptions A1–A7 used by every lily-pipe document | `AQ-LP-A` | Internal method | RESEARCH |
+| LPREF-02 | Competitor Lily Pipe Reference | `lily-pipes/COMPETITOR_LILY_PIPE_REFERENCE.md` | Segments, recurring customer problems and willingness to pay, 19-product competitor matrix with Indian prices (dated 2026-09-17), price bands, volume scenarios. Not requirements | `AQ-LP-A` | Manufacturer, retailer, community (labelled) | RESEARCH |
+| LPREF-03 | Lily Pipe Aesthetic Reference | `lily-pipes/LILY_PIPE_AESTHETIC_REFERENCE.md` | C1–C12 rubric for water-side hardware, competitor evaluation (desk), ageing in use, opportunities O1–O11, CMF review of launch options. Usable for future wet accessories | `AQ-LP-A`, future wet accessories | CMF specialist (inferred where marked) | RESEARCH |
+| LPREF-04 | Lily Pipe Technical Reference | `lily-pipes/LILY_PIPE_TECHNICAL_REFERENCE.md` | Hose/pipe diameter vocabulary, canister hose sizes, flow, outlets, intake, skimmers, mounting, materials and cleaning chemistry, risk register R01–R20 | `AQ-LP-A`; hose data serves `AQ-FL-A` (X3) | Manufacturer, standards summaries, estimates (labelled) | RESEARCH |
+| LPREF-05 | Lily pipe source register and data | `lily-pipes/sources/` (`SOURCE_REGISTER.md`, `competitor_matrix.csv`, `hose_compatibility.csv`) | Grouped sources with access dates; blocked sources; structured data | `AQ-LP-A` | As labelled | RESEARCH |
+
+Product-specific sourcing, costing, requirements, validation and concept design stay in `products/aquarium/lily-pipes/` (`sourcing/`, `costing/`, `requirements/`, `verification/`, `design/`), as the lighting products keep `sourcing/` in their product folders.
+
 ## 3. Historical and superseded material
 
 | ID | Title | Location | Purpose | Relevant product/system | Authority | Status |
@@ -57,6 +69,7 @@ Product-specific sourcing implications are in each product's `sourcing/SOURCING_
 | ID | Subject | Location | Status |
 |---|---|---|---|
 | VEN-01 | Component sourcing, pricing and lead times | `RK-A-MFG` Rev 2 (embedded in the manufacturing pack) | VENDOR SOURCE |
+| VEN-03 | Lily pipe supplier shortlist (stainless tube bending, end forming, laser, finishing, glass, moulding, import) S01–S23 and §9 location assessment | `products/aquarium/lily-pipes/sourcing/SOURCING_STRATEGY.md` §4, §9 + `sourcing/supplier_shortlist.csv` (embedded in the product sourcing strategy; nothing qualified) | VENDOR SOURCE |
 
 Rack vendor research is held inside the manufacturing pack. Lighting vendor research
 is the first standalone supplier document, `suppliers/LIGHTING_SUPPLIER_LANDSCAPE.md`

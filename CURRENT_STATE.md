@@ -1,6 +1,6 @@
 # CURRENT_STATE — trophic-hardware
 
-**As of:** 2026-09-11
+**As of:** 2026-09-19
 **Repository state:** rack design reviewed and revised (ECP-01, Rev 6); `RK-A R2` export pending; lighting program Phase 0A research complete, ADR-008 (modular control) proposed, common lighting area and planning cost model created.
 
 ---
@@ -28,6 +28,21 @@ sharing, size classes, WRGB channel count, `LT-A` driver model) are open. Each d
 decided from what is open, and does not fill the gaps; the CEA ones carry real
 inherited interface facts because the rack fixed them, and the aquarium ones are
 mostly open questions, which is correct.
+
+On 2026-09-17 **lily pipes (`AQ-LP-A`) completed Phase 0A research** in
+`products/aquarium/lily-pipes/` (market and competitors, aesthetic research under the
+CMF brief, technical, manufacturing/sourcing, commercial model, preliminary requirements,
+validation plan, decision brief). Everything is PROPOSED; no CAD, no supplier contact,
+no decision recorded. On the same day the owner answered lily-pipe decisions 1–3 (EDR-021 stainless 316L with
+304 as qualified alternate, EDR-022 16/22 hose, EDR-023 rimless 5–12 mm glass), which opens
+CONCEPT-class CAD per `products/aquarium/lily-pipes/design/CONCEPT_DESIGN_BRIEF.md`. Lily-pipe research lives in
+`docs/references/lily-pipes/`; product documents follow the rack lifecycle folders.
+
+On 2026-09-17/18 concept round 1 was built in Fusion (`AQ-LP-A_CONCEPT_r1a`, `_r1b`, class
+CONCEPT) and reviewed; on 2026-09-19 the owner decided EDR-024 (outflow swivel above the
+waterline) and ADR-009 (no skimmer in P1), tried and withdrew EDR-025 (telescopic intake cap),
+chose the round-2 form (D-24: straight pipe inside the glass), and after a CMF review the
+simplified `AQ-LP-A_CONCEPT_r2b` is the round-2 candidate; product state is in `products/aquarium/lily-pipes/CURRENT_STATE.md`.
 
 Shared standards extracted from the rack's decisions now live in `platform/`.
 

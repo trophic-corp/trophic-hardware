@@ -74,7 +74,7 @@ From each `PRODUCT.md` §8. Check here before generating anything.
 | `CT-B` | **No** | — | Volume depends entirely on `[OQ-3]` and the UPS decision. Any model would be invention |
 | `AQ-LT-A` | **No** | — | Length, mounting and channel count all open |
 | `AQ-CT-A` | **No** | — | Mains vs low-voltage changes the enclosure completely |
-| `AQ-LP-A` | After decisions 1–3 | CONCEPT | Glass forming constraints are not respected by CAD |
+| `AQ-LP-A` | **Yes — CONCEPT** (decisions 1–3 answered 2026-09-17: EDR-021 stainless 316L/304, EDR-022 16/22 hose, EDR-023 rimless 5–12 mm) | CONCEPT | Start from `products/aquarium/lily-pipes/design/CONCEPT_DESIGN_BRIEF.md`. Launch-spec values are targets, not decisions. Tube bending and end-forming limits are not respected by CAD on their own |
 | `AQ-FL-A` | **No** | — | Type and volume both open |
 | `AQ-PU-A` | **No** | — | Make-or-buy may make the question moot |
 | `AQ-TL-A` | **Yes** | CONCEPT | For this product, modelling *is* designing |
