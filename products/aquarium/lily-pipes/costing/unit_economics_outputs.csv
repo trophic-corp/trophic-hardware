@@ -1,0 +1,121 @@
+metric,route,channel,lot_qty,case,value_inr
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,25,low,1110
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,25,base,2030
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,25,high,3630
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,50,low,850
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,50,base,1540
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,50,high,2760
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,100,low,660
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,100,base,1190
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,100,high,2140
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,200,low,580
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,200,base,1040
+unit_cost,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",,200,high,1870
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,25,low,1610
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,25,base,3030
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,25,high,5470
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,50,low,1250
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,50,base,2340
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,50,high,4240
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,100,low,990
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,100,base,1840
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,100,high,3340
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,200,low,880
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,200,base,1620
+unit_cost,"S2 = S1 + intake surface-skimmer module (machined, no mould)",,200,high,2950
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,25,low,1290
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,25,base,2630
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,25,high,5400
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,50,low,1040
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,50,base,2120
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,50,high,4330
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,100,low,850
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,100,base,1720
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,100,high,3480
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,200,low,770
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,200,base,1550
+unit_cost,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",,200,high,3120
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,25,low,1930
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,25,base,3260
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,25,high,4940
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,50,low,1620
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,50,base,2730
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,50,high,4030
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,100,low,1470
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,100,base,2460
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,100,high,3580
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,200,low,1390
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,200,base,2330
+unit_cost,"M1 imported OEM SS set, private-label (benchmark only)",,200,high,3350
+contrib_after_acq_q100,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",DTC own site,100,low,2290
+contrib_after_acq_q100,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",DTC own site,100,base,1420
+contrib_after_acq_q100,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",DTC own site,100,high,50
+contrib_after_acq_q100,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Amazon.in (seller-fulfilled),100,low,1860
+contrib_after_acq_q100,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Amazon.in (seller-fulfilled),100,base,890
+contrib_after_acq_q100,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Amazon.in (seller-fulfilled),100,high,-600
+contrib_after_acq_q100,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Specialist retailer (dealer),100,low,1420
+contrib_after_acq_q100,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Specialist retailer (dealer),100,base,620
+contrib_after_acq_q100,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Specialist retailer (dealer),100,high,-680
+contrib_after_acq_q100,"S2 = S1 + intake surface-skimmer module (machined, no mould)",DTC own site,100,low,3110
+contrib_after_acq_q100,"S2 = S1 + intake surface-skimmer module (machined, no mould)",DTC own site,100,base,1890
+contrib_after_acq_q100,"S2 = S1 + intake surface-skimmer module (machined, no mould)",DTC own site,100,high,-120
+contrib_after_acq_q100,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Amazon.in (seller-fulfilled),100,low,2520
+contrib_after_acq_q100,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Amazon.in (seller-fulfilled),100,base,1160
+contrib_after_acq_q100,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Amazon.in (seller-fulfilled),100,high,-1020
+contrib_after_acq_q100,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Specialist retailer (dealer),100,low,1870
+contrib_after_acq_q100,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Specialist retailer (dealer),100,base,680
+contrib_after_acq_q100,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Specialist retailer (dealer),100,high,-1280
+contrib_after_acq_q100,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",DTC own site,100,low,1590
+contrib_after_acq_q100,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",DTC own site,100,base,330
+contrib_after_acq_q100,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",DTC own site,100,high,-1930
+contrib_after_acq_q100,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Amazon.in (seller-fulfilled),100,low,1210
+contrib_after_acq_q100,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Amazon.in (seller-fulfilled),100,base,-130
+contrib_after_acq_q100,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Amazon.in (seller-fulfilled),100,high,-2500
+contrib_after_acq_q100,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Specialist retailer (dealer),100,low,890
+contrib_after_acq_q100,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Specialist retailer (dealer),100,base,-260
+contrib_after_acq_q100,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Specialist retailer (dealer),100,high,-2380
+contrib_after_acq_q100,"M1 imported OEM SS set, private-label (benchmark only)",DTC own site,100,low,1060
+contrib_after_acq_q100,"M1 imported OEM SS set, private-label (benchmark only)",DTC own site,100,base,-300
+contrib_after_acq_q100,"M1 imported OEM SS set, private-label (benchmark only)",DTC own site,100,high,-1850
+contrib_after_acq_q100,"M1 imported OEM SS set, private-label (benchmark only)",Amazon.in (seller-fulfilled),100,low,680
+contrib_after_acq_q100,"M1 imported OEM SS set, private-label (benchmark only)",Amazon.in (seller-fulfilled),100,base,-760
+contrib_after_acq_q100,"M1 imported OEM SS set, private-label (benchmark only)",Amazon.in (seller-fulfilled),100,high,-2420
+contrib_after_acq_q100,"M1 imported OEM SS set, private-label (benchmark only)",Specialist retailer (dealer),100,low,330
+contrib_after_acq_q100,"M1 imported OEM SS set, private-label (benchmark only)",Specialist retailer (dealer),100,base,-930
+contrib_after_acq_q100,"M1 imported OEM SS set, private-label (benchmark only)",Specialist retailer (dealer),100,high,-2380
+breakeven_units,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",DTC own site,100,low,107
+breakeven_units,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",DTC own site,100,base,336
+breakeven_units,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",DTC own site,100,high,">5,000 (effectively not reached)"
+breakeven_units,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Amazon.in (seller-fulfilled),100,low,132
+breakeven_units,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Amazon.in (seller-fulfilled),100,base,536
+breakeven_units,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Amazon.in (seller-fulfilled),100,high,not reached (≤0)
+breakeven_units,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Specialist retailer (dealer),100,low,173
+breakeven_units,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Specialist retailer (dealer),100,base,769
+breakeven_units,"S1 SS316L set (inflow+outflow+2 clips), Tamil Nadu job-work, passivated",Specialist retailer (dealer),100,high,not reached (≤0)
+breakeven_units,"S2 = S1 + intake surface-skimmer module (machined, no mould)",DTC own site,100,low,92
+breakeven_units,"S2 = S1 + intake surface-skimmer module (machined, no mould)",DTC own site,100,base,296
+breakeven_units,"S2 = S1 + intake surface-skimmer module (machined, no mould)",DTC own site,100,high,not reached (≤0)
+breakeven_units,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Amazon.in (seller-fulfilled),100,low,113
+breakeven_units,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Amazon.in (seller-fulfilled),100,base,483
+breakeven_units,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Amazon.in (seller-fulfilled),100,high,not reached (≤0)
+breakeven_units,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Specialist retailer (dealer),100,low,153
+breakeven_units,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Specialist retailer (dealer),100,base,820
+breakeven_units,"S2 = S1 + intake surface-skimmer module (machined, no mould)",Specialist retailer (dealer),100,high,not reached (≤0)
+breakeven_units,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",DTC own site,100,low,155
+breakeven_units,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",DTC own site,100,base,"1,449"
+breakeven_units,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",DTC own site,100,high,not reached (≤0)
+breakeven_units,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Amazon.in (seller-fulfilled),100,low,203
+breakeven_units,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Amazon.in (seller-fulfilled),100,base,not reached (≤0)
+breakeven_units,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Amazon.in (seller-fulfilled),100,high,not reached (≤0)
+breakeven_units,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Specialist retailer (dealer),100,low,276
+breakeven_units,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Specialist retailer (dealer),100,base,not reached (≤0)
+breakeven_units,"G1 borosilicate glass set, Ambala lampwork, to Trophic drawing",Specialist retailer (dealer),100,high,not reached (≤0)
+breakeven_units,"M1 imported OEM SS set, private-label (benchmark only)",DTC own site,100,low,71
+breakeven_units,"M1 imported OEM SS set, private-label (benchmark only)",DTC own site,100,base,not reached (≤0)
+breakeven_units,"M1 imported OEM SS set, private-label (benchmark only)",DTC own site,100,high,not reached (≤0)
+breakeven_units,"M1 imported OEM SS set, private-label (benchmark only)",Amazon.in (seller-fulfilled),100,low,111
+breakeven_units,"M1 imported OEM SS set, private-label (benchmark only)",Amazon.in (seller-fulfilled),100,base,not reached (≤0)
+breakeven_units,"M1 imported OEM SS set, private-label (benchmark only)",Amazon.in (seller-fulfilled),100,high,not reached (≤0)
+breakeven_units,"M1 imported OEM SS set, private-label (benchmark only)",Specialist retailer (dealer),100,low,229
+breakeven_units,"M1 imported OEM SS set, private-label (benchmark only)",Specialist retailer (dealer),100,base,not reached (≤0)
+breakeven_units,"M1 imported OEM SS set, private-label (benchmark only)",Specialist retailer (dealer),100,high,not reached (≤0)

@@ -29,6 +29,7 @@ not get records.
 | [ADR-006](records/ADR-006-fusion-authoritative-for-cad.md) | Fusion 360 remains authoritative for native CAD; STEP/F3D are release artifacts | ACCEPTED | Repository-wide |
 | [ADR-008](records/ADR-008-light-engine-smart-module-architecture.md) | Aquarium lights as a Light Engine (LED board, CC drivers, engine MCU, thermal backstop, hardware ID, default profile, signal-only control port) plus an optional user-swappable Smart Module (radio, RTC, schedules, app, OTA); engines radio-free; tier ladder Basic/Smart; not reused by `LT-A`. Rejected: integrated control, inline DC-path controller, MCU-less signal-wire Core (challenger), module carrying LED power | **PROPOSED** (owner to accept; evaluated 2026-09-11) | AQ-LT-A, AQ-LT-B, Smart Module |
 | [ADR-007](records/ADR-007-aquarium-lighting-shared-platform.md) | Aquarium lighting is two products, `AQ-LT-A` Core and `AQ-LT-B` WRGB, on one intended shared platform with late differentiation; standalone-first; external certified adapter → ELV DC → internal CC drivers; Core exposes one logical channel. Bus voltage, PSU, chassis sharing, sizes, channel count all remain open | ACCEPTED (recorded from owner intent 2026-09-11; owner to confirm) | AQ-LT-A, AQ-LT-B |
+| [ADR-009](records/ADR-009-lily-pipe-no-skimmer-in-p1.md) | Lily-pipe P1 ships without a skimmer and without a reserved skimmer interface; skimmer is a separate P2 product | ACCEPTED (owner, 2026-09-19) | AQ-LP-A |
 
 ## Engineering decisions
 
@@ -54,6 +55,11 @@ not get records.
 | [EDR-018](records/EDR-018-rear-brace-on-grid.md) | Rear brace 1810 mm, holes 1780.1 mm on grid rows 150/1450; two bars | ACCEPTED | RK-A |
 | [EDR-019](records/EDR-019-flood-tray-formed-geometry.md) | Flood tray modelled as the formed part; deck clearance holes; floor fall → ND-10 | ACCEPTED | RK-A |
 | [EDR-020](records/EDR-020-structural-details.md) | Foot insert, upright drain holes, LED saddles, flattened mesh, datum stack confirmed | ACCEPTED | RK-A |
+| [EDR-021](records/EDR-021-lily-pipe-material-316l-with-304-alternate.md) | Lily pipes are stainless steel: 316L specified, 304 qualified alternate subject to V-T7; design grade-independent; grades never mixed in a lot | ACCEPTED (owner, 2026-09-17) | AQ-LP-A |
+| [EDR-022](records/EDR-022-lily-pipe-hose-size-16-22.md) | Launch lily-pipe hose size 16/22 mm; 12/16 later; X3 informed, not closed | ACCEPTED (owner, 2026-09-17) | AQ-LP-A, informs AQ-FL-A |
+| [EDR-023](records/EDR-023-lily-pipe-rimless-glass-5-12mm.md) | Launch lily-pipe mounting on rimless glass 5–12 mm; rimmed tanks excluded | ACCEPTED (owner, 2026-09-17) | AQ-LP-A |
+| [EDR-024](records/EDR-024-lily-pipe-outflow-swivel-above-waterline.md) | Outflow aim by a dry friction swivel above the waterline (formed socket first, machined coupling fallback); no joint of any kind below the waterline | ACCEPTED (owner, 2026-09-19) | AQ-LP-A |
+| [EDR-025](records/EDR-025-lily-pipe-telescopic-intake-cap.md) | Intake adjustment by a telescopic end cap with a silicone/PTFE band, entering from the free end; no sleeve over the slot zone; stepped caps as fallback | **WITHDRAWN (owner, 2026-09-19)** — plain removable cap reinstated | AQ-LP-A |
 
 ## Interface change records
 

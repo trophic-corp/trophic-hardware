@@ -30,6 +30,14 @@ the repository copy lives and where the published artifact lives.
 | `RK-A-PARAM` | Fusion Parameter Master | **2** | AUTHORITATIVE | `.../design/RK-A-PARAM_Rev2_parameter-master.md` (Rev 1 retained) | — read from CAD, not published |
 | `RK-A-R1` | Engineering Release Manifest | — | AUTHORITATIVE, **constrained** (CURRENT_STATE §4) | `.../release/RK-A-R1_MANIFEST.md` | — |
 
+## 1a. Aquarium products — `AQ-*`
+
+| Doc ID | Title | Rev | Class | Repository copy | Published artifact |
+|---|---|---|---|---|---|
+| `AQ-LP-A-BRIEF` | Lily Pipes Launch Specification (proposal) | **P0** (2026-09-17; rows L-02, L-05/06, L-40 approved via EDR-021/022/023) | CURRENT WORKING | `products/aquarium/lily-pipes/requirements/AQ-LP-A-BRIEF_RevP0_launch-specification.md` | Claude project doc |
+
+Phase 0 working and research documents for aquarium products (lighting `PLATFORM.md`, `SOURCING_STRATEGY.md`; lily-pipe requirements, validation plan, costing, concept brief; `docs/references/**`) are indexed in each product `README.md` and `docs/references/REFERENCE_INDEX.md`, not here, until they become controlled documents.
+
 ## 2. Shared CEA infrastructure
 
 | Doc ID | Title | Rev | Class | Repository copy | Published artifact |

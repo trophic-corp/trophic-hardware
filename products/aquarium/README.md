@@ -11,7 +11,7 @@ Phase 0A research on 2026-09-11 and share an intended platform (ADR-007); start 
 | Core smart aquascaping light | `AQ-LT-A` | Phase 0A research complete — `lighting/` |
 | Premium programmable WRGB light | `AQ-LT-B` | Phase 0A research complete — `lighting/` |
 | Sensor / controller | `AQ-CT-A` | Phase 0 |
-| Lily pipes | `AQ-LP-A` | Phase 0 |
+| Lily pipes | `AQ-LP-A` | Phase 0A research complete (2026-09-17) — `lily-pipes/`, start at `README.md` |
 | Filtration | `AQ-FL-A` | Phase 0 |
 | Pumps | `AQ-PU-A` | Phase 0 |
 | CO₂ equipment | `AQ-CO-A` | Phase 0 |
